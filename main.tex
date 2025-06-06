@@ -70,7 +70,7 @@
 \newcommand{\WriteCost}{\mathrm{WriteCost}}
 
 % ---------- title data ----------
-\title{The Courtroom Challenge\\\large Can Any Open-World AI Thrive Without Paying the Validation Bill?\\[1em]\small\textit{This note poses a conjecture, not a leaderboard: automate validation, prove it's unnecessary, or price human judgment honestly.}}
+\title{The Courtroom Challenge—A Conjecture on the Unavoidable Cost of LLM Verification}
 \author{John Repsys\thanks{email: john.repsys@gmail.com}}
 \date{\today}
 
@@ -81,10 +81,17 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-  Large language models hallucinate; ad-hoc patches conceal the true cost of verification. We therefore pose the Courtroom Challenge:
-  Conjecture 1. For any unbounded open-world text stream, a system that lacks both (i) a persistent precedent store and (ii) a friction-priced validation loop will accumulate unbounded prequential regret.
-  We formalise the state machine, cost ledger, and impossibility triangle that make this conjecture falsifiable, and invite the community to break it. A 100-query toy stream illustrates how the ledger is logged\footnote{Baseline script will appear at \url{https://github.com/johnrepsys/courtroom-model-lean} with v2.}; no attempt is made here to optimise the validator. In addition, we present the Courtroom Model, a wrapper architecture that subjects every LLM claim to a perpetual cycle of precedent search, automated semantic checks, and selective escalation to an external judge—human or automated. Each new output is validated against a persistent vector memory, while conflicting evidence triggers the re-examination of prior “case law.”
+  Large language models hallucinate; ad-hoc patches conceal the true cost of verification. 
+  We therefore pose a falsifiable ultimatum: either automate validation, prove it unnecessary, or pay the explicit human-in-the-loop cost.  
+  Conjecture 1 (the Courtroom Challenge). 
+  For any unbounded open-world text stream, a system that lacks both (i) a persistent precedent store and (ii) a friction-priced validation loop will accumulate unbounded prequential regret.
+  We formalise the state machine, cost ledger, and impossibility triangle that make this conjecture testable, and invite the community to break it.
+  A 100-query toy stream illustrates how the ledger is logged\footnote{Baseline script will appear at \url{https://github.com/johnrepsys/courtroom-model-lean} with v2.}; no attempt is made here to optimise the validator.
+  In addition, we present the Courtroom Model, a wrapper architecture that subjects every LLM claim to a perpetual cycle of precedent search, automated semantic checks, and selective escalation to an external judge—human or automated.
+  Each new output is validated against a persistent vector memory, while conflicting evidence triggers the re-examination of prior “case law.”
+  The challenge stands: thrive in an open world without paying the validation bill—or show why the bill is inescapable.
 \end{abstract}
+
 
 \section{Introduction}
 \label{sec:intro}
@@ -267,7 +274,7 @@ Cosine and L$_2$ are special cases, but a system designer is free to
 plug in any monotone metric—e.g.\ Mahalanobis distance, dot-product in a
 learned embedding space, or even a hybrid score that blends semantic and
 numeric keys—so long as the inequality is flipped to match the
-metric's notion of proximity. Section~\ref{sec:toy-storage-bound} analyses the cost/error trade-off
+metric's notion of proximity. Section~\ref{sec:sparse-memory-bound} analyses the cost/error trade-off
 under the distance form (Lemma~\ref{lemma}), and Appendix~\ref{sec:knobs} lists this dial
 among the falsifiability-critical degrees of freedom. Selecting which descriptor 
 fields to embed is itself tunable; Section~\ref{sec:open-questions} (Q\ref{open-question-schema}) sketches how the Courtroom loop 
@@ -485,7 +492,7 @@ Prequential regret after budget~$B$:
 \begin{proof}[Sketch]
 
 \textbf{Classical identification bound.}
-Choosing the 0–1 loss $L(M,X)=\mathbf 1\{\hat M(X)\neq M\}$
+Choosing the 0–1 loss $L(M,X)=\mathbf 1_{\{\hat M(X)\neq M\}}$
 and threshold $\Delta=\tfrac12$
 in Proposition 3 of \citet{chen2024interfano} yields
 \[
@@ -496,8 +503,8 @@ in Proposition 3 of \citet{chen2024interfano} yields
 
 \medskip
 \noindent
-To obtain a bound on label error we apply the same proposition to
-the indicator
+To obtain a bound on label error we apply the same proposition with 
+threshold $\Delta=\tfrac12$ to the indicator
 \[
   L^\star \;=\; \mathbf 1_{\{\Err>\Delta_{\mathrm{Err}}\}},
   \qquad
@@ -507,9 +514,6 @@ the indicator
 
 
 \item
-  Re-apply Proposition 3 to
-  $L^\star = \mathbf 1\{\Err>\Delta_{\mathrm{Err}}\}$
-  with threshold $\Delta=\tfrac12$.
   Because $\log \!\bigl(1/\rho_{1/2}\bigr)\ge\log M$ for the uniform
   prior, the proposition yields the lower bound
   \[
@@ -566,8 +570,10 @@ grows linearly with~$T$.
 
 
 
-\subsection{Toy Storage Bound}
-\label{sec:toy-storage-bound}
+\subsection{Sparse-memory bound}
+\label{sec:sparse-memory-bound}
+
+The following lemma gives a back-of-the-envelope bound on memory growth and justifies the choice of a retention threshold $\tau$.
 
 \begin{lemma}
 \label{lemma}
@@ -603,19 +609,6 @@ assumptions, any validator \(V_\theta\) that never escalates to humans must eith
 (i) mis-accept adversarially crafted hallucinations with probability \(\geq \varepsilon\)
 or (ii) write unbounded new precedent.
 \end{conjecture}
-
-\begin{lemma}[Cost–error lower bound]\label{lem:cost-error}
-  For any query stream of min-entropy $H>0$, any validator whose
-  \emph{amortised escalation cost} is $o(1)$ must incur
-  \emph{per-query error} $\Omega(1)$ against an adaptive adversary.
-\end{lemma}
-
-\begin{proof}[Proof sketch]
-  The adversary at round $t$ submits the first query not present in
-  the current precedent.  Since the validator escalates $o(T)$ times
-  over $T$ rounds, at least $T - o(T)$ queries are unseen, forcing a
-  coin-flip and hence expected error $\ge \tfrac12$. \footnote{A fully mechanised Lean proof of Lemma 2 will appear at \url{https://github.com/johnrepsys/courtroom-model-lean}.}
-\end{proof}
 
 \begin{tcolorbox}[title=Falsify-Us]
   Build an agent that—under the protocol of Section~\ref{sec:framework}—keeps
