@@ -59,6 +59,14 @@
   \draw[dashedarrow] (generator) to[out=-70,in=150] (ledger);
   \draw[dashedarrow] (judge) to[out=60,in=-150] (ledger);
 
+  % -- NEW: dashed grey skip arrow labelled “Defer” ------------------
+  \draw[dashedarrow,gray!70,very thick]
+        (validator.east)                                % start at V
+        to[out=25,in=-25]                               % small detour
+        node[pos=.60,left]{\scriptsize Defer}          % label
+        (query.east);                                   % land on Query
+  % ------------------------------------------------------------------
+
   \foreach \n in {validator}
     \draw[dashedarrow] (\n.east) -- (ledger.west);
   
