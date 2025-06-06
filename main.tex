@@ -24,6 +24,14 @@
 \usepackage{booktabs}
 \usepackage{enumitem}
 
+% --- macros used in the information-theoretic bound ---
+\usepackage{amsmath,amssymb}   % (already loaded in many templates)
+
+\newcommand{\Err}{\mathrm{Err}}
+\newcommand{\Prb}{\mathbb{P}}  % avoid \Pr: clashes with TeX primitive
+\newcommand{\kappabar}{\bar{\kappa}}
+\newcommand{\E}{\mathbb{E}}
+
 % ---------- bibliography ----------
 % Author–year (ACL-like)
 \usepackage[
@@ -130,7 +138,8 @@ Rather than requiring manual review of every idea, the Courtroom Model automatic
   \caption{One step of the Courtroom loop.%
            \ Solid arrows: primary query flow.%
            \ Dashed arrows: helper calls and cost logging.%
-           \ The cost\,bus aggregates all resource writes into a single ledger.}
+           \ The cost\,bus aggregates all resource writes into a single ledger.
+           \ On \textsc{DEFER} the round is skipped (no cost, no memory write).}
   \label{fig:courtroom}
 \end{figure}
 
@@ -346,7 +355,9 @@ If Conjecture~\ref{conjecture1} holds, genuinely autonomous, self-improving AI w
 \label{sec:minimal-state-machine}
 Formal state $S_t=(q_t,h_t,a_t,M_t)$, validator $V_\theta$, memory update
 $U$, cost ledger $\WriteCost = \sum_i \kappa_i\,c_i$.
-
+%
+Validator actions:
+$\{\textsc{ACCEPT},\textsc{REJECT},\textsc{ESCALATE},\textsc{DEFER}\}$.
 %------------------------------------------------
 \section{Formal Framework}
 \label{sec:framework}
@@ -379,7 +390,7 @@ As defined in Section~\ref{sec:minimal-state-machine}, state
   but do not decide final truth.
   
   \item \textbf{Validator family.}  
-  \(V_{\theta} : (Q, H, M) \to \{\textsc{ACCEPT}, \textsc{REJECT}, \textsc{ESCALATE}\}\), with a
+  \(V_{\theta} : (Q, H, M) \to \{\textsc{ACCEPT}, \textsc{REJECT}, \textsc{ESCALATE}, \textsc{DEFER}\}\), with a
   tunable validation–preference dial \(\theta \in \Theta\).
   \(V_{\theta}\) may be
   (i) a stronger ensemble LLM,
@@ -388,7 +399,9 @@ As defined in Section~\ref{sec:minimal-state-machine}, state
   (iv) a human panel as fallback.\footnote{\textit{Self-play precedent.}  
   AlphaZero's value network functions as an automated judge for Monte-Carlo rollouts.
   The Courtroom validator is its open-domain analogue: any module that can reliably
-  downgrade faulty claims can occupy the judge slot.}
+  downgrade faulty claims can occupy the judge slot.} \textsc{DEFER} means “skip this round”: no answer is returned,
+  no escalation cost is paid, and the generator proceeds to the next
+  query.
   
   \item \textbf{Memory update rule.}  
   \(U : (M, q, h, a) \to M'\) adds or merges precedent after a claim is accepted.
@@ -406,6 +419,8 @@ Given $S_t=(q_t,h_t,a_t,M_t)$:
           \item If $d_t=\mathrm{ACCEPT}$ set $a_t=h_t$
           \item Else obtain corrected answer $a_t = C(q_t,h_t)$
                 (oracle $C$ may call a human; cost is logged)
+          \item If $d_t=\textsc{DEFER}$ set $a_t=\bot$
+                and skip Steps 3–4 below.
         \end{itemize}
   \item $M_{t+1} \leftarrow U(M_t,q_t,h_t,a_t)$
   \item External stream provides $q_{t+1}$
@@ -420,8 +435,9 @@ Fix weights $\kappa_i$ once per benchmark—should the conjecture survive first 
 \[
   \WriteCost_t \;=\; \sum_i \kappa_i\,c_{i,t}.
 \]
-Cumulative friction budget up to step $T$ is
-$F_T = \sum_{t=0}^{T-1}\WriteCost_t$.
+Cumulative friction budget …  $F_T = \sum_{t=0}^{T-1}\WriteCost_t$.%
+\footnote{\textsc{DEFER} incurs zero cost, so the corresponding
+$\WriteCost_t$ entry is~0.}
 
 \subsection{Performance Measures}
 \label{sec:performance-measures}
@@ -436,6 +452,119 @@ Prequential regret after budget~$B$:
   \quad
   T(B) = \min\{\,T : F_T \ge B\,\}.
 \]
+
+\subsection{Information–theoretic lower bound}
+\label{sec:info-bound}
+
+\begin{lemma}[Interactive-Fano corollary]\label{lem:ErrLower}
+  Fix a validator $V$ run for $T$ rounds under margin parameter $\delta>0$.
+  Let
+  \[
+    \kappabar
+      :=\mathbb{E}_{\omega}\bigl[\kappa(\omega)\bigr],
+    \qquad
+    \Err_{\mathrm{bar}}
+      :=\mathbb{E}_{\omega}\bigl[\Err(\omega)\bigr].
+  \]
+  Suppose the transcript $X$ satisfies
+  $I(\theta;X)\le I$
+  under a uniform prior on an $M$-point label set ($M\ge 2$).
+  Then
+  \begin{equation}\label{eq:ErrLower}   % <-- new label
+    \boxed{%
+      \Err_{\mathrm{bar}}
+      \;\;\ge\;\;
+      \frac{\delta\,\kappabar\,T}{4}\;
+      \Bigl(
+        1-\dfrac{I+\log 2}{\log M}
+      \Bigr)
+    }.
+  \end{equation}
+\end{lemma}
+
+\begin{proof}[Sketch]
+
+\textbf{Classical identification bound.}
+Choosing the 0–1 loss $L(M,X)=\mathbf 1\{\hat M(X)\neq M\}$
+and threshold $\Delta=\tfrac12$
+in Proposition 3 of \citet{chen2024interfano} yields
+\[
+  P_{\mathrm{id}}
+  \;\ge\;
+  \tfrac12\Bigl(1-\tfrac{I+\log 2}{\log M}\Bigr).
+\]
+
+\medskip
+\noindent
+To obtain a bound on label error we apply the same proposition to
+the indicator
+\[
+  L^\star \;=\; \mathbf 1_{\{\Err>\Delta_{\mathrm{Err}}\}},
+  \qquad
+  \Delta_{\mathrm{Err}} := \tfrac12\,\delta\,\kappabar\,T.
+\]
+
+
+
+\item
+  Re-apply Proposition 3 to
+  $L^\star = \mathbf 1\{\Err>\Delta_{\mathrm{Err}}\}$
+  with threshold $\Delta=\tfrac12$.
+  Because $\log \!\bigl(1/\rho_{1/2}\bigr)\ge\log M$ for the uniform
+  prior, the proposition yields the lower bound
+  \[
+    \Prb\!\bigl[\Err>\Delta_{\mathrm{Err}}\bigr]
+      \;\ge\;
+      \frac12\Bigl(
+        1-\frac{I+\log 2}{\log M}
+      \Bigr).
+  \]
+
+\item
+  Multiply this probability by
+  $\Delta_{\mathrm{Err}}=\tfrac12\,\delta\,\kappabar\,T$
+  to bound the expectation:
+  \[
+    \E[\Err]
+      \;\ge\;
+      \Delta_{\mathrm{Err}}\;
+      \Prb[\Err>\Delta_{\mathrm{Err}}]
+      \;=\;
+      \frac{\delta\,\kappabar\,T}{4}\;
+      \Bigl(
+        1-\frac{I+\log 2}{\log M}
+      \Bigr).
+      \qedhere
+  \]
+
+
+\end{proof}
+
+\paragraph{Discussion.}
+Inequality~\eqref{eq:ErrLower} separates the lower bound into two
+factors:
+
+\begin{enumerate}[label=(\roman*)]
+\item the \emph{size factor} $\displaystyle\frac{\delta\,\kappabar\,T}{4}$,
+      which grows linearly with the horizon~$T$ and is large whenever
+      the validator answers many queries ($\kappabar$ moderate) under a
+      tight margin~$\delta$;
+\item the \emph{information gap}
+      $\displaystyle\Bigl(1-\tfrac{I+\log 2}{\log M}\Bigr)$,
+      which is positive as soon as the transcript carries fewer bits
+      than the label space can encode.
+\end{enumerate}
+Together they formalise our narrative: \emph{a low-cost, low-friction
+validator cannot keep cumulative label error small indefinitely as the
+stream length~$T$ grows}, unless it either (a) escalates a non-negligible
+fraction of rounds (making $\kappabar$ small and thus incurring cost) or
+(b) relaxes the margin~$\delta$.  In particular, when $M$ is
+exponentially large and $I$ is bounded by design, $\Err_{\mathrm{bar}}$
+grows linearly with~$T$.
+
+
+
+
 
 \subsection{Toy Storage Bound}
 \label{sec:toy-storage-bound}
