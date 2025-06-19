@@ -86,7 +86,7 @@
   Conjecture 1 (the Courtroom Challenge). 
   For any unbounded open-world text stream, a system that lacks both (i) a persistent precedent store and (ii) a friction-priced validation loop will accumulate unbounded prequential regret.
   We formalise the state machine, cost ledger, and impossibility triangle that make this conjecture testable, and invite the community to break it.
-  A 100-query toy stream illustrates how the ledger is logged\footnote{Baseline script will appear at \url{https://github.com/johnrepsys/courtroom-model-lean} with v2.}; no attempt is made here to optimise the validator.
+  A 100-query toy stream illustrates how the ledger is logged\footnote{Baseline script will appear at \url{https://github.com/johnrepsys/courtroom-model} with v2.}; no attempt is made here to optimise the validator.
   In addition, we present the Courtroom Model, a wrapper architecture that subjects every LLM claim to a perpetual cycle of precedent search, automated semantic checks, and selective escalation to an external judge—human or automated.
   Each new output is validated against a persistent vector memory, while conflicting evidence triggers the re-examination of prior “case law.”
   The challenge stands: thrive in an open world without paying the validation bill—or show why the bill is inescapable.
@@ -146,7 +146,9 @@ Rather than requiring manual review of every idea, the Courtroom Model automatic
            \ Solid arrows: primary query flow.%
            \ Dashed arrows: helper calls and cost logging.%
            \ The cost\,bus aggregates all resource writes into a single ledger.
-           \ On \textsc{DEFER} the round is skipped (no cost, no memory write).}
+           \ On \textsc{DEFER} the round is skipped (no cost, no memory write).
+           \ If C cannot supply an authoritative value—because the fact is genuinely unknown—the 
+           \ query transitions to a terminal UNRESOLVED state; no memory write occurs.}
   \label{fig:courtroom}
 \end{figure}
 
@@ -414,6 +416,13 @@ As defined in Section~\ref{sec:minimal-state-machine}, state
   \(U : (M, q, h, a) \to M'\) adds or merges precedent after a claim is accepted.
   
   \end{itemize}
+
+\paragraph{Provisionality of verdicts.}
+Even the external Judge’s verdicts are provisional: they may be rescinded
+if subsequent audits or new primary filings contradict earlier
+conclusions.  Accordingly, Judge-validated precedents can be re-queued,
+incur additional \(\WriteCost\), and overwrite prior entries via the usual
+supersession mechanism.
 
 \subsection{One--Step Transition}
 \label{sec:transition}
