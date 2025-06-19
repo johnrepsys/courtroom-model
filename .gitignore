@@ -1,0 +1,7 @@
+# Ignore SageMaker / Jupyter noise
+.ipynb_checkpoints/
+.sec_cache/
+.Trash-1000/
+outputs/
+*.jsonl
+__pycache__/
