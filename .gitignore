@@ -5,3 +5,5 @@
 *.bbl
 *.blg
 lost+found/
+# ignore transient ledgers
+ledger_pass*.jsonl
