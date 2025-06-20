@@ -19,10 +19,3 @@ python -m venv venv              # optional virtualenv
 source venv/bin/activate
 pip install -r requirements.txt
 jupyter lab notebooks/courtroom.ipynb
-*(After pasting, press **Enter** once to start a new line.)*
-
----
-
-### **Step 3 – close the file**
-
-```bash
