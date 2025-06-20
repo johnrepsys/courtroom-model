@@ -1,0 +1,7 @@
+boto3>=1.34           # optional – only used if you run the S3 helper block
+matplotlib>=3.8
+numpy>=1.26
+openai>=1.30
+pandas>=2.2
+pytz>=2024.1
+requests>=2.32
