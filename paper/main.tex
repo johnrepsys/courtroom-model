@@ -469,111 +469,129 @@ Prequential regret after budget~$B$:
   T(B) = \min\{\,T : F_T \ge B\,\}.
 \]
 
-\subsection{Information–theoretic lower bound}
-\label{sec:info-bound}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Setup}\label{sec:setup}
+
+\paragraph{Per-round notation.}
+Fix a margin parameter $\delta\in(0,1]$.
+For every run $\omega$ and round $t=1,\dots,T$ set
+\begin{align*}
+  y_t      &:=y_t(\theta)          &&\text{(ground-truth label)},\\
+  h_t      &:=h_t(\omega)          &&\text{(validator’s automatic prediction)},\\
+  \mathrm{Esc}_t&:=\mathbf 1\{\text{round $t$ is escalated}\}.
+\end{align*}
+Define the \emph{leverage rounds}
+\begin{equation}\label{eq:kappaDef}
+  \mathcal L(\omega):=\Bigl\{\,t:\,
+     \mathrm{Esc}_t=0\;\text{and}\;|y_t-h_t|\ge\delta\Bigr\},
+  \qquad
+  \kappa(\omega):=\frac{|\mathcal L(\omega)|}{T}.
+\end{equation}
+The cumulative label error on those rounds is
+\begin{equation}\label{eq:ErrDef}
+  \Err(\omega):=\sum_{t\in\mathcal L(\omega)}
+                \mathbf 1\!\bigl[h_t\neq y_t\bigr].
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Information-theoretic lower bound}\label{sec:info-bound}
 
 \begin{lemma}[Interactive-Fano corollary]\label{lem:ErrLower}
-  Fix a validator $V$ run for $T$ rounds under margin parameter $\delta>0$.
-  Let
-  \[
-    \kappabar
-      :=\mathbb{E}_{\omega}\bigl[\kappa(\omega)\bigr],
-    \qquad
+Let $V$ be any validator run for $T$ rounds.
+With $\kappa(\omega)$ and $\Err(\omega)$ defined in
+\eqref{eq:kappaDef}–\eqref{eq:ErrDef}, write
+\[
+  \bar\kappa:=\E[\kappa],
+  \qquad
+  \Err_{\mathrm{bar}}:=\E[\Err].
+\]
+Assume the transcript $X$ obeys the information budget
+\(I(\theta;X)\le I\) under the \emph{uniform} prior on an $M$-point
+label set ($M\ge2$).  Then
+\begin{equation}\label{eq:ErrLower-new}
+  \boxed{\;
     \Err_{\mathrm{bar}}
-      :=\mathbb{E}_{\omega}\bigl[\Err(\omega)\bigr].
-  \]
-  Suppose the transcript $X$ satisfies
-  $I(\theta;X)\le I$
-  under a uniform prior on an $M$-point label set ($M\ge 2$).
-  Then
-  \begin{equation}\label{eq:ErrLower}   % <-- new label
-    \boxed{%
-      \Err_{\mathrm{bar}}
-      \;\;\ge\;\;
-      \frac{\delta\,\kappabar\,T}{4}\;
-      \Bigl(
-        1-\dfrac{I+\log 2}{\log M}
-      \Bigr)
-    }.
-  \end{equation}
+      \;\ge\;
+      \frac{\delta\,T}{2}\;
+      \Bigl(\bar\kappa+\gamma-1\Bigr),
+      \quad
+      \gamma:=\frac12\Bigl(1-\tfrac{I+\log 2}{\log M}\Bigr)
+  }.
+\end{equation}
+In particular, the bound is positive—and linear in $T$—whenever the
+validator escalates fewer than a $(1-\gamma)$-fraction of rounds
+\((\bar\kappa>1-\gamma)\).
 \end{lemma}
 
 \begin{proof}[Sketch]
-
-\textbf{Classical identification bound.}
-Choosing the 0–1 loss $L(M,X)=\mathbf 1_{\{\hat M(X)\neq M\}}$
-and threshold $\Delta=\tfrac12$
-in Proposition 3 of \citet{chen2024interfano} yields
+Step 1 (separation).
+For any $m\neq m'$ and transcript $x$ at most one of
+$y_t(m),y_t(m')$ can equal $h_t$ on a leverage round, hence
 \[
-  P_{\mathrm{id}}
-  \;\ge\;
-  \tfrac12\Bigl(1-\tfrac{I+\log 2}{\log M}\Bigr).
+  \Err_m(x)+\Err_{m'}(x)\;\ge\;\delta\,\kappa(\omega)\,T.
+  \tag{$\ast$}
 \]
 
-\medskip
 \noindent
-To obtain a bound on label error we apply the same proposition with 
-threshold $\Delta=\tfrac12$ to the indicator
+Step 2 (interactive Fano). 
+Set the path-dependent loss
+\(L^\star(m,x):=\mathbf 1\!\bigl[\Err_m(x)>
+   \tfrac12\delta\kappa(\omega)T\bigr]\)
+and $\Delta=\tfrac12$ in Proposition 3 of
+\citet{chen2024interfano}.
+Inequality ($\ast$) fulfils the separation requirement
+\citep[Eq.\,(5)]{chen2024interfano}; thus
 \[
-  L^\star \;=\; \mathbf 1_{\{\Err>\Delta_{\mathrm{Err}}\}},
+  \Pr\!\bigl[\Err(\theta,X)>
+     \tfrac12\delta\kappa(\omega)T\bigr]
+  \;\ge\;\gamma.
+  \tag{$\dagger$}
+\]
+
+\medskip\noindent
+Step 3 (tail $\Rightarrow$ expectation, expanded).
+With
+\[
+  \mathcal E:=\Bigl\{\Err>\tfrac12\delta\,\kappa T\Bigr\},
   \qquad
-  \Delta_{\mathrm{Err}} := \tfrac12\,\delta\,\kappabar\,T.
+  \kappa_{\!*}:=\E[\kappa\mid\mathcal E],
+\]
+apply the basic fact $\E[Z]\ge a\,\Pr(Z>a)$ to
+\(Z=\Err\) and \(a=\tfrac12\delta\,\kappa T\):
+\[
+\begin{aligned}
+  \Err_{\mathrm{bar}}
+    &=\E[\Err] \\[2pt]
+    &\ge
+      \E\!\Bigl[
+        \tfrac12\delta\,\kappa T\;
+        \mathbf 1_{\{\Err>\tfrac12\delta\,\kappa T\}}
+      \Bigr] \\[6pt]
+    &=\frac{\delta T}{2}\,
+      \E\!\bigl[\kappa\,\mathbf 1_{\mathcal E}\bigr] \\[6pt]
+    &=\frac{\delta T}{2}\,
+      \kappa_{\!*}\;
+      \Pr(\mathcal E).
+\end{aligned}
 \]
 
 
-
-\item
-  Because $\log \!\bigl(1/\rho_{1/2}\bigr)\ge\log M$ for the uniform
-  prior, the proposition yields the lower bound
-  \[
-    \Prb\!\bigl[\Err>\Delta_{\mathrm{Err}}\bigr]
-      \;\ge\;
-      \frac12\Bigl(
-        1-\frac{I+\log 2}{\log M}
-      \Bigr).
-  \]
-
-\item
-  Multiply this probability by
-  $\Delta_{\mathrm{Err}}=\tfrac12\,\delta\,\kappabar\,T$
-  to bound the expectation:
-  \[
-    \E[\Err]
-      \;\ge\;
-      \Delta_{\mathrm{Err}}\;
-      \Prb[\Err>\Delta_{\mathrm{Err}}]
-      \;=\;
-      \frac{\delta\,\kappabar\,T}{4}\;
-      \Bigl(
-        1-\frac{I+\log 2}{\log M}
-      \Bigr).
-      \qedhere
-  \]
 
 
 \end{proof}
 
 \paragraph{Discussion.}
-Inequality~\eqref{eq:ErrLower} separates the lower bound into two
-factors:
+Write the bound as  
+\(\Err_{\mathrm{bar}}\!\ge(\delta T/2)\,\max\{0,\bar\kappa+\gamma-1\}\).
+Because \(\gamma>0\) whenever the transcript leaks
+fewer than \(\log M-\log2\) bits, any validator that
+handles a \emph{non-trivial} share of rounds automatically
+\((\bar\kappa>1-\gamma)\)
+faces a \emph{linear-in-$T$} unavoidable error floor.
+Escalating a larger fraction of rounds (making $\bar\kappa$ smaller) or
+relaxing the margin $\delta$ are the only ways to suppress this growth,
+precisely matching the “friction buys accuracy’’ narrative.
 
-\begin{enumerate}[label=(\roman*)]
-\item the \emph{size factor} $\displaystyle\frac{\delta\,\kappabar\,T}{4}$,
-      which grows linearly with the horizon~$T$ and is large whenever
-      the validator answers many queries ($\kappabar$ moderate) under a
-      tight margin~$\delta$;
-\item the \emph{information gap}
-      $\displaystyle\Bigl(1-\tfrac{I+\log 2}{\log M}\Bigr)$,
-      which is positive as soon as the transcript carries fewer bits
-      than the label space can encode.
-\end{enumerate}
-Together they formalise our narrative: \emph{a low-cost, low-friction
-validator cannot keep cumulative label error small indefinitely as the
-stream length~$T$ grows}, unless it either (a) escalates a non-negligible
-fraction of rounds (making $\kappabar$ small and thus incurring cost) or
-(b) relaxes the margin~$\delta$.  In particular, when $M$ is
-exponentially large and $I$ is bounded by design, $\Err_{\mathrm{bar}}$
-grows linearly with~$T$.
 
 
 
