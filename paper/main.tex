@@ -469,7 +469,6 @@ Prequential regret after budget~$B$:
   T(B) = \min\{\,T : F_T \ge B\,\}.
 \]
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Setup}\label{sec:setup}
 
 \paragraph{Per-round notation.}
@@ -478,7 +477,7 @@ For every run $\omega$ and round $t=1,\dots,T$ set
 \begin{align*}
   y_t      &:=y_t(\theta)          &&\text{(ground-truth label)},\\
   h_t      &:=h_t(\omega)          &&\text{(validator’s automatic prediction)},\\
-  \mathrm{Esc}_t&:=\mathbf 1\{\text{round $t$ is escalated}\}.
+  \mathrm{Esc}_t&:=\mathbf 1_{\{\text{round $t$ is escalated}\}.}
 \end{align*}
 Define the \emph{leverage rounds}
 \begin{equation}\label{eq:kappaDef}
@@ -490,10 +489,16 @@ Define the \emph{leverage rounds}
 The cumulative label error on those rounds is
 \begin{equation}\label{eq:ErrDef}
   \Err(\omega):=\sum_{t\in\mathcal L(\omega)}
-                \mathbf 1\!\bigl[h_t\neq y_t\bigr].
+                \mathbf 1_{\!\bigl[h_t\neq y_t\bigr]}.
 \end{equation}
+Define the global means:
+\[
+  \bar\kappa:=\E[\kappa],
+  \qquad
+  \Err_{\mathrm{bar}}:=\E[\Err].
+\]
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsection{Information-theoretic lower bound}\label{sec:info-bound}
 
 \begin{lemma}[Interactive-Fano corollary]\label{lem:ErrLower}
@@ -501,8 +506,6 @@ Let $V$ be any validator run for $T$ rounds.
 With $\kappa(\omega)$ and $\Err(\omega)$ defined in
 \eqref{eq:kappaDef}–\eqref{eq:ErrDef}, write
 \[
-  \bar\kappa:=\E[\kappa],
-  \qquad
   \Err_{\mathrm{bar}}:=\E[\Err].
 \]
 Assume the transcript $X$ obeys the information budget
@@ -510,20 +513,19 @@ Assume the transcript $X$ obeys the information budget
 label set ($M\ge2$).  Then
 \begin{equation}\label{eq:ErrLower-new}
   \boxed{\;
-    \Err_{\mathrm{bar}}
-      \;\ge\;
-      \frac{\delta\,T}{2}\;
-      \Bigl(\bar\kappa+\gamma-1\Bigr),
-      \quad
-      \gamma:=\frac12\Bigl(1-\tfrac{I+\log 2}{\log M}\Bigr)
-  }.
+     \Err_{\mathrm{bar}}
+       \;\ge\;
+       \frac{\delta\,T}{4}\;
+       \kappa_{\!*}\;
+       \Bigl(1-\tfrac{I+\log 2}{\log M}\Bigr),
+     \quad
+     \kappa_{\!*}:=\E[\kappa\mid\Err>\tfrac12\delta\kappa T]
+  }
+  \, .
 \end{equation}
-In particular, the bound is positive—and linear in $T$—whenever the
-validator escalates fewer than a $(1-\gamma)$-fraction of rounds
-\((\bar\kappa>1-\gamma)\).
 \end{lemma}
 
-\begin{proof}[Sketch]
+\begin{proof}[Proof sketch]
 Step 1 (separation).
 For any $m\neq m'$ and transcript $x$ at most one of
 $y_t(m),y_t(m')$ can equal $h_t$ on a leverage round, hence
@@ -535,18 +537,23 @@ $y_t(m),y_t(m')$ can equal $h_t$ on a leverage round, hence
 \noindent
 Step 2 (interactive Fano). 
 Set the path-dependent loss
-\(L^\star(m,x):=\mathbf 1\!\bigl[\Err_m(x)>
-   \tfrac12\delta\kappa(\omega)T\bigr]\)
-and $\Delta=\tfrac12$ in Proposition 3 of
-\citet{chen2024interfano}.
-Inequality ($\ast$) fulfils the separation requirement
-\citep[Eq.\,(5)]{chen2024interfano}; thus
 \[
-  \Pr\!\bigl[\Err(\theta,X)>
-     \tfrac12\delta\kappa(\omega)T\bigr]
-  \;\ge\;\gamma.
-  \tag{$\dagger$}
+  L^\star(m,x)
+    := \mathbf{1}_{\{\Err_m(x)>\tfrac12\,\delta\,\kappa(\omega)\,T\}}
 \]
+and $\Delta=\tfrac12$ in Proposition 3 of
+\citep{chen2024interfano}.
+Inequality ($\ast$) fulfils the separation requirement
+\citep[Eq.\,(5)]{chen2024interfano}.
+Define
+\[
+  \gamma:=\frac12\Bigl(1-\tfrac{I+\log 2}{\log M}\Bigr)\in(0,\tfrac12].
+\]
+Then
+\begin{equation}\tag{$\dagger$}
+  \Pr\!\bigl[\Err(\theta,X)>\tfrac12\delta\,\kappa(\omega)T\bigr]
+  \;\ge\;\gamma .
+\end{equation}
 
 \medskip\noindent
 Step 3 (tail $\Rightarrow$ expectation, expanded).
@@ -556,8 +563,7 @@ With
   \qquad
   \kappa_{\!*}:=\E[\kappa\mid\mathcal E],
 \]
-apply the basic fact $\E[Z]\ge a\,\Pr(Z>a)$ to
-\(Z=\Err\) and \(a=\tfrac12\delta\,\kappa T\):
+we have:
 \[
 \begin{aligned}
   \Err_{\mathrm{bar}}
@@ -565,29 +571,43 @@ apply the basic fact $\E[Z]\ge a\,\Pr(Z>a)$ to
     &\ge
       \E\!\Bigl[
         \tfrac12\delta\,\kappa T\;
-        \mathbf 1_{\{\Err>\tfrac12\delta\,\kappa T\}}
-      \Bigr] \\[6pt]
+        \mathbf{1}_{\{\Err>\tfrac12\delta\,\kappa T\}}
+      \Bigr] \\[2pt]
     &=\frac{\delta T}{2}\,
-      \E\!\bigl[\kappa\,\mathbf 1_{\mathcal E}\bigr] \\[6pt]
+      \E\!\bigl[\kappa\,\mathbf{1}_{\mathcal E}\bigr] \\[2pt]
     &=\frac{\delta T}{2}\,
       \kappa_{\!*}\;
-      \Pr(\mathcal E).
+      \Pr(\mathcal E) \\[2pt]
+    &\ge \frac{\delta T}{4}\,\kappa_{\!*}\, \Bigl(1-\tfrac{I+\log 2}{\log M}\Bigr)\;.
 \end{aligned}
 \]
 
-
-
-
 \end{proof}
+
+\paragraph{Remark (relating $\kappa_{\!*}$ to $\bar\kappa$).}
+Write $p_{\mathrm{bad}}:=\Pr(\mathcal E)$ with 
+$\mathcal E=\{\Err>\tfrac12\delta\kappa T\}$.  
+Since $0\!\le\!\kappa\!\le\!1$ one has
+$\bar\kappa
+   =p_{\mathrm{bad}}\kappa_{\!*}
+    +(1-p_{\mathrm{bad}})\kappa^{\complement}_{\!*}
+   \le p_{\mathrm{bad}}\kappa_{\!*}+1-p_{\mathrm{bad}}$.
+Hence  
+$\kappa_{\!*}\ge\bar\kappa+p_{\mathrm{bad}}-1
+            \ge\bar\kappa+\gamma-1$,
+where $\gamma$ is the Fano factor.  Therefore
+$\kappa_{\!*}\ge\max\{0,\bar\kappa+\gamma-1\}$ as used in the following
+discussion.
+
 
 \paragraph{Discussion.}
 Write the bound as  
-\(\Err_{\mathrm{bar}}\!\ge(\delta T/2)\,\max\{0,\bar\kappa+\gamma-1\}\).
+\(\Err_{\mathrm{bar}}\!\ge(\tfrac12\delta T)\,\max\{0,\bar\kappa+\gamma-1\}\).
 Because \(\gamma>0\) whenever the transcript leaks
 fewer than \(\log M-\log2\) bits, any validator that
-handles a \emph{non-trivial} share of rounds automatically
+handles a non-trivial share of rounds automatically
 \((\bar\kappa>1-\gamma)\)
-faces a \emph{linear-in-$T$} unavoidable error floor.
+faces a linear-in-$T$ unavoidable error floor.
 Escalating a larger fraction of rounds (making $\bar\kappa$ smaller) or
 relaxing the margin $\delta$ are the only ways to suppress this growth,
 precisely matching the “friction buys accuracy’’ narrative.
