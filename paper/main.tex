@@ -103,10 +103,17 @@ precedent store and—when automatic checks falter—escalated under a
 tunable \textit{validation\_preference} dial (formal spec in
 Section~\ref{sec:framework}).  The design rewires known parts
 (generator, retrieval, human oversight) but prices each byte, cycle,
-and minute of validation.  Retrieval-augmented generation \citep{lewis2020rag,
-fan2024ragsurvey}—and later iterative variants—motivate the precedent
-store; human-alignment work such as Constitutional AI
-\citep{bai2022constitutional} motivates the escalation path.
+and minute of validation.  Retrieval-augmented generation (RAG) provides the raw materials
+\citep{lewis2020rag,fan2024ragsurvey}.  
+Recent advances—Self-RAG's self-verification \citep{asai2023selfrag}, 
+Iter-RetGen's retrieval-generation synergy \citep{shao2023iterretgen}, 
+MemoRAG's compressed long-term memory \citep{qian2024memorag}, and 
+Chain-of-Verification RAG's answer-driven re-checks \citep{he2024covrag}—motivate 
+our persistent precedent store but still validate only per answer.  
+Human-alignment work such as Constitutional AI 
+\citep{bai2022constitutional} motivates the escalation branch.  
+Whereas MemoRAG retains past evidence without auditing it, our buffer makes
+each accepted verdict both permanent and costly.
 Unlike debate frameworks \citep{chen2024reconcile,madaan2023selfrefine} or formal
 provers \citep{wang2025malot}, we emphasise continuous cross-session
 verification: knowledge is never final, only current.
@@ -140,7 +147,7 @@ Rather than requiring manual review of every idea, the Courtroom Model automatic
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.9\linewidth]{courtroom}%
+  \includegraphics[width=0.9\linewidth]{figs/courtroom}%
       % no .pdf extension needed if LaTeX finds courtroom.pdf
   \caption{One step of the Courtroom loop.%
            \ Solid arrows: primary query flow.%
@@ -168,7 +175,7 @@ Sec.~\ref{sec:framework}.
 \item $\kappa_i c_{i,t}$ – \textbf{Cost-ledger term}: each resource $i$
 (bytes written, CPU‐seconds, human minutes …) is logged as a
 quantity $c_{i,t}$ weighted by its unit cost $\kappa_i$.
-$\sum_i\kappa_i c_{i,t}$ is the \emph{friction} paid at step $t$.
+$\sum_i\kappa_i c_{i,t}$ is the friction paid at step $t$.
 \item $\tau$ – \textbf{Retention threshold} that controls whether a
 new descriptor vector is written to the precedent store:  
 \vspace{-2pt}
@@ -226,7 +233,7 @@ escalated—no domain-specific rule required.
 
 \paragraph{3. External judge $C$}
 A human analyst consults the 2018 10-K and confirms that
-\texttt{Debt Securities} is a \emph{new} line-item, not yet present in
+\texttt{Debt Securities} is a new line-item, not yet present in
 the taxonomy.  The analyst extracts the FY-2018 amount  
 \[
 a_t = \text{``Bucket: \texttt{"Debt Securities"}; FY-2018 amount: \$14.406 B.''}
@@ -296,8 +303,7 @@ This process embodies the Courtroom Model: association meets structure, refined 
 In practice, the model could leverage dynamic prioritization algorithms to determine which associations or precedents are most in need of re-evaluation. This approach would enable the model to scale effectively to large datasets, focusing scrutiny on the most impactful claims and reducing computational load while maintaining rigorous validation. While this is not yet implemented, it represents a key area for future development, enhancing the system's efficiency and scalability.
 
 \section{Are LLMs a Dead End? Converging Error}
-Critics such as LeCun \citep{LeCun2023SFI}\,%
-(see also Appendix~\ref{fig:lecun-slide}) argue that
+Critics such as LeCun \citep{LeCun2023SFI}\, argue that
 purely autoregressive LLMs will always accumulate error:
 if the per-token slip rate is $e$, the probability an
 $n$-token answer is entirely correct decays as
@@ -334,7 +340,7 @@ Both AlphaGo and Lean + LLM workflows demonstrate that progress often arises fro
 \end{enumerate}
 \begin{tcolorbox}[colback=gray!5,colframe=gray!40,title=Why a concept note?]
   The field currently optimises ever-larger generators without a matching theory of
-  validation.  We publish this abstraction \emph{before} a prototype for two reasons:
+  validation.  We publish this abstraction before a prototype for two reasons:
   (i)~to surface hidden degrees of freedom that can silently invalidate benchmarks,
   and (ii)~to recruit empirical collaborators—open-sourcing code is planned for v2.
 \end{tcolorbox}
@@ -412,10 +418,17 @@ As defined in Section~\ref{sec:minimal-state-machine}, state
   no escalation cost is paid, and the generator proceeds to the next
   query.
   
-  \item \textbf{Memory update rule.}  
-  \(U : (M, q, h, a) \to M'\) adds or merges precedent after a claim is accepted.
-  
+  \item \textbf{Memory update rule.}
+  \(U : (M, q, h, a) \to M'\) records (or merges) a precedent whenever a claim is
+  accepted.  Whereas vanilla RAG treats retrieved passages as a transient
+  context window \citep{lewis2020rag}—and even iterative or self-reflective
+  extensions still validate only the current answer
+  \citep{shao2023iterretgen,asai2023selfrag}—the Courtroom store is
+  persistent: it survives across sessions and every entry can later be
+  re-audited for contradiction or obsolescence.
+
   \end{itemize}
+
 
 \paragraph{Provisionality of verdicts.}
 Even the external Judge’s verdicts are provisional: they may be rescinded
@@ -446,7 +459,7 @@ Given $S_t=(q_t,h_t,a_t,M_t)$:
 \label{sec:cost-ledger}
 
 Let $c_{i,t}$ be the measured consumption of resource $i$ at step~$t$
-(bytes written, FAISS rebuild time, human minutes, \emph{etc.}).
+(bytes written, FAISS rebuild time, human minutes, etc.).
 Fix weights $\kappa_i$ once per benchmark—should the conjecture survive first contact.  The per-write cost is
 \[
   \WriteCost_t \;=\; \sum_i \kappa_i\,c_{i,t}.
@@ -470,6 +483,15 @@ Prequential regret after budget~$B$:
 \]
 
 \subsection{Setup}\label{sec:setup}
+
+The definitions in \S\ref{sec:framework} merely fix notation
+(\(T,\kappa,\Err,\theta,X\)); they do not restrict the validator's
+internal design.  We now state Lemma~\ref{lem:ErrLower}, an
+information-theoretic lower bound that applies to any interactive
+validator whose transcript carries at most \(I\) bits of information
+about the hidden label.  The inequality therefore functions as
+motivation for the Courtroom architecture rather than a theorem
+that assumes it.
 
 \paragraph{Per-round notation.}
 Fix a margin parameter $\delta\in(0,1]$.
@@ -509,7 +531,7 @@ With $\kappa(\omega)$ and $\Err(\omega)$ defined in
   \Err_{\mathrm{bar}}:=\E[\Err].
 \]
 Assume the transcript $X$ obeys the information budget
-\(I(\theta;X)\le I\) under the \emph{uniform} prior on an $M$-point
+\(I(\theta;X)\le I\) under the uniform prior on an $M$-point
 label set ($M\ge2$).  Then
 \begin{equation}\label{eq:ErrLower-new}
   \boxed{\;
@@ -695,7 +717,7 @@ Evolving memory store & If the FAISS/Parquet index grows during test, the model 
 }
 \end{center}
 
-Unless these knobs are frozen, the framework is empirically \emph{unfalsifiable}.
+Unless these knobs are frozen, the framework is empirically unfalsifiable.
 
 %--------------------------------------------------------
 \subsection{\quad Benchmark Protocol}
@@ -703,7 +725,7 @@ Unless these knobs are frozen, the framework is empirically \emph{unfalsifiable}
 %--------------------------------------------------------
 
 Because precedent management is the model's hallmark, a static snapshot is not enough; a
-\emph{prequential} (streaming) phase measures learning velocity under a cost cap.
+prequential (streaming) phase measures learning velocity under a cost cap.
 
 \begin{center}
 \resizebox{\textwidth}{!}{%
@@ -729,7 +751,7 @@ Area under curve: error vs.\ cumulative friction cost \\ \hline
 \WriteCost_t \;=\; \sum_i \kappa_i\,c_{i,t},\qquad
 \text{unused terms may take }\kappa_i=0.
 \]
-\item \textbf{Delayed grading:} batch \(k\) is scored \emph{before} the system sees batch \(k{+}1\).
+\item \textbf{Delayed grading:} batch \(k\) is scored before the system sees batch \(k{+}1\).
 \item \textbf{Full disclosure:} publish the write log, cost ledger and final memory snapshot so any team can replay the run.
 \end{enumerate}
 
@@ -748,7 +770,7 @@ file a new precedent, when to reuse, and how fast error falls given a finite fri
 Core ambition & Single monolith handles everything & NN $+$ logic engine & LLM generates; external friction validates \\ \hline
 Strength & No human loop & Explainability, deductive power & Halts hallucination without retraining \\ \hline
 Weakness & Brittle world-model, hallucination & Heavy logic engineering & Testability collapses if knobs are free \\ \hline
-Ideal use case & Simulated-world agents & Formal maths, compliance & High-risk domains where \emph{trust} outranks latency \\ \hline
+Ideal use case & Simulated-world agents & Formal maths, compliance & High-risk domains where trust outranks latency \\ \hline
 \end{tabular}
 }
 \end{center}
@@ -782,30 +804,17 @@ Even under a frozen policy:
 
 \item \emph{"But without numbers you cannot prove progress."} The claim is architectural, not empirical: \textsc{Claim A}: persistent precedent + adaptive friction is necessary for bounded-error knowledge bases in an open world; \textsc{Claim B}: current “bigger-is-better” pipelines violate \textsc{Claim A}. Both claims are falsifiable: show a practical system that achieves low hallucination without any external precedent store or escalation dial, and the Courtroom premise collapses. Until such a counter-example exists, producing another decimal improvement on GSM8K is beside the point.
 
-\item \emph{“Isn't this just a dressed-up retrieval-augmented loop?”} Retrieval-augmented generation (RAG) treats the store as a stateless evidence buffer flushed between prompts. The Courtroom store is jurisprudential—each write becomes precedent and must pay rent (friction) forever. That difference, though conceptually small, flips the optimisation target from “accuracy at \(k = 1\)” to “prequential regret under a cost budget.” No existing RAG benchmark measures that regime.
+\item \emph{“Isn't this just a dressed-up retrieval-augmented loop?”} Retrieval-augmented generation (RAG) treats the store as a context-window scoped evidence buffer flushed between prompts. The Courtroom store is jurisprudential—each write becomes precedent and must pay rent (friction) forever. That difference, though conceptually small, flips the optimisation target from “accuracy at \(k = 1\)” to “prequential regret under a cost budget.” No existing RAG benchmark measures that regime.
 
 \item \emph{“Validator still needs humans—won't scale.”}  Baseline validator uses humans today; our conjecture invites automated judges that meet the same friction budget. Section~\ref{app:benchmark} logs $\kappa_{\text{human}}>0$ until automated checkers emerge.
 
 \item \emph{“Unfalsifiable if the dial is tuned post-hoc.”}
       The evaluation protocol (Section~\ref{app:benchmark}) freezes the validation policy
-      \emph{before} scoring and logs every write, so any attempt to
+      before scoring and logs every write, so any attempt to
       retune after seeing the test set is detectable.
 
 \item \emph{“Memory blow-up defeats latency budgets.”}  Section~\ref{sec:performance-measures} already prices FAISS rebuild time.  Setting $\kappa_{\text{rebuild}}$ higher turns slow writes into economic friction that discourages runaway growth.
 \end{itemize}
-
-\section*{Appendix B  \quad  Reference Slide}
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=.9\linewidth]{figs/fig_lecun_ar_llm_slide.jpeg}
-  \caption{Slide from Yann LeCun's talk *“Unpopular Opinion about
-           AR-LLMs”* (Santa Fe Institute, Apr 2023) \citep{LeCun2023SFI}.
-           The geometric expression
-           $P_{\text{correct}} = (1-e)^{n}$ motivates
-           our Conjecture~\ref{conjecture1} on error accumulation in purely autoregressive
-           LLMs.}
-  \label{fig:lecun-slide}
-\end{figure}
 
 \section*{Acknowledgments}
 
