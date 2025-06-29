@@ -1,6 +1,8 @@
 # Courtroom Model
 
-This repository accompanies the paper **“The Courtroom Challenge — A Conjecture on the Unavoidable Cost of LLM Verification”** (2025).
+This repository accompanies the paper  
+**“The Courtroom Challenge — A Conjecture on the Unavoidable Cost of LLM Verification”**  
+[local `paper/main.pdf`](paper/main.pdf)) &nbsp;© 2025.
 
 | Folder / file | Purpose |
 |---------------|---------|
