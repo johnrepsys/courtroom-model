@@ -105,7 +105,7 @@ Section~\ref{sec:framework}).  The design rewires known parts
 (generator, retrieval, human oversight) but prices each byte, cycle,
 and minute of validation.  Retrieval-augmented generation (RAG) provides the raw materials
 \citep{lewis2020rag,fan2024ragsurvey}.  
-Recent advances—Self-RAG's self-verification \citep{asai2023selfrag}, 
+Recent advances—Self-RAG's self-verification \citep{asai2024selfrag}, 
 Iter-RetGen's retrieval-generation synergy \citep{shao2023iterretgen}, 
 MemoRAG's compressed long-term memory \citep{qian2024memorag}, and 
 Chain-of-Verification RAG's answer-driven re-checks \citep{he2024covrag}—motivate 
@@ -423,7 +423,7 @@ As defined in Section~\ref{sec:minimal-state-machine}, state
   accepted.  Whereas vanilla RAG treats retrieved passages as a transient
   context window \citep{lewis2020rag}—and even iterative or self-reflective
   extensions still validate only the current answer
-  \citep{shao2023iterretgen,asai2023selfrag}—the Courtroom store is
+  \citep{shao2023iterretgen,asai2024selfrag}—the Courtroom store is
   persistent: it survives across sessions and every entry can later be
   re-audited for contradiction or obsolescence.
 
@@ -821,7 +821,7 @@ Even under a frozen policy:
 Large-language-model assistance: Some portions of the manuscript—
 in particular early wording suggestions, reference formatting, and a toy-demo
 code sketch—were drafted or refined with the aid of OpenAI ChatGPT
-(model o3, May 2025). All ideas, experiments, and final text were reviewed,
+(model o3, June 2025). All ideas, experiments, and final text were reviewed,
 verified, and are the sole responsibility of the author.
 
 % ---------- references ----------
