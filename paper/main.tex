@@ -96,6 +96,8 @@
 \section{Introduction}
 \label{sec:intro}
 Large Language Models (LLMs) have demonstrated impressive capabilities in generating context-rich outputs by associating patterns from large corpora. However, this power comes with a critical limitation: LLMs often produce plausible-sounding but factually incorrect conclusions, a phenomenon known as hallucination \citep{marcus2020nextdecade,shinn2023reflexion}. Without structured verification, these errors risk being perpetuated and even amplified over time, undermining trust in LLM-generated knowledge. Addressing this issue requires a system that not only generates associations but rigorously validates and refines them.
+Throughout this paper we use the term
+\emph{Courtroom} metaphorically: it denotes an epistemic due-process layer that challenges and verifies LLM outputs, not a system for practicing law or adjudicating legal disputes.
 
 To address these shortcomings we pose the \textit{Courtroom Challenge}: a
 hybrid state machine in which every LLM claim is tested against a persistent
