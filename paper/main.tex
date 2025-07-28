@@ -1,5 +1,5 @@
 % =========================================================
-% main.tex  –  arXiv-ready article template (CS categories)
+% main.tex  -  arXiv-ready article template (CS categories)
 % =========================================================
 \documentclass[11pt]{article}
 
@@ -13,7 +13,8 @@
 \usepackage{lmodern}       % Latin Modern = vector version of Computer Modern
 
 % ---------- math & symbols ----------
-\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\newtheorem*{remark}{Remark}
 
 % ---------- graphics ----------
 \usepackage{graphicx}      % \includegraphics
@@ -33,7 +34,7 @@
 \newcommand{\E}{\mathbb{E}}
 
 % ---------- bibliography ----------
-% Author–year (ACL-like)
+% Author-year (ACL-like)
 \usepackage[
   backend=biber,
   style=authoryear,
@@ -81,16 +82,10 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-  Large language models hallucinate; ad-hoc patches conceal the true cost of verification. 
-  We therefore pose a falsifiable ultimatum: either automate validation, prove it unnecessary, or pay the explicit human-in-the-loop cost.  
-  Conjecture 1 (the Courtroom Challenge). 
-  For any unbounded open-world text stream, a system that lacks both (i) a persistent precedent store and (ii) a friction-priced validation loop will accumulate unbounded prequential regret.
-  We formalise the state machine, cost ledger, and impossibility triangle that make this conjecture testable, and invite the community to break it.
-  A 100-query toy stream illustrates how the ledger is logged\footnote{Baseline script is shown at \url{https://github.com/johnrepsys/courtroom-model}.}; no attempt is made here to optimise the validator.
-  In addition, we present the Courtroom Model, a wrapper architecture that subjects every LLM claim to a perpetual cycle of precedent search, automated semantic checks, and selective escalation to an external judge—human or automated.
-  Each new output is validated against a persistent vector memory, while conflicting evidence triggers the re-examination of prior “case law.”
-  The challenge stands: thrive in an open world without paying the validation bill—or show why the bill is inescapable.
+Large-scale generative models hallucinate, and ad hoc patches hide the true cost of verification. We pose a falsifiable ultimatum: automate validation, prove it unnecessary, or pay the explicit human-in-the-loop bill. We conjecture that for any unbounded open-world data stream with Shannon entropy rate $h>0$, a system that lacks both a persistent precedent store and a friction-priced validation loop will accumulate unbounded prequential regret. To test this “validation trilemma” we formalise a state machine, a cost ledger, and an impossibility triangle, then invite the community to break it. A 100-query toy stream illustrates how the ledger is logged; optimising the validator is left to future work. We also introduce the Courtroom Model, a wrapper that subjects every claim—textual, visual, or otherwise—to precedent search, automated semantic checks, and selective escalation to an external judge. Each output is checked against persistent vector memory, and conflicting evidence reopens prior “case law.” The challenge stands: thrive without paying the validation bill—or show why the bill is inescapable.
 \end{abstract}
+
+\footnotetext[1]{Baseline script and toy data: \url{https://github.com/johnrepsys/courtroom-model}}
 
 
 \section{Introduction}
@@ -167,18 +162,18 @@ Rather than requiring manual review of every idea, the Courtroom Model automatic
   top=4pt, bottom=4pt, title=Notation snapshot]
 \small
 \begin{itemize}[leftmargin=*]
-\item $G$ – \textbf{Generator}: LLM (+ optional helper calls)
+\item $G$ - \textbf{Generator}: LLM (+ optional helper calls)
 that proposes a hypothesis $h_t$ for query $q_t$.
-\item $V_{\theta}$ – \textbf{Validator} with
-\emph{validation–preference dial} $\theta\!\in[0,1]$  
+\item $V_{\theta}$ - \textbf{Validator} with
+\emph{validation-preference dial} $\theta\!\in[0,1]$  
 ($0 =\,$speed‐first, $1 =\,$accuracy‐first).  
 The dial is fixed during any evaluation run; see
 Sec.~\ref{sec:framework}.
-\item $\kappa_i c_{i,t}$ – \textbf{Cost-ledger term}: each resource $i$
+\item $\kappa_i c_{i,t}$ - \textbf{Cost-ledger term}: each resource $i$
 (bytes written, CPU‐seconds, human minutes …) is logged as a
 quantity $c_{i,t}$ weighted by its unit cost $\kappa_i$.
 $\sum_i\kappa_i c_{i,t}$ is the friction paid at step $t$.
-\item $\tau$ – \textbf{Retention threshold} that controls whether a
+\item $\tau$ - \textbf{Retention threshold} that controls whether a
 new descriptor vector is written to the precedent store:  
 \vspace{-2pt}
 \[
@@ -270,8 +265,8 @@ The precedent store need not—indeed, should not—memorise every numeric
 fact. A single \emph{retention knob} (\(\tau\)) decides whether a freshly
 extracted descriptor vector is written back or simply reuses its nearest
 neighbour. Let \(S(x,y)\) be any similarity score where “larger means
-closer’’ (or equivalently a distance \(D(x,y)\) where “smaller means
-closer’’). The generic rule is
+closer” (or equivalently a distance \(D(x,y)\) where “smaller means
+closer”). The generic rule is
 
 \[
 \text{write\_new} =
@@ -285,8 +280,8 @@ Cosine and L$_2$ are special cases, but a system designer is free to
 plug in any monotone metric—e.g.\ Mahalanobis distance, dot-product in a
 learned embedding space, or even a hybrid score that blends semantic and
 numeric keys—so long as the inequality is flipped to match the
-metric's notion of proximity. Section~\ref{sec:sparse-memory-bound} analyses the cost/error trade-off
-under the distance form (Lemma~\ref{lemma}), and Appendix~\ref{sec:knobs} lists this dial
+metric's notion of proximity. Section~\ref{sec:sparse-memory-bound-tightness} analyses the cost/error trade-off
+under the distance form, and Appendix~\ref{sec:knobs} lists this dial
 among the falsifiability-critical degrees of freedom. Selecting which descriptor 
 fields to embed is itself tunable; Section~\ref{sec:open-questions} (Q\ref{open-question-schema}) sketches how the Courtroom loop 
 could learn or prune schema columns over time.
@@ -322,7 +317,7 @@ Several approaches have attempted to improve LLM reasoning through collaboration
 
 \section{Architectural Analogues}
 \label{sec:analogues}
-Structured exploration, exemplified by AlphaGo's policy–value search \citep{silver2016alphago} and more recently by Tree-of-Thoughts planning \citep{yao2023tree}, offers a compelling model for integrating creativity with systematic validation. In AlphaGo, a policy network generates moves, a value network evaluates outcomes, and self-play iteratively refines strategy. The Courtroom Model generalizes this principle to open-ended domains, applying continuous validation not only internally but also against a persistent external memory and, when needed, human oversight. This convergence supports the idea that the Courtroom Model is not prescriptive, but descriptive — a lens for recognizing effective reasoning architectures wherever they emerge. It offers a retrospective framework to describe such structures — and perhaps guide the design of future systems that balance creativity with constraint.
+Structured exploration, exemplified by AlphaGo's policy-value search \citep{silver2016alphago} and more recently by Tree-of-Thoughts planning \citep{yao2023tree}, offers a compelling model for integrating creativity with systematic validation. In AlphaGo, a policy network generates moves, a value network evaluates outcomes, and self-play iteratively refines strategy. The Courtroom Model generalizes this principle to open-ended domains, applying continuous validation not only internally but also against a persistent external memory and, when needed, human oversight. This convergence supports the idea that the Courtroom Model is not prescriptive, but descriptive — a lens for recognizing effective reasoning architectures wherever they emerge. It offers a retrospective framework to describe such structures — and perhaps guide the design of future systems that balance creativity with constraint.
 
 In formal mathematics, frameworks such as Lean \citep{mathlib2020lean} and multi-agent proof systems like MA-LoT \citep{wang2025malot} demonstrate that combining generative reasoning with strict verification pipelines can achieve rigorous correctness. These systems ensure that every step adheres to formal logic before being accepted. Inspired by these principles, the Courtroom Model aims to bring analogous rigor to less formally structured domains, using semantic similarity, precedent management, and a friction-priced external judge—human or automated—to prevent the unchecked propagation of errors.
 
@@ -408,7 +403,7 @@ As defined in Section~\ref{sec:minimal-state-machine}, state
   
   \item \textbf{Validator family.}  
   \(V_{\theta} : (Q, H, M) \to \{\textsc{ACCEPT}, \textsc{REJECT}, \textsc{ESCALATE}, \textsc{DEFER}\}\), with a
-  tunable validation–preference dial \(\theta \in \Theta\).
+  tunable validation-preference dial \(\theta \in \Theta\).
   \(V_{\theta}\) may be
   (i) a stronger ensemble LLM,
   (ii) a formal-proof kernel,
@@ -433,7 +428,7 @@ As defined in Section~\ref{sec:minimal-state-machine}, state
 
 
 \paragraph{Provisionality of verdicts.}
-Even the external Judge’s verdicts are provisional: they may be rescinded
+Even the external Judge's verdicts are provisional: they may be rescinded
 if subsequent audits or new primary filings contradict earlier
 conclusions.  Accordingly, Judge-validated precedents can be re-queued,
 incur additional \(\WriteCost\), and overwrite prior entries via the usual
@@ -451,7 +446,7 @@ Given $S_t=(q_t,h_t,a_t,M_t)$:
           \item Else obtain corrected answer $a_t = C(q_t,h_t)$
                 (oracle $C$ may call a human; cost is logged)
           \item If $d_t=\textsc{DEFER}$ set $a_t=\bot$
-                and skip Steps 3–4 below.
+                and skip Steps 3-4 below.
         \end{itemize}
   \item $M_{t+1} \leftarrow U(M_t,q_t,h_t,a_t)$
   \item External stream provides $q_{t+1}$
@@ -500,7 +495,7 @@ Fix a margin parameter $\delta\in(0,1]$.
 For every run $\omega$ and round $t=1,\dots,T$ set
 \begin{align*}
   y_t      &:=y_t(\theta)          &&\text{(ground-truth label)},\\
-  h_t      &:=h_t(\omega)          &&\text{(validator’s automatic prediction)},\\
+  h_t      &:=h_t(\omega)          &&\text{(validator's automatic prediction)},\\
   \mathrm{Esc}_t&:=\mathbf 1_{\{\text{round $t$ is escalated}\}.}
 \end{align*}
 Define the \emph{leverage rounds}
@@ -525,29 +520,46 @@ Define the global means:
 
 \subsection{Information-theoretic lower bound}\label{sec:info-bound}
 
-\begin{lemma}[Interactive-Fano corollary]\label{lem:ErrLower}
+\begin{lemma}[Interactive-Fano corollary, general prior]\label{lem:ErrLower}
 Let $V$ be any validator run for $T$ rounds.
 With $\kappa(\omega)$ and $\Err(\omega)$ defined in
-\eqref{eq:kappaDef}–\eqref{eq:ErrDef}, write
-\[
-  \Err_{\mathrm{bar}}:=\E[\Err].
-\]
+\eqref{eq:kappaDef}-\eqref{eq:ErrDef}, write
+$\Err_{\mathrm{bar}}:=\E[\Err]$.
 Assume the transcript $X$ obeys the information budget
-\(I(\theta;X)\le I\) under the uniform prior on an $M$-point
-label set ($M\ge2$).  Then
-\begin{equation}\label{eq:ErrLower-new}
-  \boxed{\;
-     \Err_{\mathrm{bar}}
-       \;\ge\;
-       \frac{\delta\,T}{4}\;
-       \kappa_{\!*}\;
-       \Bigl(1-\tfrac{I+\log 2}{\log M}\Bigr),
-     \quad
-     \kappa_{\!*}:=\E[\kappa\mid\Err>\tfrac12\delta\kappa T]
-  }
-  \, .
+$I(\theta;X)\le I$ under an arbitrary\, prior $\mu$ on the $M$-point label set $(M\!\ge\!2)$.
+Define
+\[
+  H_{\star}:=
+  \begin{cases}
+      H(\theta) & \text{(Shannon entropy)}\\[4pt]
+      -\log p_{\max} & \text{(min-entropy),}
+  \end{cases}
+  \qquad
+  p_{\max}:=\max_{m}\mu(m).
+\]
+Then
+\begin{equation}\label{eq:ErrLower-general}
+  \boxed{\,%
+   \Err_{\mathrm{bar}}
+   \;\ge\;
+   \frac{\delta\,T}{4}\;
+   \kappa_{\!*}\;
+   \Bigl(1-\tfrac{I+\log 2}{H_{\star}}\Bigr),
+   \quad
+   \kappa_{\!*}:=
+     \E\bigl[\kappa\,\bigl|\,\Err>\tfrac12\delta\kappa T\bigr]
+  \,}.
 \end{equation}
 \end{lemma}
+
+\begin{remark}[Entropy convention]
+Throughout we write $H_{\star}$ for whichever entropy measure is appropriate
+in context—Shannon entropy when a prior is specified, min-entropy when no
+distributional knowledge is assumed.
+Uniform priors maximise $H_{\star}$, producing the strongest (largest)
+version of the bound, while skewed priors reduce $H_{\star}$ and weaken the
+barrier proportionally.
+\end{remark}
 
 \begin{proof}[Proof sketch]
 Step 1 (separation).
@@ -571,7 +583,7 @@ Inequality ($\ast$) fulfils the separation requirement
 \citep[Eq.\,(5)]{chen2024interfano}.
 Define
 \[
-  \gamma:=\frac12\Bigl(1-\tfrac{I+\log 2}{\log M}\Bigr)\in(0,\tfrac12].
+  \gamma:=\frac12\Bigl(1-\tfrac{I+\log 2}{H_{\star}}\Bigr)\in(0,\tfrac12].
 \]
 Then
 \begin{equation}\tag{$\dagger$}
@@ -602,7 +614,7 @@ we have:
     &=\frac{\delta T}{2}\,
       \kappa_{\!*}\;
       \Pr(\mathcal E) \\[2pt]
-    &\ge \frac{\delta T}{4}\,\kappa_{\!*}\, \Bigl(1-\tfrac{I+\log 2}{\log M}\Bigr)\;.
+    &\ge \frac{\delta T}{4}\,\kappa_{\!*}\, \Bigl(1-\tfrac{I+\log 2}{H_{\star}}\Bigr)\;.
 \end{aligned}
 \]
 
@@ -628,58 +640,152 @@ discussion.
 Write the bound as  
 \(\Err_{\mathrm{bar}}\!\ge(\tfrac12\delta T)\,\max\{0,\bar\kappa+\gamma-1\}\).
 Because \(\gamma>0\) whenever the transcript leaks
-fewer than \(\log M-\log2\) bits, any validator that
+fewer than \((H_{\star}-\log 2)\) bits, any validator that
 handles a non-trivial share of rounds automatically
 \((\bar\kappa>1-\gamma)\)
 faces a linear-in-$T$ unavoidable error floor.
 Escalating a larger fraction of rounds (making $\bar\kappa$ smaller) or
 relaxing the margin $\delta$ are the only ways to suppress this growth,
-precisely matching the “friction buys accuracy’’ narrative.
+precisely matching the “friction buys accuracy” narrative.
 
 
 
+\subsection{Sparse-memory bounds and tightness}
+\label{sec:sparse-memory-bound-tightness}
 
+We bound how many precedents a validator stores when it keeps only queries that
+are at least a distance~$\tau$ apart.  The first lemma gives a worst-case upper
+bound; the second shows that bound is tight under mild stochastic traffic.
 
-
-\subsection{Sparse-memory bound}
-\label{sec:sparse-memory-bound}
-
-The following lemma gives a back-of-the-envelope bound on memory growth and justifies the choice of a retention threshold $\tau$.
-
-\begin{lemma}
-\label{lemma}
-Assume (i) queries are i.i.d.\ in a bounded metric space
-and (ii)  $U$ inserts a new vector only if its L$_2$ distance to every
-vector in $M_t$ exceeds a threshold~$\tau$.  Then
+\begin{lemma}[Sparse-memory upper bound]\label{lem:2}
+Let $\mathcal Q\subset\mathbb R^{d}$ be bounded with
+$\operatorname{diam}\mathcal Q=D<\infty$.
+Suppose the validator maintains a set $M_t$ that starts empty and, at each
+round $t$, inserts the query $q_t$ \emph{only if}
+\(\min_{m\in M_{t-1}}\lVert q_t-m\rVert_2>\tau\).
+Then for all $T\ge0$
 \[
-  |M_T| \;\le\;
-  \bigl(\tfrac{\operatorname{diam}(Q)}{\tau}\bigr)^{d},
-  \qquad
-  \forall\,T\ge 0 .
+  |M_T|
+  \;\le\;
+  \Bigl(\tfrac{\operatorname{diam}\mathcal Q}{\tau}\Bigr)^{d}.
 \]
-Hence total storage cost is $O\!\bigl(\tau^{-d}\bigr)$.
+Hence total storage cost is \(O\!\bigl(\tau^{-d}\bigr)\).
 \end{lemma}
 
 \begin{proof}[Proof sketch]
-The insertion rule builds an $\tau$-packing of $Q$; a standard $\varepsilon$-net
-argument bounds the packing number by $(\mathrm{diam}/\tau)^d$.
+The rule ensures $M_T$ is a $\tau$-packing of $\mathcal Q$.
+By a standard $\varepsilon$-net/volume argument, any $\tau$-packing inside a
+$D$-diameter set has size at most $(D/\tau)^{d}$.
 \end{proof}
+
+\begin{lemma}[Stochastic tightness of $\tau$-packing]\label{lem:3}
+Let the setting of Lemma \ref{lem:2} hold, and assume in addition that the
+queries $(q_t)_{t\ge1}$ are i.i.d.\ with a density
+$f\ge\lambda>0$ on $\mathcal Q$.
+Define
+\[
+  T_0(\tau,\delta)\;=\;
+  \frac{2^{d}}{\lambda\,\nu_d}\,
+  \tau^{-d}\,
+  \Bigl[d\log\!\bigl(D/\tau\bigr)+\log(1/\delta)\Bigr],
+  \qquad
+  \nu_d=\frac{\pi^{d/2}}{\Gamma(d/2+1)}.
+\]
+Then, for any confidence level $0<\delta<1$ and all $T\ge T_0$,
+\[
+  \Pr\!\Bigl[\,|M_T|\;\ge\;
+        \tfrac12\,\nu_d^{-1}D^{-d}\,\tau^{-d}\Bigr]
+  \;\ge\;1-\delta.
+\]
+In particular, under full-support i.i.d.\ traffic the memory size scales
+\(\Theta(\tau^{-d})\) with high probability.
+\end{lemma}
+
+\begin{proof}[Sketch]
+1.~Maximal $\tau$-packing.
+Let $\{c_i\}_{i=1}^{m}\subset\mathcal Q$ be maximal with pairwise distances
+$>\tau$.  By inscribing disjoint axis-aligned cubes of side $\tau/\sqrt d$ we
+obtain $m\ge\alpha_d(D/\tau)^d$ with $\alpha_d=2^{-d}$.
+
+\noindent
+2.~Disjoint balls.
+Set $B_i=B(c_i,\tfrac{\tau}{2})$.  The balls are disjoint and lie inside
+$\mathcal Q$.
+
+\noindent
+3.~Uniform hit probability.
+By the density lower bound, each ball has
+$p_\tau=\lambda\nu_d2^{-d}\tau^{d}$
+probability mass; the value is the same for every $i$.
+
+\noindent
+4.~Empty-ball tail.
+$\Pr(B_i\text{ empty})=(1-p_\tau)^T\le e^{-p_\tau T}$
+(using $\log(1-x)\le -x$).  Choosing $T\ge T_0$
+forces $e^{-p_\tau T}\le\delta/m$.
+
+\noindent
+5.~Union bound and insertion rule.
+With probability $\ge1-\delta$ every $B_i$ is hit at least once.
+The first hit in each ball is $>\tau$ from all stored points,
+hence inserted; so $|M_T|\ge m\ge\alpha_d(D/\tau)^d$.
+Taking $c_d=\tfrac12\nu_d^{-1}D^{-d}\le\alpha_d$ matches the lemma's constant.
+\end{proof}
+
+
+\paragraph{Discussion — from tightness to the trilemma.}
+Lemma~\ref{lem:2} caps memory by $O(\tau^{-d})$ for any query
+sequence.  Lemma~\ref{lem:3} shows that, under full-support
+i.i.d.\ traffic, the same $\Theta(\tau^{-d})$ rate is unavoidable.
+Together with the Fano-style information bound in
+Lemma~\ref{lem:ErrLower} we now have two orthogonal “laws of friction”:
+
+\begin{itemize}\setlength\itemsep{2pt}
+\item[\textbullet] Information ledger.
+  To keep transcripts short, the validator must tolerate a
+  Fano error floor.  
+\item[\textbullet] Memory ledger.
+  At granularity $\tau$ it must provision
+  $\Theta(\tau^{-d})$ precedent cells—no compression trick beats this
+  when queries explore the space fully.
+\end{itemize}
+
+\noindent
+What remains open—and is precisely what the next two conjectures tackle—is a
+joint lower bound that couples both ledgers plus the escalation
+(human-minutes) ledger when queries arrive in an open-world, potentially
+adaptive fashion.  The conjectures formulate that missing link.
+
+
 
 \subsection{Core Conjectures}
 \label{sec:conjectures}
 
 \newtheorem{conjecture}{Conjecture}
-\begin{conjecture}[Validation trilemma] \label{conjecture1} Fix any open-world stream \(\mathcal{S}\) whose Shannon entropy \(\geq H\).
-For every system that (i) stores \(\leq B\) bytes of precedent
-and (ii) spends \(\leq \kappa\) human-minutes per 10k tokens, prequential regret
-after budget B satisfies   \( R(B) \geq f(H, \kappa, B) \)   for some monotone f (non-increasing in \(\kappa\) and non-decreasing in H).
+\begin{conjecture}[Validation trilemma]\label{conjecture1}
+Let $\mathcal{S}=\langle s_1,\dots,s_T\rangle$ be an open-world data stream
+whose source has Shannon entropy rate at least $h$ bits per symbol
+(equivalently, $H(\mathcal S_{1:T})\ge hT$).
+For any system that\\[0.1em]
+\hspace*{1.5em}(i) stores at most $B$ bytes of persistent precedent and\\[0em]
+\hspace*{1.5em}(ii) budgets at most $\kappa$ bits of external validation per $N$ symbols,\\
+the prequential regret after it consumes $B$ bytes satisfies
+\[
+   R(B)\;\;\ge\;\;f\bigl(h,\kappa,B\bigr),
+\]
+for some monotone $f$ (non-increasing in $\kappa$, non-decreasing in $h$).
 \end{conjecture}
 
-\begin{conjecture}[No-free-lunch verifier] \label{conjecture2} Under the same entropy
-assumptions, any validator \(V_\theta\) that never escalates to humans must either
-(i) mis-accept adversarially crafted hallucinations with probability \(\geq \varepsilon\)
-or (ii) write unbounded new precedent.
+\begin{conjecture}[No-free-lunch verifier]\label{conjecture2}
+Under the same entropy assumption,
+any fully automatic validator $V_\theta$ that never escalates to humans
+must either
+\begin{enumerate}[label=(\roman*)]
+\item mis-accept adversarially crafted claims with probability at least~$\varepsilon$, or
+\item write an unbounded amount of new precedent as $T\to\infty$.
+\end{enumerate}
 \end{conjecture}
+
 
 \begin{tcolorbox}[title=Falsify-Us]
   Build an agent that—under the protocol of Section~\ref{sec:framework}—keeps
@@ -688,7 +794,7 @@ or (ii) write unbounded new precedent.
     \item total precedent $\leq \kappa|Q|$
     \item total human-escalation cost $\leq \beta|Q|$
   \end{itemize}
-  for arbitrarily long query streams $Q$.
+  for arbitrarily long open-world data streams $S$.
 \end{tcolorbox}
 
 \section{Future Work}
@@ -804,7 +910,7 @@ Even under a frozen policy:
 
 \item \emph{“Just freeze the humans, then!”} Freezing humans defeats the point. The Courtroom cycle exists precisely because some domains contain irreducible judgment calls (e.g., fraud indicators in SEC filings). Replacing humans with a static rubric re-introduces brittle heuristics— the very failure mode we are trying to avoid.
 
-\item \emph{"But without numbers you cannot prove progress."} The claim is architectural, not empirical: \textsc{Claim A}: persistent precedent + adaptive friction is necessary for bounded-error knowledge bases in an open world; \textsc{Claim B}: current “bigger-is-better” pipelines violate \textsc{Claim A}. Both claims are falsifiable: show a practical system that achieves low hallucination without any external precedent store or escalation dial, and the Courtroom premise collapses. Until such a counter-example exists, producing another decimal improvement on GSM8K is beside the point.
+\item \emph{"But without numbers you cannot prove progress."} The claim is architectural, not empirical: \textsc{Claim A}: persistent precedent + adaptive friction is necessary for bounded-error knowledge bases in an open world; \textsc{Claim B}: current “bigger-is-better” pipelines violate \textsc{Claim A}. Both claims are falsifiable: show a practical system that achieves low hallucination without any external precedent store or escalation dial, and the Courtroom premise collapses. Until such a counter-example exists, producing another decimal improvement on the latest benchmark leaderboard is beside the point.
 
 \item \emph{“Isn't this just a dressed-up retrieval-augmented loop?”} Retrieval-augmented generation (RAG) treats the store as a context-window scoped evidence buffer flushed between prompts. The Courtroom store is jurisprudential—each write becomes precedent and must pay rent (friction) forever. That difference, though conceptually small, flips the optimisation target from “accuracy at \(k = 1\)” to “prequential regret under a cost budget.” No existing RAG benchmark measures that regime.
 
