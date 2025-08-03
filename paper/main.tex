@@ -496,7 +496,7 @@ For every run $\omega$ and round $t=1,\dots,T$ set
 \begin{align*}
   y_t      &:=y_t(\theta)          &&\text{(ground-truth label)},\\
   h_t      &:=h_t(\omega)          &&\text{(validator's automatic prediction)},\\
-  \mathrm{Esc}_t&:=\mathbf 1_{\{\text{round $t$ is escalated}\}.}
+  \mathrm{Esc}_t&:=\mathbf 1_{\{\text{round $t$ is escalated}\}}.
 \end{align*}
 Define the \emph{leverage rounds}
 \begin{equation}\label{eq:kappaDef}
@@ -510,6 +510,12 @@ The cumulative label error on those rounds is
   \Err(\omega):=\sum_{t\in\mathcal L(\omega)}
                 \mathbf 1_{\!\bigl[h_t\neq y_t\bigr]}.
 \end{equation}
+For any hypothetical label index \(m\) and transcript \(x\) we write
+\[
+  \Err_m(x):=\sum_{t\in\mathcal L(\omega)}\mathbf 1_{\!\bigl[h_t(x)\neq y_t(m)\bigr]},
+\]
+i.e.\ the cumulative error that would occur on the same leverage rounds if the
+hidden parameter were \(m\).
 Define the global means:
 \[
   \bar\kappa:=\E[\kappa],
@@ -563,12 +569,15 @@ barrier proportionally.
 
 \begin{proof}[Proof sketch]
 Step 1 (separation).
-For any $m\neq m'$ and transcript $x$ at most one of
-$y_t(m),y_t(m')$ can equal $h_t$ on a leverage round, hence
+Fix \(m\neq m'\) and transcript \(x\).  On each leverage round
+\(t\in\mathcal L(\omega)\) we have \(|y_t(\theta)-h_t|\ge\delta\).
+Hence \(h_t\) can coincide with at most one of
+\(y_t(m),y_t(m')\), so
 \[
-  \Err_m(x)+\Err_{m'}(x)\;\ge\;\delta\,\kappa(\omega)\,T.
-  \tag{$\ast$}
+  \Err_m(x)+\Err_{m'}(x)\;\ge\;\delta\,\kappa(\omega)\,T\;.
+\tag{$\ast$}
 \]
+
 
 \noindent
 Step 2 (interactive Fano). 
@@ -676,6 +685,8 @@ Hence total storage cost is \(O\!\bigl(\tau^{-d}\bigr)\).
 The rule ensures $M_T$ is a $\tau$-packing of $\mathcal Q$.
 By a standard $\varepsilon$-net/volume argument, any $\tau$-packing inside a
 $D$-diameter set has size at most $(D/\tau)^{d}$.
+(In the worst‑case geometry one needs an extra factor \(2^{d}\); we omit it
+because all subsequent results depend only on the \(\tau^{-d}\) scaling.)
 \end{proof}
 
 \begin{lemma}[Stochastic tightness of $\tau$-packing]\label{lem:3}
@@ -702,15 +713,25 @@ In particular, under full-support i.i.d.\ traffic the memory size scales
 \end{lemma}
 
 \begin{proof}[Sketch]
-1.~Maximal $\tau$-packing.
-Let $\{c_i\}_{i=1}^{m}\subset\mathcal Q$ be maximal with pairwise distances
-$>\tau$.  By inscribing disjoint axis-aligned cubes of side $\tau/\sqrt d$ we
-obtain $m\ge\alpha_d(D/\tau)^d$ with $\alpha_d=2^{-d}$.
+1.~Maximal \(3\tau\)-packing.\footnote{Using \(3\tau\) rather than \(\tau\) only
+shrinks the packing constant by \(3^{-d}\); the \(\Theta(\tau^{-d})\) scaling
+is unaffected.}
+Let \(\{c_i\}_{i=1}^{m}\subset\mathcal Q\) be maximal with pairwise
+distances \(>3\tau\).  Axis‑aligned cubes of side \(3\tau/\sqrt d\) give
+\(m\ge\alpha_d(D/\tau)^d\) with \(\alpha_d=3^{-d}2^{-d}\).
 
 \noindent
-2.~Disjoint balls.
-Set $B_i=B(c_i,\tfrac{\tau}{2})$.  The balls are disjoint and lie inside
-$\mathcal Q$.
+2.~Disjoint balls and guaranteed insertion.  
+Set \(B_i=B(c_i,\tfrac{\tau}{2})\).  
+For any query \(q_t\in B_i\) and any prior memory point \(m\in B_j\;(j\neq i)\),
+\[
+\lVert q_t-m\rVert
+\;>\; 3\tau-\tfrac{\tau}{2}-\tfrac{\tau}{2}
+\;=\;2\tau>\tau,
+\]
+so the insert-iff-distance \(>\tau\) rule is automatically satisfied.
+The
+balls are disjoint and lie inside \(\mathcal Q\).
 
 \noindent
 3.~Uniform hit probability.
@@ -725,11 +746,15 @@ $\Pr(B_i\text{ empty})=(1-p_\tau)^T\le e^{-p_\tau T}$
 forces $e^{-p_\tau T}\le\delta/m$.
 
 \noindent
-5.~Union bound and insertion rule.
-With probability $\ge1-\delta$ every $B_i$ is hit at least once.
-The first hit in each ball is $>\tau$ from all stored points,
-hence inserted; so $|M_T|\ge m\ge\alpha_d(D/\tau)^d$.
-Taking $c_d=\tfrac12\nu_d^{-1}D^{-d}\le\alpha_d$ matches the lemma's constant.
+5.~Union bound and memory lower bound.  
+With probability \(\ge 1-\delta\) every \(B_i\) is hit at least once.
+If the first hit is accepted, it is written to memory; if it is rejected, the
+blocking memory point \(m\) satisfies
+\(\lVert m-c_i\rVert<1.5\,\tau\) and therefore lies in the expanded ball
+\(\tilde{B}_i:=B(c_i,1.5\,\tau)\).
+Because the \(\tilde{B}_i\) are disjoint (centre separation \(>3\tau\)),
+each centre still accounts for one distinct stored point, so
+\(|M_T|\ge m\ge\alpha_d(D/\tau)^d\).
 \end{proof}
 
 
