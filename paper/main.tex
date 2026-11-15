@@ -4224,24 +4224,15 @@ reuse and resource use across first contacts, exposed-item replays and
 untouched terminal questions. Runtime policies remain frozen within attempts;
 authorized components may change between development questions.
 
-Registration has two stages. The prospective accounting seal precedes
-reference audit. It freezes $S_0$, the candidate pool and selection rules,
-reference and canonicalization procedures, evidence and assessment
-contracts, permissions, resource accounting, immutable outer caps, reserved
-evaluation allocation, and $B_{\mathrm{eval}}$. The complete requirements,
-including seeds and actual numerical exponent bounds, are in
-Section~\ref{subsec:ledger-registration}. Historical work in $S_0$ is
-disclosed as observed, partly observed, or unknown; missing historical costs
-are not zero.
-
-Before the first prospective item is revealed, the execution manifest
-reaffirms every accounting-sealed field by hash and adds only the realized
-outputs of the frozen audit, selection, allocation, and ordering procedures.
-Reference inspection cannot change an evaluator constant, rule, seed,
-permission, or cap. The timestamped registration commitment and its
-custody and disclosure rules are specified in
-Section~\ref{subsec:ledger-registration}. Until it exists, this section
-describes a design to be registered.
+The two-stage registration in Section~\ref{subsec:ledger-registration}
+seals all prespecified rules, $S_0$, permissions and resource bounds before
+reference audit, then commits only their realized outputs before the first
+prospective item is revealed. Reference inspection cannot change an evaluator
+constant, rule, seed, permission or cap. That section specifies the complete
+registration requirements and timestamped custody/disclosure commitment.
+Until the commitment exists, this is a design to be registered. Historical
+work in $S_0$ is disclosed as observed, partly observed or unknown;
+missing historical costs are not zero.
 
 A reference custodian is technically and procedurally isolated from
 development, runtime, retrieval, revision tests, and confirmatory execution.
@@ -4571,18 +4562,15 @@ with their actual gate, evidence access, and checking resources logged.
 
 \label{subsec:pilot-frozen-releases}
 
-The complete release after episode $t$ is $S_t$. Its content-addressed
-manifest covers the runtime components in Section~\ref{sec:the-courtroom-loop}
-and the version-specific development budget $B_t$. The requested base model,
-provider, decoding configuration, and provider-retry policy are invariant
-through $S_8$. The reference procedure, scorer, canonicalizer, numerical loss,
-solution-evidence contract, assessment rubric and procedure, item assignment,
-and $B_{\mathrm{eval}}$ belong to the separately frozen evaluation manifest.
-A runtime attempt uses a read-only release clone. ``Frozen'' describes the
-client-visible configuration; actual returned identifiers, timestamps,
-usage, and controllable randomness are execution observations, and hidden
-provider kernels may drift. Manifest and comparability requirements are
-specified in Section~\ref{subsec:execution-manifests}.
+The complete release after episode $t$ is $S_t$, with a content-addressed
+manifest and development budget $B_t$. The requested base model, provider,
+decoding configuration and provider-retry policy are invariant through $S_8$.
+Each attempt uses a read-only release clone. Runtime components, the separate
+frozen evaluation manifest, execution observations and comparability are
+specified in Section~\ref{subsec:execution-manifests}. The evaluation manifest
+also fixes item assignment and $B_{\mathrm{eval}}$ under
+Section~\ref{subsec:ledger-registration}. ``Frozen'' is client-visible,
+not a guarantee against hidden provider drift.
 
 For each development item $Q_t$, two first-contact branches are scheduled before the reference is revealed. A launched adaptive cell executes under $(S_{t-1},B_{t-1})$, while a launched shadow cell executes under $(S_0,B_0)$. Here and below, $\operatorname{Run}(S,Q;\xi)$ also depends on the applicable branch- and phase-specific execution manifest, interaction environment, budget, cache, and reset policy; suppressing those indices does not make $S$ alone determine the execution or its law. Let $\mathsf{Rec}_t^{\mathrm{adapt}}$ and $\mathsf{Rec}_t^0$ denote the sealed scheduled-branch records. For a launched branch that durably seals a terminal action, the corresponding record and action satisfy
 
@@ -4850,14 +4838,10 @@ once. Evaluation/overhead stay outside those operational quantities; without
 deployments they are projections, and unknown history prevents a complete
 lifecycle total.
 
-Optional value scenarios register compared releases, cost boundary, dated
-valuation, future conditions, horizon and measured/assumed/supported inputs
-$F$, $c_{\mathrm{use}}$, $g$ and $v$ under
-Section~\ref{subsec:ledger-resources}. Bundle expenditure is not one motif's
-incremental cost, evaluation is not automatically recurring deployment,
-and replay/four terminal items do not establish $g$. Break-even remains a
-conditional projection, not an observed return or a substitute for native
-resources and correctness readouts.
+Optional policy and lifecycle-value scenarios obey the registration,
+input-provenance and conditional-interpretation requirements in
+Section~\ref{subsec:ledger-resources}. They never replace native resources
+or correctness readouts.
 
 \Needspace{7\baselineskip}
 \subsection{Outcomes and Planned Analysis}
@@ -5114,12 +5098,11 @@ L_t^b
 \right\}.
 \end{equation}
 
-$\operatorname{Run}(S,Q;\xi)$ executes the policy fixed jointly by a release
-and its branch/phase manifest, including environment, budget, cache, and
-reset rules. Adaptive and shadow first contacts use $(S_{t-1},B_{t-1})$ and
-$(S_0,B_0)$; official replays use $(S_t,B_t)$; final-development and terminal
-cells use $B_{\mathrm{eval}}$. Suppressed indices and observable or
-controllable randomness remain recorded. Each launched cell runs an
+Use the release/branch/phase-specific $\operatorname{Run}(S,Q;\xi)$ and
+recorded environment, budget, cache, reset and randomness conventions of
+Section~\ref{subsec:pilot-frozen-releases}. The phase budgets are fixed in
+Sections~\ref{subsec:pilot-development-episode}
+and~\ref{subsec:pilot-final-replay-terminal}. Each launched cell runs an
 implemented policy, not a family infimum.
 
 Every scheduled branch must receive a sealed execution or status
@@ -5172,38 +5155,17 @@ metadata are allowed; these may not encode answer length, disposition,
 failure, score, variable usage, or another outcome proxy. The provider-plane
 invariant in Section~\ref{subsec:execution-isolation} applies throughout.
 
-For every launched, analysis-valid, target-loss-eligible branch, the
-canonical numerical loss is
-\begin{equation}
-\ell^{\mathrm{can}}(Q_t,Y_t,\widehat O_t^b)
-=
-\mathbf 1\!\left\{
-c_{Q_t}\!\left(\operatorname{ans}(\widehat O_t^b)\right)
-\neq c_{Q_t}(Y_t)
-\right\}.
-\label{eq:appendix-canonical-score}
-\end{equation}
-Every sealed no-answer, deferral, within-branch cap-exhaustion, or
-registered launched-failure disposition maps to $\bot$, as does a
-malformed, nonfinite, dimensionally incompatible, or out-of-range
-answer. No post-canonicalization numerical tolerance is applied.
-A nonlaunched or catastrophically incomplete cell retains null
-terminal-action and item-loss fields; neither is silently converted
-into a solver-produced $\bot$.
+For launched, analysis-valid, target-loss-eligible branches, apply the
+canonical loss in Equation~\ref{eq:pilot-item-loss} with no subsequent
+tolerance. The answer/disposition and no-action rules in
+Sections~\ref{subsec:pilot-question-sets}
+and~\ref{subsec:pilot-retry-policy} remain distinct: a sealed failure action
+can map to $\bot$; nonlaunch or catastrophic incompleteness has null action
+and loss fields.
 
-If the outer loop accepts revision bundle $\Delta_t^{\mathrm{acc}}$,
-the next release is
-\begin{equation}
-S_t
-=
-\operatorname{Freeze}\!\left(
-S_{t-1}\oplus\Delta_t^{\mathrm{acc}}
-\right).
-\label{eq:appendix-release-transition}
-\end{equation}
-
-Only the permitted components and revision path in
-Section~\ref{subsec:pilot-development-episode} may enter this transition.
+Accepted bundles update $S_t$ only by Equation~\ref{eq:pilot-version-transition}
+and the permitted revision path in
+Section~\ref{subsec:pilot-development-episode}.
 Runtime parsers and renderers must still conform to the common evidence and
 output contracts. No active execution writes directly to persistent released
 state, and raw local artifacts cannot be inserted into a later runtime cache.
@@ -5235,15 +5197,11 @@ They identify the governing rules and reference version, permitted evidence
 and gate, findings and unresolved claims, initial and reconciled judgments,
 responsible assessor or configuration, and resource events. Their authorized
 join follows Equation~\ref{eq:pilot-solution-status}; it neither rewrites the
-submission nor enlarges its runtime budget. The common rubric,
-pseudonymization, first-pass rule, $B_{\mathrm{assess}}$, and correction rules
-remain those of Section~\ref{subsec:pilot-solution-adjudication}.
-Missing derivation evidence or a pending assessment at a reporting cutoff
-does not remove an otherwise eligible action from either correctness
-reporting set. Process states, supported findings, and pending/completed
-reporting values follow Section~\ref{subsec:pilot-solution-adjudication};
-canonical failure or an established retained defect still settles failure.
-Shared checking events count once.
+submission nor enlarges its runtime budget. The rubric, pseudonymization, first-pass rule, $B_{\mathrm{assess}}$,
+cutoff/process-state reporting, failure precedence and corrections follow
+Section~\ref{subsec:pilot-solution-adjudication}. Missing or pending
+assessment does not remove an eligible action from either correctness set
+(Section~\ref{subsec:pilot-outcomes}). Shared checking events count once.
 
 \subsection{Replay, Assessment Gates, and Confirmatory Sealing}
 \label{subsec:execution-confirmatory}
@@ -5452,20 +5410,10 @@ Post-embargo findings cannot trigger another release or replace a submission.
 \subsection{Numerical Outcomes, Derivation Judgments, and Audit Codes}
 \label{subsec:audit-endpoints}
 
-For a target-loss-eligible item $i$ with a sealed terminal action
-$O_i$, define
-\begin{equation}
-Z_i:=c_{Q_i}(Y_i),
-\qquad
-\widehat Z_i:=c_{Q_i}\!\left(\operatorname{ans}(O_i)\right).
-\label{eq:audit-canonical-labels}
-\end{equation}
-
-For an eligible reference $Z_i\neq\bot$, the numerical loss on an
-analysis-valid executed cell is $\mathbf 1\{\widehat Z_i\neq Z_i\}$.
-The no-action and $\bot$ rules are in
-Sections~\ref{subsec:pilot-question-sets} and~\ref{subsec:pilot-retry-policy};
-derivation judgments and combined statuses are in
+Numerical outcomes use the canonical target and loss in
+Equations~\ref{eq:pilot-canonical-target}--\ref{eq:pilot-item-loss}, with the
+no-action and $\bot$ rules of Section~\ref{subsec:pilot-retry-policy}.
+Derivation judgments and combined statuses use
 Equations~\ref{eq:pilot-derivation-assessment}--\ref{eq:pilot-solution-status}.
 A correct number can coexist with an invalid retained dependency. Missing
 evidence is not invalidity, and no detected defect is not a validity verdict.
@@ -5810,20 +5758,13 @@ Access and export & Field-group value status, missingness/redaction reasons, aut
 
 Other analyses use a separate inclusion table keyed by
 \texttt{run\_id}, \texttt{analysis\_id}, \texttt{inclusion\_status},
-\texttt{reason}, and version. The primary numerical and full-solution
-readouts retain the same eligible executed-cell set
-$\mathcal C_g$ from Section~\ref{subsec:pilot-outcomes}. Unassessable
-derivations remain in that set and in its paired intersections.
-No-action cells cannot acquire an ordinary item loss or formal
-full-solution assessment through a later join. A durably sealed
-unexecuted or launched-but-incomplete status record can close a
-scheduled record without contributing a solver output to an
-executed-cell denominator. If a required seal remains unavailable,
-the registered stop or abort rule applies. Planned-cell sensitivity
-coding is stored separately and retains its explicit nonoutput
-interpretation. An undefined, pending, or
-invalidated adjudication is reported as such; summaries are not made
-complete by silently dropping records or replacing nulls with zero.
+\texttt{reason}, and version. Both correctness readouts and their paired intersections retain the common
+eligible executed-cell sets in Section~\ref{subsec:pilot-outcomes}, including
+unassessable derivations. Later joins cannot fabricate actions, losses or
+assessments; status-only closure and unavailable seals follow
+Section~\ref{subsec:execution-confirmatory}. Store planned-cell sensitivity
+coding separately with its nonoutput interpretation. Undefined, pending and
+invalidated adjudications remain explicit, never dropped or replaced by zero.
 
 \Needspace{7\baselineskip}
 \subsection{Retained-Solution, Assessment, and Coding Records}
@@ -6041,21 +5982,23 @@ separate scenario totals but once in physical study consumption. Unexecuted
 policies and state-dependent costs remain counterfactual projections.
 
 \paragraph{Optional lifecycle-value projection records.}
-A scenario under Section~\ref{subsubsec:reuse-lifecycle-value} identifies its
-rule/version, compared releases, common cost boundary, dated valuation,
-future task/execution assumptions, horizon and as-of source records.
-Inputs $F$, $c_{\mathrm{use}}$, $g$ and $v$ retain their units, provenance,
-applicable horizons and status as measured, derived, independently supported
-or assumed. Unavailable inputs stay explicit.
+If reported, scenarios under Section~\ref{subsubsec:reuse-lifecycle-value}
+register selection and valuation rules, parameter/scenario schemas and
+horizons. Each identifies its rule/version, compared releases, common cost
+boundary, dated valuation, future task/execution assumptions and as-of source
+records. Inputs $F$, $c_{\mathrm{use}}$, $g$ and $v$ retain units, provenance,
+applicable horizons and measured, derived, independently supported or assumed
+status; unavailable inputs stay explicit.
 
-Value each alternative before differencing; identify included upfront and
-recurring incremental costs. Measured expenditure does not establish an
-expected cost bound, and replay fit or four terminal items do not establish
-a population gain lower bound. Report the premises and conditional net-value
-bound in Equation~\ref{eq:lifecycle-net-value-bound}, and any sufficient
-reuse count under Equation~\ref{eq:lifecycle-break-even}. Missing inputs,
-no implied break-even, and a negative lower bound remain distinct from an
-observed loss. Assumed future uses create no physical deployment events.
+Value each alternative before differencing; identify upfront and recurring
+incremental costs. Bundle expenditure is not one motif's incremental cost,
+and evaluation is not automatically recurring deployment. Measured spending
+establishes no expected cost bound; replay fit or four terminal items establish
+no population gain lower bound. Report the premises and conditional bound in
+Equation~\ref{eq:lifecycle-net-value-bound}, and any sufficient reuse count
+under Equation~\ref{eq:lifecycle-break-even}. Missing inputs, no implied
+break-even and a negative lower bound are not an observed loss or return.
+Assumed future uses create no physical deployment events.
 
 \Needspace{7\baselineskip}
 \subsection{Registration Manifest}
@@ -6084,90 +6027,60 @@ Public commitments to low-entropy fields such as item identities or order
 use a keyed construction or high-entropy secret salt withheld through the
 embargo; an unsalted hash does not conceal them.
 
-The combined registration record fixes the following choices; it may refer
-to the contracts above instead of reproducing them.
-\begin{enumerate}[leftmargin=*,itemsep=4pt,topsep=4pt]
-\item \textbf{Items and references.}
-Benchmark revision, exposure census and residual unknowns; dependence-family
-grouping and pool flow; eligibility/exclusion/reserve and insufficient-pool
-rules; selection, allocation and order algorithms/seeds; realized development
-and terminal sets; isolated reference roles, locked forms and reconciliation.
-
-\item \textbf{Releases, authority and budgets.}
-$S_0$ and historical-cost limitations; invariant model/provider, decoding and
-retry configuration; permitted revision/test classes and admission-policy
-timing; release/write authorities; human information and permissions;
-immutable episode/study caps, their exhaustion treatment, reserved evaluation
-allocation and global stop. Register $B_{\mathrm{eval}}$, its field-by-field
-application and endpoint configuration/mode hashes without replacing internal
-release stopping rules. Development budgets change only by release.
-
-\item \textbf{Numerical contract.}
-Distinct published/verified targets, reproducible reference computation and
-renderer; public reference-blind $u(q)$ and identical runtime exposure;
-$c_q=\bar c_{u(q)}$ and conformance tests; exact typed unit/scale normalization;
-six significant digits, nearest/ties-even rounding, global numerical exponent
-bounds fixed before reference inspection, zero and $\bot$ conventions, primary
-loss and no manual output-specific override. Record
-$K=2+18\cdot10^5(e_{\max}-e_{\min}+1)$, $\log_2(K-1)$ and the conditional
-$\Psi_K$ curve without claiming an empirical accessibility floor. Fix the
-five-/seven-digit, wider-bound and released-repository secondary metrics.
-
-\item \textbf{Solution and assessment contract.}
-Common terminal schema and retained-dependency evidence, exact/approximate/
-interval semantics, partial failures and conformance cases; frozen rubric,
-assessor roles/configurations, tools/evidence, common $B_{\mathrm{assess}}$,
-pseudonymization and blinding limits, first-pass/reference-assisted checking,
-reconciliation, reporting cutoffs and process states, pending versus
-completed-unassessable counts, known-failure precedence, unresolved
-judgments and dated corrections. No checker may
-repair a submission; conformance is not universal assessor soundness.
-
-\item \textbf{Execution and isolation.}
-Launch boundary and logging; action/question limits; content-independent
-identical-request retries, timeouts, failures, late-response quarantine and
-stop rules; fresh-state/session/cache controls and exact request records;
-branch/order balance, fixed slots, quotas and padded gates; provider-plane
-and archive separation; episode-8 closure and replay, final-development and
-terminal schedule/matched endpoint modes; full confirmatory gate, abort
-certificate, field-level access and computation/disclosure permissions.
-Register the immutable evidence and manifest commitments, concealment of
-low-entropy fields, archived-object resolution and comparability rules.
-
-\item \textbf{Development and audit instruments.}
-Microscope configuration, evidence and finite budgets; permitted corpora,
-synthetic/revision tests, repository and network/egress access and logging;
-trace taxonomy, separate dispositions/evidence limits/transitions, ordering
-and retention conventions, two independent initial coding assignments,
-checking/reconciliation, prior access and role overlap. Diagnoses cannot
-alter submissions or evaluation rules.
-
-\item \textbf{Outcomes, inclusion and interpretation.}
-Exact-canonical acceptance and zero post-canonicalization tolerance; planned,
-launched, valid, eligible, included and paired sets; common executed-cell
-sets for both readouts; unresolved/paired assessment ranges, mandatory
-pessimistic eligible planned-cell numerical summary and any full-solution
-completion range; coverage, accepted-answer risk, dispositions, resources
-and all planned summaries. Empty denominators are undefined. Register the
-outcome-blind terminal motif-relevance procedure and its isolated gate,
-finite deviation map and consistency checks. The descriptive and theoretical
-limits in Section~\ref{subsec:pilot-scope} remain applicable.
-
-\item \textbf{Records and physical accounting.}
-Concrete linked schemas for the information in this appendix, versioning,
-missingness and visibility; instrumentation boundary, atomic event grain and
-native units; immutable adapt/eval/deploy/over scope rules, exact-once links,
-coordinate completeness, charges and billing basis, dated optional valuations,
-cohort time $t_e$, cutoff $T_{\mathrm{report}}$ and reconciliation. Optional
-policy-attribution records identify policy--event indicators, rationale,
-scenario version and actual-execution status. Quantities for unexecuted
-policies remain counterfactual projections. Optional lifecycle-value
-scenarios additionally fix selection and valuation rules, comparators, cost
-boundaries, input provenance, parameter/scenario schemas and horizons.
-Observed inputs retain that status; future lifecycle returns remain
-conditional projections, not observed returns.
+The combined registration record incorporates the full requirements and
+required fields at the following locations; these references shorten the
+checklist, not the obligations. All prespecified choices are fixed at the
+accounting seal; only the realized outputs allowed above are added later.
+\begin{enumerate}[leftmargin=*,itemsep=3pt,topsep=3pt]
+\item \textbf{Items and references:}
+dataset/exposure census, grouping, pool flow, eligibility, reserves, selection,
+allocation/order algorithms and seeds, realized sets and isolated reference
+audit (Section~\ref{subsec:pilot-question-sets}).
+\item \textbf{Releases, authority and budgets:}
+$S_0$, history, invariants, revision/admission timing and permissions;
+immutable caps, exhaustion/global stops, reserved evaluation allocation and
+field-by-field $B_{\mathrm{eval}}$ with endpoint configuration/mode hashes
+(Sections~\ref{subsec:pilot-frozen-releases},
+\ref{subsec:pilot-development-episode} and~\ref{subsec:execution-manifests}).
+\item \textbf{Numerical contract:}
+references, public metadata, scorer/renderer, conformance, actual exponent
+bounds, six-digit loss, $K$, $\log_2(K-1)$, conditional $\Psi_K$ curve and
+all registered sensitivities (Section~\ref{subsec:pilot-question-sets}
+and the renderer requirements below).
+\item \textbf{Solution and assessment:}
+evidence/schema, rubric, roles/configurations, tools, $B_{\mathrm{assess}}$,
+blinding, checking, reconciliation, cutoff/process states, unresolved judgments
+and corrections (Section~\ref{subsec:pilot-solution-adjudication}).
+\item \textbf{Execution and isolation:}
+launch, limits/retries/failures, quarantine, fresh state/cache, branch balance,
+fixed slots/quotas/padded gates, provider/archive separation, immutable evidence,
+episode-8 closure, confirmatory/abort gates, access and comparability
+(Section~\ref{subsec:pilot-retry-policy} and Appendix~\ref{app:execution-replay}).
+\item \textbf{Development and audit instruments:}
+permitted corpora, synthetic/revision tests, repository/network egress and
+logging (Section~\ref{subsec:pilot-development-episode}); microscope,
+codebook, forms, two independent initial assignments, ordering, evidence,
+budgets, role overlap and reconciliation (Appendix~\ref{app:audit-microscopes}).
+\item \textbf{Outcomes and inclusion:}
+both readouts, common executed/paired sets, coverage, all planned summaries,
+unresolved/paired ranges, mandatory pessimistic eligible planned-cell numerical
+summary, any full-solution completion range and outcome-blind relevance mapping
+(Section~\ref{subsec:pilot-outcomes}); finite deviation map and consistency
+checks (Sections~\ref{subsec:ledger-deviations}
+and~\ref{subsec:ledger-consistency}); inferential limits
+(Section~\ref{subsec:pilot-scope}).
+\item \textbf{Records and physical accounting:}
+concrete schemas, versioning, missingness, visibility and required ledger
+information (Tables~\ref{tab:version-revision-ledger}--\ref{tab:trace-coding-ledger});
+instrumentation, atomic events, native units, scopes, completeness, charges,
+cohort time/cutoff, reconciliation and all conditions for any optional
+valuations, policy attributions or lifecycle scenarios
+(Section~\ref{subsec:ledger-resources} and Table~\ref{tab:resource-event-ledger}).
 \end{enumerate}
-
+The frozen forms, algorithms, schemas, rubric, numerical parameter values,
+caps and configuration artifacts must be supplied by registration before
+execution, not left as unresolved implementation choices. Incorporation by
+reference does not make a required field optional.
 The exponent bounds must be actual numbers at execution, not unresolved
 symbols. A coarsely published reference is reproducibly recomputed and
 reconciled at the registered precision or excluded by the frozen
