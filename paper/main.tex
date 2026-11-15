@@ -75,77 +75,170 @@
 
 \begin{abstract}
 
-Reusable procedural memory can improve bounded reasoning when useful
-procedures are correctly retrieved and applied, but its value depends on
-construction, assurance, execution, and maintenance costs. We introduce the
-\emph{Courtroom loop}, a versioned, budgeted framework separating admission-time
-certification of reusable procedures from runtime validation of their
-applications, while charging successful, failed, and rejected work.
+Reusable procedural memory can spare a bounded solver repeated derivation,
+but storing a correct procedure does not ensure its applicable use,
+improve an implemented system, or recover its lifecycle costs. We present
+the \emph{Courtroom loop} as a theory-guided synthesis of versioned
+procedural assurance, conditional analyses of reuse, and prospective
+evidence collection. Admission-time certification concerns a reusable
+procedure or relation within its declared scope; runtime validation
+concerns a particular application. Complete system releases and resource
+ledgers retain successful, failed, rejected, and unused work.
 
-The framework distinguishes representation, bounded accessibility, and
-realized performance. Standard information-theoretic results describe
-representation limits under declared ensembles and separate conditional
-Shannon uncertainty from a restricted Kullback--Leibler approximation gap.
-On deductive tasks such as FormulaReasoning, the complete question
-determines the target; support can
-improve computation without adding conditional Shannon information.
-For interactive systems, we evaluate policies under their own laws and
-state finite-canonical log-loss/error calibration under law- and
-budget-preserving closure.
+The theory distinguishes representation, bounded policy-family
+accessibility, and realized performance. Standard representation results
+and a Shannon--Kullback--Leibler decomposition distinguish conditional
+uncertainty from a restricted approximation gap. On FormulaReasoning, the complete question
+determines the canonical target, so support can improve computation
+without adding conditional Shannon information. Interactive
+log-loss/error calibrations require law- and budget-preserving closures.
+A separate stage model gives sufficient conditions for useful coverage
+to improve full-solution accuracy, explains cross-stage complementarity
+and admission-order effects on cumulative performance, and supports
+conditional lifecycle break-even calculations.
 
-An idealized stage model gives accuracy gains from increased useful
-coverage under sound procedural use, stable interfaces and fallback
-behavior, and preserved continuation resources under a fixed task law
-and common budget. The model also identifies complementarity across stages
-and explains why admission order can affect cumulative benefit despite
-equal final coverage and mechanisms. A conditional break-even calculation
-connects these benefits to lifecycle costs and future reuse.
-
-The framework is parameterized by registered development and evaluation sizes.
-We instantiate it in a prospective feasibility protocol with $D=8$ sequential
-development questions, an isolated frozen-baseline shadow, replays, and a
-matched-budget comparison on $H=4$ prospectively untouched terminal questions.
-Numerical answers are compared exactly after reference-blind normalization and
-six-significant-digit canonicalization on a bounded finite grid, using
-independently recomputed references. Separate full-solution assessments
-check retained derivations and report unresolved judgments. The study
-records one development path and its resource use; it does not estimate
-family optima or identify component effects. It provides an auditable basis
-for larger studies of accuracy trajectories, admission order, and the
-lifecycle value of shared procedural knowledge.
+An evidence framework distinguishes support availability, particular
+use, comparative effect, and lifecycle value. Availability and assessed
+valid use do not by themselves establish comparative effect or lifecycle
+value. We instantiate it in a proposed FormulaReasoning
+feasibility protocol with $D=8$ sequential development questions, an
+isolated frozen-baseline shadow, sealed replays, and a matched-budget
+comparison on $H=4$ prospectively untouched terminal questions. Exact
+canonical numerical scores and fallible retained-derivation assessments,
+including unassessable judgments, remain separate. The protocol is
+designed to document one development trajectory and its costs, not to
+estimate family optima, identify component effects, or establish
+population superiority. No prospective outcomes are reported.
 
 \end{abstract}
 
 \section{Introduction}
 \label{sec:introduction}
 
-A growing procedural store can improve bounded reasoning by replacing
-fallible reconstruction with reusable, correctly applied procedures.
 A formula, transformation, or solution strategy can be constructed and
-checked once, then instantiated on later questions. The central question
-is when this improves reliability enough to justify the work of
-construction, assurance, retrieval, execution, and maintenance.
+checked once, then instantiated on later questions. Reusable procedural
+memory offers a way to replace repeated, fallible reconstruction with
+scoped support. The central question is when that support improves
+bounded reasoning enough to justify construction, assurance, retrieval,
+execution, and maintenance.
 
-Realizing that benefit requires more than accumulating objects. A correct
-procedure can be selected for the wrong target, applied outside its scope,
-bound to incorrect inputs, or composed with an incompatible procedure.
-Retrieval and checking also consume resources needed elsewhere. We
-introduce the \emph{Courtroom loop} to make these conditions and costs
-auditable across a versioned development trajectory.
+Accumulation alone does not answer this question. A correct procedure can
+be selected for the wrong target, applied outside its scope, bound to
+incorrect inputs, or composed through an invalid relation. Retrieval and
+checking consume resources needed elsewhere. A successful answer may
+retain an invalid derivation, while an assessed valid application does
+not reveal what would have happened without it. These distinctions
+motivate the \emph{Courtroom loop}: a theory-guided synthesis connecting
+procedural assurance, conditional models of useful reuse, and an
+auditable development trajectory.
 
-Courtroom separates \emph{admission-time certification} of a reusable motif
-or relation from \emph{runtime validation} of a particular application.
+\paragraph{Assurance across a versioned lifecycle.}
+
+Courtroom separates \emph{admission-time certification} of a reusable
+motif or relation from \emph{runtime validation} of a particular
+application and from external assessment of the submitted solution.
 Motifs carry semantic roles, units, applicability conditions, execution
-contracts, provenance, and assurance evidence. Relations carry their own
-scoped composition claims. The inner loop executes a frozen question-specific
-policy; the outer loop examines authorized sealed records, tests general
-revisions, and publishes the next release. The complete release $S_t$
-includes prompts, code, tools, retrieval, validators, stores, and resource
-settings. Store growth is one part of this whole-system process, whose
-changes and unsuccessful work remain recorded.
+contracts, provenance, and assurance evidence. A relation carries its own
+scoped composition claim; admitting two motifs does not certify a link
+between them. Certification records the claim, scope, evidence, and
+decision rather than conferring unrestricted correctness. Formal
+assurance, when available, remains conditional on its specification,
+premises, and trusted checking machinery.
+
+The inner loop executes a frozen question-specific policy. The outer
+loop examines authorized sealed records, tests general revisions, and
+publishes the next release. The complete release $S_t$ includes prompts,
+code, tools, retrieval, validators, stores, and resource settings. Store
+growth is one part of this whole-system process. Admissions,
+replacements, revocations, unused support, unsuccessful revisions, and
+human work remain in the record. This makes the realized path
+inspectable without treating its bundled changes as identified component
+effects.
+
+\paragraph{A hypothetical numerical pass with invalid retained reasoning.}
+
+Consider a question asking for mass from density and volume, with correct
+normalized values $\rho$ and $V$. Suppose the solver selects the correct
+formula $m=\rho V$ but retains a conversion that multiplies density by
+ten and another that divides volume by ten. Then
+\[
+(10\rho)(V/10)=\rho V.
+\]
+The answer can pass numerical adjudication even though the retained
+conversions are invalid. This is an illustrative construction, not an
+observed pilot result. It separates the final number, the validity of
+the submitted derivation, and the eligibility of any extracted procedure
+for later admission.
+
+A fully correct solution requires both a canonically correct answer and
+valid retained reasoning. Discarded exploratory errors need not invalidate
+it. A repair must replace or justify affected claims and recompute or
+revalidate surviving dependents; cancellation does not perform that
+repair. In the hypothetical example, a later audit might motivate general
+conversion support. Such a repair, its admission, and any benefit on
+another question would each require their own evidence. This possible
+extension is not an observed repair or a demonstrated gain.
+
+The distinction between answer and reasoning quality has prior art.
+ReCEval evaluates reasoning chains through step correctness and
+informativeness, using natural-language-inference and
+$\mathcal V$-information-based metrics \citep{prasad2023receval}.
+Courtroom's FormulaReasoning protocol instead registers a numerical
+contract and a separate assessment of the submitted mathematical
+derivation. That assessment is fallible: assessed validity is not a proof
+of validity, and unassessable evidence remains explicit. We do not assume
+that one reasoning metric or assurance standard transfers unchanged
+across domains.
+
+\paragraph{Availability, use, effect, and value.}
+
+Four questions organize the evidence. What support was available in a
+frozen release? What was actually selected, bound, executed, and retained?
+How does performance compare under a specified task law, endpoint, and
+budget? Under what future-use, cost, and valuation premises would reuse be
+worthwhile? These are distinct questions, not an implication chain.
+Table~\ref{tab:intro-reuse-evidence} gives an interpretive map; the detailed
+theory and the protocol specify different ways to address them.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}p{0.37\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Question} & \textbf{Relevant evidence} & \textbf{Interpretive boundary}\\
+\midrule
+Availability & Versioned motifs and relations, scopes, admission evidence, and release manifests.
+& Inventory does not show applicable selection or useful coverage.\\
+\addlinespace
+Use & Sealed application records, bindings, execution, retained dependencies, and fallible validity assessments.
+& An assessed valid application does not identify its effect on success or cost.\\
+\addlinespace
+Effect & Specified system comparisons, endpoints, task laws, budgets, and identifying assumptions or interventions.
+& One trace or exposed-item replay supplies no causal component contrast; the small terminal panel is descriptive.\\
+\addlinespace
+Value & Resource ledgers plus justified future gains, reuse horizon, cost bounds, and valuation.
+& Observed expenditure or an accuracy gain alone does not establish lifecycle value.\\
+\bottomrule
+\end{tabularx}
+\caption{Evidence questions for procedural reuse. Records and premises
+depend on the claim; inventory and valid-use judgments do not identify
+causal benefit or lifecycle value.}
+\label{tab:intro-reuse-evidence}
+\end{table}
+
+Validity concerns whether an application meets the declared mathematical
+and procedural contract. Attribution concerns the difference made by a
+specified change. A trace can support the former judgment and locate a
+particular defect without supplying the counterfactual needed for the
+latter. Replaying an exposed item can document changed fit, but cannot
+restore holdout status or isolate the contribution of a procedure when
+prompts, tools, validation, or other components also changed.
+\FloatBarrier
 
 \paragraph{Information, accessibility, and realization.}
 
+The theory is self-contained and applies to its declared ensembles,
+policy families, and comparisons independently of the proposed pilot.
 Representation concerns which task-relevant distinctions survive under a
 declared source ensemble. Bounded accessibility concerns what a registered
 policy family can attain with its observations, tools, and budget.
@@ -153,18 +246,18 @@ Realization concerns the particular implemented policy. For discrete
 targets under a fixed law $P$, expected log loss decomposes as
 \[
 L_{\mathcal V}^{P}(Z\mid X)
-=H_P(Z\mid X)+\Gamma_{\mathcal V}^{P}(Z\mid X)
+=H_P(Z\mid X)+\Gamma_{\mathcal V}^{P}(Z\mid X),
 \]
-where $L_{\mathcal V}^{P}$ is the family's best expected log loss and
-$\Gamma_{\mathcal V}^{P}$ its best expected Kullback--Leibler approximation
-gap relative to the true conditional distribution. Answer-relevant support
-can reduce positive conditional uncertainty; standard information--distortion
-and packing--Fano converses describe representation limits under a specified
-source--representation ensemble and decoder-visible state.
+where $\Gamma_{\mathcal V}^{P}$ is the family's best expected
+Kullback--Leibler approximation gap relative to the true conditional
+distribution. Standard information--distortion and packing--Fano converses
+describe representation limits under a specified source--representation
+ensemble and decoder-visible state. Observed solver errors alone do not
+establish a positive Shannon residual.
 
-FormulaReasoning \citep{li2026formulareasoning} instead has a canonical target
-determined by the complete question. Writing $f_{\mathrm{FR}}$ for its verified reference function and
-$c_Q$ for the registered canonicalizer,
+FormulaReasoning \citep{li2026formulareasoning} has a canonical target
+determined by the complete question. With verified reference function
+$f_{\mathrm{FR}}$ and registered canonicalizer $c_Q$,
 \begin{equation}
 Z=c_Q\!\left(f_{\mathrm{FR}}(Q)\right),
 \qquad H(Z\mid Q)=0.
@@ -173,46 +266,41 @@ Z=c_Q\!\left(f_{\mathrm{FR}}(Q)\right),
 Determination does not guarantee reliable computation within budget.
 Stored procedures can externalize derivations, constrain bindings, or make
 compositions executable without adding Shannon information conditional on
-the complete question.
+the complete question. The counterfactual representation analysis asks a
+different question under its own source ensemble.
 
-Interactive policies induce different histories and laws. Our accessibility
-analysis fixes a common task law and frozen interaction environment,
-evaluates each policy under its own law, and then takes a family infimum.
-On a finite canonical output alphabet, confidence completion and sampling
-closure connect best-family log loss and decision error in their respective
-directions when source and wrapper preserve the preterminal experiment and
-jointly fit the budget.
-Section~\ref{subsubsec:acceptance-set-accessibility} and
-Section~\ref{subsubsec:formula-reasoning-finite-specialization} give the
-general and finite-canonical calibrations. These conditional connections
-neither establish a positive accessibility residual nor show that adding
-a procedure improves an implemented solver. The following model addresses
-that mechanism directly.
+Interactive policies induce different histories and laws. The
+accessibility analysis fixes a common task law and frozen interaction
+environment, evaluates each policy under its own law, and takes a family
+infimum. General acceptance-set and finite-canonical calibrations connect
+best-family log loss and decision error under their respective law- and
+budget-preserving closure premises
+(Sections~\ref{subsubsec:acceptance-set-accessibility}
+and~\ref{subsubsec:formula-reasoning-finite-specialization}). These
+conditional connections establish neither a positive accessibility
+residual nor improvement by an implemented solver. Realization accounting
+keeps family-optimal risk separate from the risk of the chosen policy;
+the pilot does not estimate that decomposition.
 
 \paragraph{A conditional mechanism for useful reuse.}
 
-A fully correct solution requires valid retained reasoning and a canonically
-correct answer. Cancelling numerical mistakes do not validate an incorrect
-retained step. Discarded exploratory errors or correctly repaired attempts
-need not invalidate the final derivation; admission of any extracted
-procedure remains a separate decision.
-
+A separate, idealized stage model addresses an implemented mechanism.
 Fix a task law, common budget, and decomposition into $m$ semantic stages.
-For question $q$, let $a_{i,t}(q)$ be the conditional probability of choosing
-applicable verified support at stage $i$ under store version $t$, and let
-$p_i(q)$ be the baseline route's success probability when selected. These
-values must hold at every registered valid history, with $p_i(q)$ common
-to the compared controllers. Routing precedes execution and does not
-require detecting that the baseline would fail.
+Let $a_{i,t}(q)$ be the conditional probability of choosing applicable
+verified support at stage $i$ under store version $t$, and $p_i(q)$ the
+baseline route's success probability when selected. The specified
+kernels hold at every registered valid history, with $p_i(q)$ common to
+the compared controllers. Routing precedes execution and does not require
+detecting that the baseline would fail.
 
 Assume sound procedures and relations, correct applicability, binding and
 execution, stable stage interfaces, and preserved conditional fallback
-behavior and continuation resources. The conditional stage reliability is
+behavior and continuation resources. Then
 \begin{equation}
 s_{i,t}(q)=a_{i,t}(q)+\bigl(1-a_{i,t}(q)\bigr)p_i(q),
 \label{eq:intro-stage-reliability}
 \end{equation}
-and
+and the full-solution success probability and expected accuracy are
 \begin{equation}
 \operatorname{Succ}^{\mathrm{sol}}_t(q)
 =\prod_{i=1}^{m}s_{i,t}(q),
@@ -221,124 +309,100 @@ and
 =\mathbb E_Q\!\left[\operatorname{Succ}^{\mathrm{sol}}_t(Q)\right].
 \label{eq:intro-solution-accuracy}
 \end{equation}
-The product is a conditional-probability calculation along valid prefixes,
-not an assumption of independent stage errors.
+The product follows conditional probabilities along valid prefixes,
+without assuming independent stage errors. Useful coverage is a routing
+probability, not store size or a count of observed uses.
 
 Nondecreasing useful coverage at every stage for almost every question
-therefore gives nondecreasing expected full-solution accuracy. Suppose a
-region of task probability at least $\alpha>0$ has coverage gain at least
-$r>0$ at one fixed stage, baseline failure probability at least $b>0$ there,
-and pre-update success product at least $\gamma>0$ over the remaining stages.
-Then
+gives nondecreasing expected full-solution accuracy under these premises.
+If a region of task probability at least $\alpha>0$ has coverage gain at
+least $r>0$ at one fixed stage, baseline failure probability at least
+$b>0$ there, and pre-update success product at least $\gamma>0$ over the
+remaining stages, then
 \begin{equation}
 \operatorname{Acc}^{\mathrm{sol}}_{t+1}
 -\operatorname{Acc}^{\mathrm{sol}}_t
 \geq\alpha rb\gamma.
 \label{eq:intro-verified-reuse-gain}
 \end{equation}
-Section~\ref{subsec:verified-procedural-growth} derives this elementary bound,
-its induced full-solution log-loss interpretation, and an imperfect-use
-variant in which supported reliability need only match or exceed baseline
-reliability under the same stability conditions. The induced-distribution
-log loss need not be reported by the runtime API. Useful coverage is a
-conditional routing probability, not store size. Admission tests and
-runtime checks supply evidence about the premises without establishing
-them uniformly over future uses.
+Section~\ref{subsec:verified-procedural-growth} derives the bound, its
+induced-distribution log-loss interpretation, and an imperfect-use variant.
+Finite admission tests and runtime checks can provide evidence relevant
+to the assumptions without establishing sound use or stable continuation
+uniformly over future questions.
 
-\paragraph{Complementarity and admission order.}
-
-Under the fixed-kernel stage model, feasible coverage improvements at
-different stages have nonnegative mixed accuracy gains. Improving one
-stage can increase the marginal benefit of improving another when their
-useful question scopes overlap and the remaining stages can succeed.
-This is a property of the specified stage comparison, not of arbitrary
-motif sets: alternatives at one stage can substitute for each other.
-
-Identical final coverage and conditional mechanisms give identical endpoint
-accuracy, but intermediate coverage can differ across admission orders.
-Cumulative expected correct solutions, and the costs incurred along the
-path, can consequently differ. Section~\ref{subsubsec:reuse-complementarity}
-gives an explicit example in which selecting the largest immediate accuracy
-gain is suboptimal for cumulative accuracy even with equal admission costs.
-Equal final inventories alone do not establish equal mechanisms or accuracy.
+Under the fixed-kernel model, feasible coverage improvements at different
+stages have nonnegative mixed accuracy gains. Their marginal benefits can
+increase when their useful scopes overlap and other stages can succeed;
+alternatives at one stage may instead substitute for each other. Equal
+final coverage and conditional mechanisms give equal endpoint accuracy,
+but admission orders can yield different intermediate coverage and
+cumulative benefit. Section~\ref{subsubsec:reuse-complementarity} gives an
+example in which the largest immediate gain is not optimal for cumulative
+accuracy, even with equal admission costs. These are conditional
+comparisons, not consequences of observing co-use or one admission path.
 
 \paragraph{Lifecycle value.}
 
-Let $g:=\alpha rb\gamma$ bound the expected accuracy gain between the
-specified releases. In a declared deployment scenario, suppose incremental
-expected cost through $N$ uses is at most $F+Nc_{\mathrm{use}}$, where $F\geq0$
-covers upfront construction and assurance and $c_{\mathrm{use}}$ covers
-incremental use and maintenance. With value $v\geq0$ per additional fully
-correct solution, expressed in the same units, and the gain premise
-maintained through the horizon,
+Let $g:=\alpha rb\gamma$ be a maintained lower bound on expected
+full-solution accuracy gain between the specified releases. In a declared
+deployment scenario, suppose incremental expected
+cost through $N$ uses is at most $F+Nc_{\mathrm{use}}$, with upfront bound
+$F\geq0$, recurring-cost bound $c_{\mathrm{use}}$, and
+value $v\geq0$ per additional fully correct solution in the same units.
+Then
 \begin{equation}
 \mathbb E[\operatorname{NetValue}_N]
 \geq N\bigl(vg-c_{\mathrm{use}}\bigr)-F.
 \label{eq:intro-reuse-net-value}
 \end{equation}
-For $vg>c_{\mathrm{use}}$, an integer $N\geq1$ satisfying
-$N\geq F/(vg-c_{\mathrm{use}})$ suffices for nonnegative expected net value.
-Linearity of expectation requires no independence across uses. A negative
-lower bound does not establish unprofitability. Section~\ref{subsubsec:reuse-lifecycle-value}
-also treats differing gains and costs along admission paths.
+For $vg>c_{\mathrm{use}}$, an integer $N\geq1$ with
+$N\geq F/(vg-c_{\mathrm{use}})$ suffices for nonnegative expected net
+value. Linearity of expectation requires no independence across uses;
+a negative lower bound does not establish unprofitability.
+Section~\ref{subsubsec:reuse-lifecycle-value} also treats differing gains
+and costs along admission paths.
 
-The prospective ledger retains native resource quantities, human effort,
-failed and rejected work, and unused admitted procedures. It separates
-adaptation, evaluation, deployment, and overhead, leaving unrecorded
-historical work unknown. Measured expenditure does not itself establish
-future gain or cost bounds; scenarios retain their comparator, valuation,
-horizon, and assumptions separately from observations.
+The resource ledger records native quantities, human effort, failed and
+rejected work, and unused admitted procedures. Adaptation, evaluation,
+deployment, and overhead remain separate; unrecorded historical work
+remains unknown. Observed expenditure does not supply a future gain or
+cost bound. A lifecycle scenario therefore retains its comparator,
+valuation, horizon, and assumptions separately from observations.
 
-\paragraph{A prospective feasibility study.}
+\paragraph{A prospective feasibility protocol.}
 
-For arbitrary positive integers $D$ and $H$, the study design uses $D$
-sequential development questions and $H$ prospectively untouched terminal
-questions. These sizes are registered before execution. The FormulaReasoning
-instantiation excludes known historical uses and registered direct-source,
-generated, or template siblings.
-Registration freezes $S_0$, selection and ordering procedures, permissions,
-outer caps, evaluation, and stopping rules before prospective execution.
-For question $Q_t$, the current $S_{t-1}$ and an isolated frozen-$S_0$ shadow
-are scheduled for first contact. Both execution or nonexecution records
-seal before permitted current-reference release to development. Authorized
-adaptive evidence may then inform revisions and the next freeze. Shadow
-outcomes remain unavailable throughout adaptation and confirmatory execution.
+The framework permits registered positive development and evaluation sizes
+$D$ and $H$. Section~\ref{sec:pilot-design} proposes a FormulaReasoning
+instantiation with $D=8$ sequential development questions and $H=4$
+prospectively untouched terminal questions. Registration freezes $S_0$,
+selection, ordering, permissions, budgets, evaluation, and stopping rules.
+Known historical uses and registered source, generated, or template
+siblings are excluded. An isolated frozen-$S_0$ shadow is scheduled beside
+each adaptive first contact. Both records seal before permitted
+current-reference release to development; shadow outcomes remain unavailable during
+adaptation and confirmatory execution.
 
 Official same-item replays measure exposed-item fit. After $S_D$ and the
-adaptation ledger freeze, a final replay on the $D$ development items
-seals before $S_0$ and $S_D$ are compared without revision on the $H$
-terminal items under the matched outer budget $B_{\mathrm{eval}}$.
-Confirmatory archives remain mutually embargoed until all $D+2H$ scheduled
-final-development and terminal records seal, or a registered irrevocable
-abort-sealing certificate closes the partial record.
+adaptation ledger freeze, final-development replays and the matched-budget
+$S_0$--$S_D$ terminal comparison proceed without revision. Confirmatory
+archives remain mutually embargoed until all scheduled records seal or
+the registered abort-sealing rule closes the partial record. Exact
+numerical comparison follows reference-blind normalization and
+six-significant-digit canonicalization on a bounded finite grid, with
+independently recomputed references. Separate retained-derivation
+assessments report assessed validity, invalidity, and unassessable
+judgments. Noncompletion, numerical failure, and assessment coverage
+remain distinct records with explicit denominators.
 
-Section~\ref{sec:pilot-design} instantiates this design as a prospective
-feasibility protocol with $D=8$ and $H=4$, not as a fixed size of the
-Courtroom framework. Its concrete selection, scheduling, resource, sealing,
-and noncompletion rules are specified there and in
-Appendix~\ref{app:execution-replay}. Other sizes require their own
-prospectively registered choices; exact branch-order balance, for example,
-is not possible when $D$ is odd.
-
-The numerical endpoint uses reference-blind parsing, exact unit/scale
-normalization, and six-significant-digit canonicalization with global
-exponent bounds chosen before reference inspection. References are
-independently recomputed using exact or certified arithmetic. Equivalent
-raw representations can share a label; distinct labels receive zero
-post-canonicalization tolerance. A separate frozen, fallible assessment
-checks the retained derivation. Unassessable judgments remain explicit
-within the common eligible executed-cell denominator. Canonical failures,
-full-solution assessments, noncompletion, and assessment coverage remain
-distinct records.
-
-The proposed $D=8$, $H=4$ pilot records one human--API trajectory, with
-bundled revisions and one execution per scheduled cell. It does not compare
-admission orders, identify component effects, estimate family optima, or establish population superiority. Four
-terminal items provide a small descriptive endpoint comparison; replays do
-not restore holdout status. Recorded applications, retained defects,
-regressions, and costs make the proposed reuse mechanism and its possible
-breakdowns auditable. They do not verify its population premises or convert
-sample errors into a family-optimal floor.
+The proposed pilot has one human--API development path, bundled revisions,
+and one execution per scheduled cell. Four paired terminal items provide
+a small descriptive endpoint comparison. The records can document
+applications, retained defects, regressions, revisions, and costs, but do
+not identify component effects, population superiority, family optima,
+complementarity, or optimal admission order. No prospective results are
+claimed here. The theory motivates what to examine without acquiring its
+premises from this small study.
 
 \paragraph{Positioning and longer-term motivation.}
 
@@ -364,9 +428,9 @@ Procedural Graphs evolves relations among procedures using validation-gated
 edits; SPEM stores atomic skills and reusable skill-DAG compositions
 \citep{lu2026proceduralgraphs,zhou2026spem}.
 These recent reports include preprints, notably ChipMEM, Zep Agent Skills,
-Procedural Graphs, and SPEM. A lifecycle taxonomy organizes evolving skill libraries around
-verification/admission, retrieval/composition, maintenance, and governance
-\citep{li2026dynamicskills}.
+Procedural Graphs, and SPEM. A lifecycle taxonomy organizes evolving skill
+libraries around verification/admission, retrieval/composition, maintenance,
+and governance \citep{li2026dynamicskills}.
 
 SkillsBench supplies paired no-skill and curated-skill evaluations;
 SkillEvolBench and AFTER examine skill evolution and transfer
@@ -377,11 +441,11 @@ regressions, including excessive verification
 \citep{tan2026skillcoverage,dong2026skillharm}.
 Analyses of memory retrieval and compaction address additional resource
 constraints \citep{xmemory2026,colaco2026whattokeep}.
-Courtroom's emphasis is the auditable connection between reusable-object
-assurance, validity of particular applications, whole-system development,
+Courtroom's contribution is the connection among scoped reusable-object
+assurance, particular-application validity, whole-system development,
 conditional reuse and lifecycle calculations, and a sealed prospective
-protocol. The cited work already studies reusable stores, admission gates,
-versioning, and procedural composition. The pilot does not isolate admission
+protocol. It does not originate reusable stores, admission gates,
+versioning, or procedural composition. The pilot does not isolate
 certification's incremental value over runtime validation.
 
 Collective skill evolution and reusable skill knowledge bases also
@@ -389,42 +453,27 @@ motivate pooling support across contributors
 \citep{skillclaw2026,skillx2026}. A procedural knowledge commons could share
 versioned, scoped nodes and relations carrying provenance, tests, and
 validation evidence. Reuse may spread acquisition and assurance costs,
-while governance, maintenance, retrieval interference, and renewed
-validation remain continuing costs. The conditional calculations identify
-what would need to hold for such a commons to be worthwhile; larger
-controlled studies would need to assess those conditions.
+while governance, maintenance, retrieval interference, correlated
+failures, and renewed validation remain concerns. The conditional
+calculations identify what would need to hold for such a commons to be
+worthwhile; cross-user applicability and lifecycle value need evidence
+beyond this pilot.
 
-\paragraph{Contributions.}
+\paragraph{Contributions and roadmap.}
 
-The paper provides four connected components:
-\begin{enumerate}
-\item \textbf{Versioned assurance and accounting.}
-Courtroom separates admission, application, and release authority while
-recording successful, unsuccessful, and human work across the lifecycle.
-
-\item \textbf{A layered information framework.}
-Standard representation results and conditional policy-family calibration
-distinguish Shannon uncertainty, bounded accessibility, and realized error.
-
-\item \textbf{Conditional reuse and lifecycle calculations.}
-The stage model gives accuracy gains, their log-loss interpretation,
-cross-stage complementarity, and admission-order effects on cumulative
-performance. Explicit valuation and cost premises yield sufficient
-expected break-even conditions.
-
-\item \textbf{A prospective FormulaReasoning protocol.}
-An isolated shadow, sealed revisions and replays, untouched terminal
-comparison, separate numerical and full-solution assessments, and resource
-ledgers support an audit of one development path.
-\end{enumerate}
-
-\paragraph{Roadmap.}
-
-Section~\ref{sec:the-courtroom-loop} presents the architecture.
-Section~\ref{sec:theory} develops the information framework, reuse and
-complementarity calculations, realization analysis, and lifecycle value.
-Section~\ref{sec:pilot-design} specifies the study; the appendices detail
-execution and isolation, trace coding, ledgers, and registration.
+The paper combines a versioned assurance and accounting architecture, a
+layered information framework, conditional reuse and lifecycle
+calculations, and a prospective FormulaReasoning protocol. These
+components serve different purposes: the architecture specifies authority
+and records; the theory states conditional relationships; the protocol
+defines observations and their limits.
+Section~\ref{sec:the-courtroom-loop} presents the architecture and a running
+example. Section~\ref{sec:theory} develops representation, accessibility,
+realization, reuse, complementarity, order, and lifecycle value.
+Section~\ref{subsec:identification-pilot} maps theoretical quantities to
+observable evidence. Section~\ref{sec:pilot-design} specifies the proposed
+study; the remaining appendices detail execution and isolation, trace
+coding, ledgers, and registration.
 
 
 
@@ -441,12 +490,60 @@ and publishes or carries forward the next immutable release. The store
 can therefore grow across questions while remaining fixed during each
 scored execution.
 
-Admission certification assesses reusable claims within their declared
-scope; runtime validation checks particular applications; external
-adjudication assesses the submitted solution. These roles have different
-evidence and authority. The present study follows one human-guided outer
-trajectory. Each release declares which optional validation, repair, and
-escalation capabilities are active.
+The architecture gives the evidence questions in the introduction an
+operational form. Release manifests establish what support was available;
+sealed execution records show its attempted use; external adjudication
+assesses the submitted solution. Admission certification assesses reusable
+claims within their declared scope, whereas runtime validation checks
+particular applications. These roles have different evidence and authority;
+none alone establishes the effect or lifecycle value of a revision. The
+prospective protocol follows one human-guided outer trajectory. Each release
+declares which optional validation, repair, and escalation capabilities are
+active.
+
+\subsection{Running FormulaReasoning Example}
+\label{subsec:courtroom-example}
+
+The following hypothetical example follows a claim from retrieval to
+possible later reuse; it reports no pilot execution. For a question asking
+for mass from density and volume, a frozen release may expose a motif with
+payload $m=\rho V$, semantic roles, dimensional and conversion requirements,
+provenance, tests, and an execution contract. The solver must still bind the
+stated values to the relevant material and object, normalize their units,
+and record the dependencies supporting its multiplication.
+
+Suppose the correct normalized values are $\rho$ and $V$, but the retained
+derivation multiplies density by ten and divides volume by ten through
+invalid conversions. Then
+\[
+(10\rho)(V/10)=\rho V.
+\]
+The final number can pass canonical adjudication while the retained
+conversions violate full-solution validity. Whether empirical assessment
+detects them depends on the evidence and checks. Neither the numerical pass
+nor working-graph membership admits those conversions into persistent memory.
+
+For contrast, consider a separately sealed illustrative execution that
+correctly binds the same givens, justifies the conversions to compatible
+units, and recomputes the multiplication using $\rho$ and $V$. If all retained
+dependencies and the final rendering are valid, it satisfies the
+full-solution endpoint, although its canonical answer is unchanged. In a
+repair, the invalid conversion nodes must be superseded and their surviving
+dependents recomputed or revalidated; changing flags or relying on
+cancellation is insufficient. The original record remains fixed. This
+contrast changes derivation validity, not answer-only accuracy, and does
+not establish that a validator or stored motif caused the difference.
+
+A post-seal audit may motivate general conversion or binding support. That
+proposal needs scoped admission and release checks before becoming available
+to another execution. Applying it on the exposed item documents fit, not
+unseen transfer. On a future question, conversion support and
+formula-selection support can address distinct stages; the complementarity
+calculation concerns their joint useful coverage under its stated kernels,
+not mere co-presence in the store. The audit records which objects were
+available, selected, bound, executed, and retained, and which retained uses
+were assessed as valid. A performance comparison and lifecycle account
+remain separate requirements for effect and value claims.
 
 \subsection{Versioned System State, Manifests, and Isolation}
 \label{subsec:courtroom-state}
@@ -792,54 +889,34 @@ it does not require a runtime API to report those probabilities. Expected
 improvement under the model also does not require every successive observed
 answer to improve.
 
-\subsection{Running FormulaReasoning Example}
-\label{subsec:courtroom-example}
-
-For a question asking for mass from density and volume, retrieval may
-expose a motif with payload $m=\rho V$, semantic roles, dimensional and
-conversion requirements, provenance, tests, and an execution contract.
-The solver binds the stated values to the relevant material and object,
-records their source evidence, normalizes units, and multiplies. An active
-reference-blind validator follows its frozen route before final sealing.
-
-Compensating conversion errors show why the retained derivation matters.
-If an incorrect conversion multiplies the correct normalized density by
-ten and another divides the correct normalized volume by ten, then
-\[
-(10\rho)(V/10)=\rho V.
-\]
-The number can pass canonical adjudication while the retained conversions
-violate full-solution validity. Whether the empirical assessment detects
-them depends on its evidence and checks. Neither the numerical pass nor
-working-graph membership admits those conversions into persistent memory.
-
-A post-seal audit may motivate a general conversion or binding repair.
-It must pass scoped admission and release checks before becoming available
-to another execution; the original evidence remains fixed. Conversion
-support and formula-selection support can address different stages of the
-same future question, making their joint availability relevant to the
-complementarity calculation. Realized benefit still requires applicable,
-correctly used support and a viable continuation. The audit records which
-objects were available, selected, bound, executed, and retained, and whether
-those retained uses were assessed as valid.
-
-
 \section{Layered Theory of Representation, Accessibility, and Realization}
 \label{sec:theory}
 
-We distinguish three questions: what can be recovered from a declared
-representation, what a bounded policy family can attain, and what an
-implemented solver realizes. Standard representation converses and the
-Shannon--KL decomposition provide the information-theoretic background.
-Law- and budget-preserving terminal closures connect optimal log loss
-with optimal decision error for interactive policy families.
+The theory gives separate analyses of representation, bounded
+accessibility, and implemented realization. These are not successive steps
+in a proof that an available procedure improves a solver. Representation
+asks what can be recovered from a declared source and representation;
+accessibility asks what a registered policy family can attain within
+budget; realization concerns the policy actually implemented. Standard
+representation converses and the Shannon--KL decomposition supply the
+information-theoretic background. Law- and budget-preserving terminal
+closures connect optimal log loss with optimal decision error for
+interactive policy families.
 
-A separate stage model describes how useful procedural coverage can
-improve implemented full-solution accuracy without adding Shannon
-information conditional on a complete deductive question. We derive its
-gain and complementarity calculations, distinguish endpoint from
-cumulative performance, and connect gains to conditional lifecycle value.
-The final subsection states what the feasibility study can establish.
+A separate stage model supplies a sufficient mechanism for useful reuse:
+increased useful coverage can improve expected full-solution accuracy when
+its local sound-use, fallback, and continuation premises hold. We derive
+gain and complementarity calculations, distinguish endpoint from cumulative
+performance, and connect justified gains to conditional lifecycle value.
+The family-level calibration does not establish the stage-model premises,
+and the gain calculation does not establish future costs or value.
+
+These results are self-contained conditional analyses, not quantities
+estimated by the proposed pilot. The trajectory definitions specify which
+outcomes and resources a prospective study can report. The final
+subsection connects each theoretical claim to its premises and evidential
+limits, complementing the introduction's availability--use--effect--value
+map.
 
 \paragraph{Conventions and common acceptance rule.}
 
@@ -1358,6 +1435,13 @@ nonempty accepted sets alone do not guarantee one.
 
 \subsection{External Support: Shannon Information and Bounded Accessibility}
 \label{subsec:external-support-accessibility}
+
+External support raises two distinct questions. In a declared source
+ensemble, an exposed packet may change the information available to a
+decoder. In a bounded computation, a procedure may change what a policy can
+execute even when the complete question already determines the answer.
+We first state the Shannon comparison, then develop the fixed-law and
+interactive-family accessibility analyses without identifying these roles.
 
 \subsubsection{The counterfactual Shannon layer}
 
@@ -2417,11 +2501,15 @@ The family-level calibration does not, by itself, order the risks of two
 implemented systems. The following stage model describes a sufficient
 mechanism for improvement: increased useful coverage replaces some
 fallible baseline executions while preserving the other stage
-mechanisms. The comparison uses full-solution loss from
+mechanisms. Here coverage concerns conditional use of the supported route
+at a valid interface, not inventory size or a count of recorded uses;
+route reliability is specified separately. The comparison uses full-solution loss from
 Equation~\eqref{eq:theory-full-solution-loss}, a common future-task law,
 and a common runtime budget. Its conclusions are elementary consequences
 of explicit local conditions, whose applicability is the substantive
-question for a deployed system.
+question for a deployed system. The model is therefore a conditional
+comparison of controllers, not a conclusion drawn from an admission record
+or successful trace.
 
 \paragraph{Stores, stages, and valid interfaces.}
 
@@ -2926,6 +3014,12 @@ be lost. The experiment therefore retains both endpoints.
 \subsection{Restricted Risk for Versioned Systems}
 \label{subsec:restricted-risk}
 
+Real releases can change more than the useful coverage isolated above.
+We therefore define whole-system risk and its family-optimum accounting
+without assuming that successive releases improve. This separates a
+specified performance comparison from the architectural record of what
+support was available and used.
+
 The operational comparison fixes a common evaluation law $P_{Q,Y}$,
 the registered canonicalizer, and the terminal solution-record space
 $\mathcal O$ defined above. The canonical numerical loss is
@@ -3051,6 +3145,11 @@ gap in Equation~\eqref{eq:versioned-risk-accounting}.
 
 \subsection{Prospective Development-Trajectory Estimands}
 \label{subsec:adaptive-estimands}
+
+We next distinguish summaries of a recorded development path from
+population targets under declared task and execution laws. This provides
+an evaluation language without treating procedural-use evidence as an
+identified performance effect.
 
 Fix arbitrary positive integers $D$ and $H$, denoting the registered number
 of development episodes and terminal questions. The design has an isolated
@@ -3830,9 +3929,12 @@ incremental contribution of admission certification.
 \subsection{Limits of Interpretation}
 \label{subsec:identification-pilot}
 
-The released trajectory makes executions and revisions auditable, but
-does not by itself identify a positive latent representation residual
-or the contributions of components changed together.
+The evidence framework is organized by the claim being made, not by an
+implication from availability through use to effect and value. The released
+trajectory makes executions and revisions auditable. Its limits follow
+from which quantities and counterfactual comparisons remain unobserved;
+in particular, it does not by itself identify a positive latent
+representation residual or the contributions of components changed together.
 
 For the representation question, suppose the latent representation
 $\Theta$ is unobserved and no capacity or structural restriction excludes
@@ -3876,8 +3978,10 @@ guarantee identical behavior from a stochastic or externally changing
 provider. The finite trajectory also does not establish a population
 causal effect of the complete revision bundle.
 
-Table~\ref{tab:interpretive-levels} summarizes the separate roles of the
-theory and the observations.
+Table~\ref{tab:interpretive-levels} connects the introduction's evidence
+questions to the detailed theoretical objects, premises, and observations.
+It is a scope map: results at one level do not supply the premises of the
+next.
 
 \FloatBarrier
 \begin{table}[t]
@@ -3959,6 +4063,14 @@ population superiority, an optimal admission order, or the distinct
 effect of certification. The complete empirical scope is stated in
 Section~\ref{subsec:pilot-scope}.
 
+Together, the architecture, conditional analyses, and prospective protocol
+connect scoped procedural support to the evidence required for claims about
+its use, effect, and lifecycle value. The mathematical results specify
+comparisons in which useful reuse follows from explicit premises; the
+records permit inspection of actual applications without upgrading them
+to those comparisons. This synthesis is broader than the particular
+feasibility study and does not depend on that study validating every layer.
+
 A shared procedural commons would additionally require evidence of
 cross-user applicability, sound governance, manageable correlated
 failures, and sufficient reuse to cover continuing assurance and
@@ -3975,10 +4087,11 @@ the protocol makes one development path and its costs auditable.
 
 \label{sec:pilot-design}
 
-This appendix instantiates the arbitrary-horizon Courtroom framework and
-summaries with $D=8$ development episodes and $H=4$ terminal questions.
-These are design choices for this prospective feasibility study, not fixed
-requirements of the framework. The concrete counts, balanced schedules,
+This appendix specifies a prospective evidence-collection protocol within
+the Courtroom framework, instantiating its trajectory summaries with $D=8$
+development episodes and $H=4$ terminal questions. These are design choices
+for this prospective feasibility study, not fixed requirements of the
+framework. The concrete counts, balanced schedules,
 resource allocations, and disclosure gates in this and the following
 appendices belong to this $D=8$, $H=4$ protocol; another size requires its
 own prospectively registered protocol.
@@ -3986,9 +4099,12 @@ own prospectively registered protocol.
 The study records one prospective human--API development path: eight
 sequential development questions, paired adaptive and isolated frozen-$S_0$
 first contacts, post-update and final-development replays, and a matched-budget
-$S_0$--$S_8$ comparison on four prospectively untouched questions. It asks
-whether useful procedural reuse appears in the recorded trajectory and
-what construction, assurance, revision, and execution resources it consumes.
+$S_0$--$S_8$ comparison on four prospectively untouched questions. It
+documents the support available in each release, its attempted and assessed
+valid uses, numerical and assessed full-solution outcomes, and construction,
+assurance, revision, and execution resources. The planned version contrasts
+are descriptive; the record of a valid use does not itself establish a
+performance effect.
 
 Two correctness readouts are kept separate. The primary numerical endpoint
 uses exact equality after registered canonicalization. Full-solution
@@ -4580,6 +4696,7 @@ Section~\ref{subsec:execution-manifests}.
 \subsection{Evidence About Procedural Reuse}
 \label{subsec:pilot-reuse-evidence}
 
+The reuse record addresses availability and use separately from effect.
 Link attempted procedural use to availability, retrieval/order, pre-execution
 routing, scope, binding, checks, execution and retention in the sealed graph.
 The audit separates observations, validity judgments, unresolved links and
@@ -4791,7 +4908,20 @@ planned-cell and late-exclusion sensitivities retain their stated codings.
 The population, causal, and replication limits are collected in
 Section~\ref{subsec:pilot-scope}.
 
-Any descriptive statement that improvement followed a \emph{relevant} admitted motif uses a mapping produced by a preregistered outcome-blind procedure after $S_8$ and the adaptation ledger are frozen and all terminal records have sealed, but before any terminal output or adjudication is unsealed for analysis or full-solution assessment. The isolated reference role maps terminal question requirements to the then-frozen motif-type vocabulary; the resulting artifact remains inside the isolated reference archive and is unavailable to the terminal-execution controller. The execution trace separately records whether each mapped motif was actually retrieved, bound, executed, checked, and retained. The derivation assessment separately records whether that retained use was judged valid, invalid, or unassessable. This prevents post-outcome relevance relabeling but still does not identify a motif-specific causal effect.
+Any descriptive statement that improvement followed a \emph{relevant}
+admitted motif uses a mapping produced by a preregistered outcome-blind
+procedure after $S_8$ and the adaptation ledger are frozen and all terminal
+records have sealed, but before any terminal output or adjudication is
+unsealed for analysis or full-solution assessment. The isolated reference
+role maps terminal question requirements to the then-frozen motif-type
+vocabulary; the resulting artifact remains inside the isolated reference
+archive and is unavailable to the terminal-execution controller.
+
+The execution trace separately records whether each mapped motif was
+actually retrieved, bound, executed, checked, and retained. The derivation
+assessment separately records whether that retained use was judged valid,
+invalid, or unassessable. This prevents post-outcome relevance relabeling
+but still does not identify a motif-specific causal effect.
 
 \Needspace{7\baselineskip}
 \subsection{Integrity Checks and Deviation Handling}
@@ -4836,9 +4966,11 @@ representatives establish neither same-budget closure nor coverage of valid
 full derivations; observed errors are not family-optimal floors. Assessment
 ranges do not correct mistaken resolved judgments.
 
-Resource records support only declared scenarios, not demonstrated
-cost-effectiveness or recovery of unknown history. A shared knowledge commons
-would also need valid cross-context reuse sufficient for continuing
+Resource records document observed consumption within the declared
+boundary, not recovery of unknown history. Lifecycle-value scenarios
+additionally require justified gain, future-use, cost, and valuation
+premises; they do not demonstrate cost-effectiveness. A shared knowledge
+commons would also need valid cross-context reuse sufficient for continuing
 assurance, governance and maintenance. Controlled order, assurance-policy
 and stage interventions remain follow-ups requiring their own frozen
 platforms, registries, environments and budgets.
