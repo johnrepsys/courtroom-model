@@ -2276,40 +2276,6 @@ the weight $\delta=1-1/K$ explicitly yields the uniform canonical kernel.
 
 \end{proof}
 
-\paragraph{Mixture-weight resolution.}
-
-The exact calibration uses confidence weights approaching the
-optimizing value, including arbitrarily small or large weights at the
-two endpoints. Bounded finiteness of the answer alphabet does not
-establish this separate closure premise. If the manifest instead
-permits only a nonempty finite grid
-$\Delta\subset(0,1)$ and supplies the same law- and budget-preserving
-completions for every $\delta\in\Delta$, the argument gives
-\begin{equation}
-\begin{split}
-A_{s,B}^{\mathrm{can}}
-&\leq\phi_{K,\Delta}
-\!\left(R_{s,B}^{\star,\mathrm{can}}\right),\\
-\phi_{K,\Delta}(r)
-&:=
-\min_{\delta\in\Delta}
-\left\{(1-r)[-\log_2(1-\delta)]
-+r\log_2\frac{K-1}{\delta}\right\}.
-\end{split}
-\label{eq:finite-weight-grid-calibration}
-\end{equation}
-For each policy, minimize its completion loss over $\Delta$.
-The minimum of finitely many continuous functions is continuous, so
-passing to a sequence of decision errors approaching the infimum
-proves the displayed bound. Since $\phi_{K,\Delta}(0)>0$, this
-finite-grid premise alone does not imply that zero optimal decision
-error forces zero optimal log loss. A residual bound
-$c\leq\phi_{K,\Delta}(0)$ yields no positive error floor from this
-curve. The stronger closure used in
-Corollary~\ref{cor:formula-reasoning-canonical-calibration} must therefore
-be checked as registered, rather than inferred from finite-precision
-numerical outputs.
-
 For the registered finite fallback, the target-independent raw kernel assigns
 mass $1/(K-1)$ to a representative of the correct canonical label on every
 canonical error.  Therefore, for every $\pi\in\Pi_{s,B}^{\mathrm{dec}}$, the
@@ -2331,7 +2297,7 @@ construction resolves the continuous-singleton problem by assigning an
 atom to each canonical representative. Uniformity is a chosen terminal
 wrapper, not an assumption about an LLM's native answers. Finiteness and
 the registered renderer supply this modulus; law preservation,
-same-budget implementation, and mixture-weight resolution remain
+same-budget implementation, and closure for every $0<\delta<1$ remain
 separate premises. The manifest must report the $K$ from
 Equation~\eqref{eq:theory-canonical-alphabet-size}, its fallback penalty,
 and $\Psi_K$ before claiming quantitative instantiation. Finer precision
