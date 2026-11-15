@@ -449,7 +449,11 @@ builds an experience library for optimization-program formulation, tests
 new insights through retrieval and execution replay on their source tasks,
 and refines applicability conditions using cross-task evidence
 \citep{kong2026alphaopt}. This is a close precedent for scoped, checked
-reuse, not a proof of general semantic validity. Janus selects
+reuse, not a proof of general semantic validity. AlphaOPT v4 also reports
+phase-specific token, monetary, and runtime costs for library learning,
+diagnosis, refinement, and testing, and discusses amortizing construction
+cost over subsequent reuse \citep[Appendix~B.4 and Table~5]{kong2026alphaopt}.
+Janus selects
 between old and proposed memories; matched-rollout validation estimates a
 candidate skill's marginal utility before storage
 \citep{chen2026janus,zhang2026coevolving}.
@@ -1640,9 +1644,12 @@ uncertainty in the observation from the additional loss imposed by the
 predictor family. When it vanishes, all remaining fixed-law log loss is
 an approximation gap.
 
-When policies induce different histories and laws, the corresponding
-entropy terms need not be common; their family infimum cannot generally
-be separated into two infima.
+In broader policy-induced experiments, observations may reveal hidden
+source uncertainty and the corresponding entropy terms need not be
+common; a family infimum then cannot generally be separated into two
+infima. This caveat does not apply to fixed finite task-derived targets
+under the observed-history response kernels specified in
+Equation~\eqref{eq:observed-history-response-kernel} below.
 
 Ordinary predictive $\mathcal V$-entropy cannot be inserted into classical Fano for an arbitrary family. For example, let $Y=X\in\{0,1\}$ and suppose a restricted family contains only a predictor assigning probability $0.51$ to the correct semantic answer and $0.49$ to the other answer. Its argmax is always correct, while its log loss is positive. The family has excluded every confidence sharpening of an already perfect decision rule.
 
@@ -1705,11 +1712,30 @@ an almost-surely finite stopping time $T_\pi$, and a terminal kernel. The frozen
 
 \begin{equation}
 \mathsf K_{s,k}(do_k\mid h_k,a_k).
+\label{eq:observed-history-response-kernel}
 \end{equation}
 
 Here $a_k$ is the selected action and $o_k$ is the environment
 observation returned in response. The kernel describes the law of that
 observation given the observed history and action at stage $k$.
+This is a generative specification: conditional also on $(Q,Y)$, the
+action and response laws remain $\pi_k(\cdot\mid h_k)$ and
+$\mathsf K_{s,k}(\cdot\mid h_k,a_k)$, respectively. Any initial permitted
+runtime fields are conditionally independent of $Y$ given $Q$, and
+private policy randomness is independent of task and environment
+randomness. Thus actions and responses use the observed history, which
+includes $Q$, not an additional hidden-target input. The resulting factorization gives $Y\perp H_\pi\mid Q$ and, for
+any fixed measurable finite target $J=j(Q,Y)$,
+\[
+H_{P^\pi}(J\mid H_\pi)=H_P(J\mid Q)
+\qquad\text{for every policy }\pi.
+\]
+This statement is limited to fixed task-derived targets. A broader
+experiment in which observations reveal hidden target or source
+uncertainty instead requires a correspondingly target-dependent response
+kernel, or a declared latent-state kernel with its joint task law; the
+conditional independence and common entropy above need not hold there.
+
 Private policy randomization is represented inside the action kernels. Budget admissibility requires the registered cumulative resource vector through $T_\pi$, including terminal operations, to satisfy $B$. The task law, policy kernels, and environment kernels induce the policy-specific law $P^\pi$ by the Ionescu--Tulcea construction. Stage-specific action, observation, and history spaces may be represented by their standard-Borel disjoint unions. This kernel formulation is what ``nonanticipating end-to-end policy'' means below.
 
 An explicit terminal-reserve convention chooses a solving allowance $B_{\mathrm{solve}}$ and a reserve $b_{\mathrm{term}}$ for the registered terminal path before defining the policy families, with declared total $B=B_{\mathrm{solve}}+b_{\mathrm{term}}$ (componentwise for a resource vector). The solving allowance is not the total budget; all charged terminal operations must also be accounted for.
@@ -2476,10 +2502,14 @@ P^\rho_{J\mid H_\rho}\,\middle\|\,v_\rho(\cdot\mid H_\rho)
 This follows by conditioning on $H_\rho$ and using
 $-\sum_j p_j\log_2v_j=-\sum_j p_j\log_2p_j+
 \sum_jp_j\log_2(p_j/v_j)$, with the usual extended-value conventions.
-When conditional target uncertainty is positive, both terms can
-matter. A family infimum is an infimum of these sums, not in general
-the sum of two separate infima. Pulling out a common entropy term
-requires a reason that it is common across the compared policies.
+For any fixed finite task-derived target $J=j(Q,Y)$ under
+Equation~\eqref{eq:observed-history-response-kernel}, the entropy term is
+$H_P(J\mid Q)$ for every policy and can be pulled outside the family
+infimum, even though the transcript laws differ. In a broader experiment
+with hidden-source-revealing observations and correspondingly extended
+response kernels, entropy may instead depend on the policy; an infimum
+of these sums then cannot generally be separated into two infima.
+No common-entropy claim is made for an arbitrary policy-specific $J$.
 
 Because every $H_\rho$ contains $Q$ and $Z$ is a deterministic function of
 $Q$, the policy-specific conditional law of $Z$ given $H_\rho$ is the Dirac
