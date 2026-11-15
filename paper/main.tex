@@ -162,8 +162,8 @@ can reduce positive conditional uncertainty; standard information--distortion
 and packing--Fano converses describe representation limits under a specified
 source--representation ensemble and decoder-visible state.
 
-FormulaReasoning instead has a canonical target determined by the complete
-question. Writing $f_{\mathrm{FR}}$ for its verified reference function and
+FormulaReasoning \citep{li2026formulareasoning} instead has a canonical target
+determined by the complete question. Writing $f_{\mathrm{FR}}$ for its verified reference function and
 $c_Q$ for the registered canonicalizer,
 \begin{equation}
 Z=c_Q\!\left(f_{\mathrm{FR}}(Q)\right),
@@ -342,21 +342,47 @@ sample errors into a family-optimal floor.
 
 \paragraph{Positioning and longer-term motivation.}
 
-Courtroom builds on work treating context, memory, skills, and code as
-revisable resources. ACE and Evo-Memory study evolving context or memory;
-Skill-Pro, human-guided systems, and code-evolution approaches develop
-reusable skills or revise implementations
+Reusable procedural stores predate this proposal: Voyager accumulates and
+retrieves executable, compositional skills \citep{wang2024voyager}.
+ACE and Evo-Memory study evolving context or memory; Skill-Pro, human-guided
+systems, and code-evolution approaches develop reusable skills or revise
+implementations
 \citep{ace2026,wei2025evomemory,mi2026skillpro,aria2025,darwingodel2026}.
-Runtime skill assurance and analyses of memory construction, retrieval,
-and capacity address related reliability and resource questions
-\citep{skillsentry2026,xmemory2026,colaco2026whattokeep}.
-SkillEvolBench and AFTER/EVOLUTION provide close comparisons on skill
-revision, versioning, evaluation, transfer, and cost
-\citep{skillevolbench2026,belikova2026after}.
-Our emphasis is an auditable connection between assurance of reusable
-objects, validity of their applications, whole-system development, and
-lifecycle cost. The pilot does not isolate admission certification's
-incremental value over runtime validation.
+
+Admission and version management also have close precedents. Janus selects
+between old and proposed memories; matched-rollout validation estimates a
+candidate skill's marginal utility before storage
+\citep{chen2026janus,zhang2026coevolving}.
+Anything2Skill manages evidence-bearing skill contracts in a versioned bank,
+and ChipMEM conditions procedural storage on tool-based verification
+\citep{pan2026anything2skill,alrabah2026chipmem}.
+Zep Agent Skills compiles verified traces into versioned contracts with
+field-level event citations and admission gates, while SkillSentry monitors
+and guides skill execution at runtime
+\citep{chalef2026learningbydoing,skillsentry2026}.
+Procedural Graphs evolves relations among procedures using validation-gated
+edits; SPEM stores atomic skills and reusable skill-DAG compositions
+\citep{lu2026proceduralgraphs,zhou2026spem}.
+These recent reports include preprints, notably ChipMEM, Zep Agent Skills,
+Procedural Graphs, and SPEM. A lifecycle taxonomy organizes evolving skill libraries around
+verification/admission, retrieval/composition, maintenance, and governance
+\citep{li2026dynamicskills}.
+
+SkillsBench supplies paired no-skill and curated-skill evaluations;
+SkillEvolBench and AFTER examine skill evolution and transfer
+\citep{li2026skillsbench,skillevolbench2026,belikova2026after}.
+Skill Coverage distinguishes exercised behavioral constraints from task
+outcomes, while differential analyses document functional and efficiency
+regressions, including excessive verification
+\citep{tan2026skillcoverage,dong2026skillharm}.
+Analyses of memory retrieval and compaction address additional resource
+constraints \citep{xmemory2026,colaco2026whattokeep}.
+Courtroom's emphasis is the auditable connection between reusable-object
+assurance, validity of particular applications, whole-system development,
+conditional reuse and lifecycle calculations, and a sealed prospective
+protocol. The cited work already studies reusable stores, admission gates,
+versioning, and procedural composition. The pilot does not isolate admission
+certification's incremental value over runtime validation.
 
 Collective skill evolution and reusable skill knowledge bases also
 motivate pooling support across contributors
@@ -3972,22 +3998,22 @@ in Section~\ref{subsec:verified-procedural-growth} and
 Section~\ref{subsubsec:reuse-lifecycle-value} motivate these observations;
 the pilot does not estimate their population parameters or test admission
 orders against one another. Section~\ref{subsec:pilot-scope} states the
-inferential limits. The execution appendix specifies operational gates,
-the audit appendix specifies coding, and the ledger appendix supplies
-schemas, registration requirements, and the finite deviation map.
+inferential limits. The following appendices specify execution gates, audit coding, and the
+minimum evidence needed to reconstruct this study. They are not a universal
+implementation specification for Courtroom. Other studies may use different
+record layouts, instruments, and coding procedures, registered to support
+the claims they make. The present pilot does not require measurement of the
+idealized model's stage probabilities or policy-family optima.
 
 \Needspace{7\baselineskip}
 \subsection{Study Objective and Registration Boundary}
 
 \label{subsec:pilot-registration}
 
-The study asks:
-
-\begin{quote}
-
-What trajectory of canonical numerical outcomes, assessed full-solution outcomes, procedural reuse, and resource use is realized across first contacts, post-update same-item replays, final development replay, and terminal evaluation when the permitted Courtroom components may be revised between fresh questions but remain frozen within each attempt?
-
-\end{quote}
+The study records numerical and assessed full-solution outcomes, procedural
+reuse and resource use across first contacts, exposed-item replays and
+untouched terminal questions. Runtime policies remain frozen within attempts;
+authorized components may change between development questions.
 
 Registration has two stages. The prospective accounting seal precedes
 reference audit. It freezes $S_0$, the candidate pool and selection rules,
@@ -4030,17 +4056,18 @@ the study before the first question is revealed. Repair requires a dated
 successor protocol and seal; superseded commitments and all costs from the
 original accounting boundary remain recorded under their original scopes.
 
-Registration fixes the human operator's information, permissions, caps,
-stopping rules, and logging obligations. It does not fix a deterministic
-history-to-revision map. Future releases depend on authorized human judgment;
-this single trajectory is not a replicated draw from a specified update
-algorithm.
+Registration constrains human information, authority, budgets, stopping and
+records, not a deterministic history-to-revision algorithm.
 
 \Needspace{7\baselineskip}
 \subsection{Question Sets, Dependence-Family Separation, and Reference-Isolated Adjudication}
 
 \label{subsec:pilot-question-sets}
 
+FormulaReasoning provides formula-structured numerical tasks and an external
+formula database \citep{li2026formulareasoning}. Registration identifies the
+exact dataset release, repository revision, selected split, and file hashes;
+a later benchmark revision does not silently change the candidate pool.
 For this pilot, set $D=8$ and $H=4$. The registered question sets are
 
 \begin{align}
@@ -4164,7 +4191,7 @@ Target-loss eligibility and exclusion are output-blind: they may not depend on a
 
 The mathematical endpoint is
 $\ell^{\mathrm{sol}}(q,y,o)$ from
-Equation~\eqref{eq:theory-full-solution-loss}: the canonical answer
+Equation~\ref{eq:theory-full-solution-loss}: the canonical answer
 must be correct and the retained derivation must be valid. The study
 assesses this endpoint using a frozen evidence contract and rubric.
 An empirical assessment is not infallible access to
@@ -4172,109 +4199,66 @@ $\operatorname{Valid}(q,o)$.
 
 \paragraph{The sealed solution record.}
 
-Every launched policy uses the same registered terminal schema.
-Alongside its answer or failure disposition, its record identifies
-the submitted derivation and the dependencies retained in support of
-it. The contract is fixed at the accounting seal and disclosed
-identically to every release. It requires:
-\begin{enumerate}[itemsep=3pt,topsep=3pt]
-\item the requested quantity, relevant givens, units, sign conventions,
-and stated physical assumptions;
-\item each retained claim or operation, its inputs and semantic
-bindings, and its stated justification or procedural contract;
-\item the dependencies connecting those claims to the terminal answer,
-including the versions, hashes, scope, and bindings of used store
-objects and relations;
-\item the corresponding executed expressions or code and recorded
-results when a tool supplies a retained numerical claim; and
-\item a terminal retained-state manifest distinguishing retained claims
-from abandoned attempts, superseded values, and repaired dependencies.
-\end{enumerate}
+Every launched policy uses the same terminal evidence contract, fixed at
+the accounting seal and disclosed to every release. The sealed solution
+identifies the target, givens, assumptions and unit/sign conventions;
+retained claims, semantic bindings, inputs and justifications; dependencies
+to the answer, including used object/relation versions, scope and checks;
+executed expressions/code and results supporting tool-derived claims; and
+the final retained state, distinguished from discarded or repaired work.
+Supporting certificates and records must be identifiable, not inferred from
+a release name or admission verdict. The answer needs a supported path to
+the givens and registered mathematical/physical primitives.
 
-The final answer must have a supported dependency path to the question's
-givens and the registered mathematical or physical primitives.
-Disconnected correct statements do not supply that path. Supporting
-certificates and tool records must be identifiable in the sealed
-record; their existence is not inferred from a release name or an
-admission verdict.
-Failure dispositions may carry partial or empty derivations with the
-registered reason codes. They do not require a fabricated complete
-solution, and canonical failure already settles full-solution failure.
-A catastrophic launched-but-incomplete execution with no durably
-sealed terminal action follows
-Section~\ref{subsec:pilot-retry-policy}: it has no fabricated answer,
-canonical score, or full-solution assessment. An absent terminal
-action is distinct from an existing terminal submission whose
-derivation is missing or unassessable.
+This is an explicit submitted solution and observable evidence, not a demand
+for a provider's hidden internal reasoning. Exact values, approximations and
+intervals have distinct meanings; approximations need justification at the
+claimed resolution. Machine representations are not silently exact real
+arithmetic. The numerical endpoint remains six-digit canonical equality.
 
-This contract concerns an explicit submitted solution and observable
-execution evidence. It does not require access to a provider's hidden
-internal reasoning. Exact values, approximate values, and intervals
-have distinct registered meanings. Permitted numerical approximations
-must be justified at the claimed resolution; ordinary machine
-representations are not silently treated as exact real arithmetic.
-The final answer still receives the same six-digit canonical score.
+Discarded exploratory errors need not invalidate the final solution. Repairs
+must replace or justify affected claims and recompute or revalidate surviving
+dependents; changed flags, stale descendants and cancelling mistakes do not
+suffice. Construction, selection, rendering and checking consume runtime
+resources. Later assessors cannot supply missing work or select a more
+favorable graph after reference access.
 
-Discarded exploratory errors do not automatically fail the final
-solution. A repair must replace or justify the affected retained
-claims and recompute or revalidate every dependent claim that survives.
-Changing a node's status flag, retaining descendants of an invalid
-binding, or obtaining a correct number through cancelling mistakes is
-insufficient. The record preserves the abandoned material for audit
-while identifying the submitted derivation before sealing.
-
-Constructing, selecting, rendering, and checking this solution within
-the policy consumes its registered runtime resources. An assessor may
-later check the sealed claims, but may not supply a missing derivation,
-repair the submission, or select a more favorable retained graph after
-seeing the reference. A missing derivation does not erase an otherwise
-valid canonical execution record.
+Failure dispositions may retain partial or empty derivations with reasons;
+canonical failure already settles full-solution failure. Catastrophic
+incompleteness without a terminal action has no fabricated solution or
+assessment (Section~\ref{subsec:pilot-retry-policy}). By contrast, missing
+or unassessable evidence on an existing terminal submission does not erase
+its numerical execution record.
 
 \paragraph{Frozen rubric and assessment procedure.}
 
-The accounting seal registers the assessor roles, human qualifications
-or automated configurations, allowed tools and evidence, per-record
-assessment cap, reconciliation rule, and assessment-record schema.
-Write $B_{\mathrm{assess}}$ for the common per-record assessment cap.
-The same cap and checking rules apply to both versions and all
-reported phases. Its work is charged to the appropriate adaptation
-or evaluation allocation; it does not enlarge a solver's runtime
-budget or authorize additional within-question corrective calls.
-The solution-adjudication role is separate from the within-question
-solver, runtime validator, admission decision, and development
-microscope. It has no authority to change item eligibility or the
-sealed submission. The reference custodian's output-blind eligibility
-procedure remains separate.
+The accounting seal fixes assessor roles/qualifications or automated
+configurations, evidence, tools, reconciliation and record requirements,
+and common per-record cap $B_{\mathrm{assess}}$ across versions and phases.
+Checking is charged to adaptation or evaluation without enlarging runtime
+budgets or authorizing corrective solver calls. The assessor is separate
+from runtime validation, admission and the microscope, and cannot change
+a submission or output-blind eligibility.
 
-The rubric checks task interpretation and assumptions; formula
-selection and scope; semantic binding, dimensions, units, and signs;
-arithmetic or justified approximation; dependency and repair
-integrity; and the connection from the retained derivation to the
-reported answer. It accepts any derivation meeting these requirements,
-including an alternative to the reference program. It does not demand
-the reference's exact wording or sequence of steps.
+The rubric checks interpretation/assumptions, formula scope, binding,
+dimensions/units/signs, arithmetic or justified approximation, dependency and
+repair integrity, and support for the answer. Alternative valid derivations
+are accepted without matching the reference's wording or order.
 
-The assessor receives a read-only, pseudonymized packet containing the
-question, public metadata, submitted derivation, and the permitted
-supporting records. Version, branch, phase, comparative outcomes, and
-the mechanical canonical verdict are masked where they are not needed
-to check a claim. Runtime objects are provided under neutral packet
-identifiers with a custodied mapping to their original hashes.
-Recognizable content may still reveal a method or version; such
-limitations are recorded rather than described as complete blinding.
-No counterpart solution is supplied as a template for judging the
-current solution.
+Each read-only pseudonymized packet contains the question, public metadata,
+submitted derivation and permitted evidence. Branch, release, phase,
+comparative outcomes and canonical verdict are masked where unnecessary;
+objects use neutral identifiers linked to custodied hashes. Record recognizable
+content and other blinding limits; do not supply a counterpart solution as
+a template. Role overlap with operator/model/reference functions is disclosed,
+not treated as independent error control.
 
-A first assessment records the evidence checked and any invalid or
-unresolved dependency before the canonical verdict is joined. Further
-reference-assisted checking is allowed only under the preregistered
-procedure and after the applicable reference-release gate. Initial
-and reconciled judgments, reasons for any change, assessor identities
-or configuration hashes, and resource events are preserved. Neither
-the operator nor the microscope can override a judgment to make an
-episode successful. Any adjudication work performed by the same
-person or model used elsewhere in the system is disclosed; role
-separation does not establish statistical independence of errors.
+The first pass records checked evidence and invalid/unresolved dependencies
+before joining the canonical verdict. Further reference-assisted checking
+requires its registered procedure and release gate. Preserve initial and
+reconciled judgments, reasons, responsible identities/configurations and
+resources; neither operator nor microscope can override them to make an
+episode successful.
 
 For a sealed record $o$, the final derivation assessment is
 \begin{equation}
@@ -4292,21 +4276,13 @@ assessment-cap exhaustion without a resolved verdict. A known invalid
 retained step is sufficient for an invalid judgment even if other
 parts remain unresolved.
 
-Successful Python execution, a runtime-validator pass, an admission
-certificate, agreement with the reference number, or an unsupported
-LLM endorsement alone cannot establish a valid derivation. A correct
-number without assessable supporting work is not reported as a fully
-correct solution. Where meaningful, the assessment records the
-earliest invalid retained dependency and the descendants it affects.
-For a branching graph, several minimal invalid dependencies may
-exist. These diagnostic locations do not introduce a partial-credit
-endpoint.
-
-After all permitted checks and reconciliation, the assessment record
-is sealed. Disagreement not resolved within the registered procedure
-remains unassessable. Subsequent corrections are dated supplements
-that preserve the original verdict and its effect on reported
-summaries. All checking and reconciliation work is charged.
+Tool success, validator/admission endorsement, reference-number agreement
+or unsupported LLM approval alone cannot establish validity. Where meaningful,
+locate the earliest invalid retained dependencies and affected descendants;
+several minimal defects may coexist. These diagnostics do not add partial
+credit. Seal the assessment after permitted checks; unresolved disagreement
+stays unassessable. Dated corrections preserve earlier verdicts and their
+reported effects. All checking and reconciliation is charged.
 
 \paragraph{Combining the two correctness readouts.}
 
@@ -4503,21 +4479,19 @@ evaluation begins. Section~\ref{subsec:execution-confirmatory} supplies
 the exact gates.
 \end{enumerate}
 
-Immutable outer caps cover API calls, native token coordinates, charges,
-tool/compute use, elapsed time, and active human effort. Each is registered
-as episode-limiting, adaptation-stream-limiting, cell-nonlaunching, or globally
-stopping; its treatment cannot change after outcomes are known. A development
-budget $B_t$ may change only by release within that envelope. Exhausting the
-adaptation allocation stops revisions and yields later no-change releases,
-while preserving the reserved evaluation allocation, unless a registered
-global stop applies. The matched outer cap $B_{\mathrm{eval}}$ uses a frozen
-field-by-field application and endpoint-configuration hashes. It imposes
-the same maxima on both terminal releases without replacing their internal
-routing or stopping rules; realized usage may differ.
+Register immutable caps on calls, native tokens, charges, tools/compute,
+elapsed time and active human effort. Each cap is registered as
+episode-limiting, adaptation-stream-limiting, cell-nonlaunching, or globally
+stopping; its treatment is fixed before outcomes. Release budgets $B_t$ stay
+within this envelope. Exhausting the adaptation allocation stops revisions
+and yields later no-change releases while protecting the reserved evaluation
+allocation, unless a global stop applies. The field-by-field matched outer
+$B_{\mathrm{eval}}$ uses frozen endpoint-configuration hashes, leaves internal
+routing/stopping intact and permits different realized consumption.
 
-Replays measure fit on exposed items. Numerical and assessed full-solution
-transitions are reported separately under Section~\ref{subsec:audit-interpretation};
-a correct replay does not establish a causal repair or fresh transfer.
+Replay fit and numerical/full-solution transitions have the descriptive
+interpretation in Section~\ref{subsec:audit-interpretation}, not identified
+causal repair or fresh transfer.
 
 \Needspace{7\baselineskip}
 \subsection{Inference, Retry, and Branch-Stopping Rules}
@@ -4578,16 +4552,14 @@ Applying two versions to four questions schedules eight version--item cells acro
 \mathcal I_0^{\mathrm{valid}}\cap\mathcal I_8^{\mathrm{valid}}.
 \end{equation}
 
-The raw $2\times4$ matrix retains missing, invalid, and excluded cells.
-Both correctness readouts use the common eligible executed-cell intersection,
-including unresolved derivations. Its size is at most four; the paired
-contrast is undefined if it is empty and need not equal the difference
-between release-specific means when inclusion is asymmetric. The sole
-planned endpoint contrast is $S_0\to S_8$, with all release-specific and
-paired counts reported under Section~\ref{subsec:pilot-outcomes}. Two versions
-on four items remain four paired question units. Here ``transfer'' describes
-behavior on questions untouched by the registered development process,
-without asserting a causal transfer effect.
+Retain the raw $2\times4$ matrix, including missing, invalid and excluded
+cells. Both readouts use the same eligible executed-cell paired intersection,
+including unresolved derivations. It has at most four item units; its
+contrast is undefined if empty and can differ from the difference of release
+means under asymmetric inclusion. Report the sole planned $S_0\to S_8$
+contrast and all release/pair counts under
+Section~\ref{subsec:pilot-outcomes}. ``Transfer'' here describes behavior on
+prospectively untouched questions, not an identified causal effect.
 
 \Needspace{7\baselineskip}
 \subsection{Caches, State Isolation, and Immutable Artifacts}
@@ -4608,75 +4580,56 @@ Section~\ref{subsec:execution-manifests}.
 \subsection{Evidence About Procedural Reuse}
 \label{subsec:pilot-reuse-evidence}
 
-For each attempted procedural use, link availability, retrieval and ordering,
-route selection, scope, binding, runtime checks, execution, and retention
-to the sealed solution graph. Routing records distinguish choosing a stored
-procedure or the baseline route before execution from a later registered
-repair. The audit separates observed events, supported validity judgments,
-unresolved links, and proposed explanations under
-Appendix~\ref{app:audit-microscopes}.
+Link attempted procedural use to availability, retrieval/order, pre-execution
+routing, scope, binding, checks, execution and retention in the sealed graph.
+The audit separates observations, validity judgments, unresolved links and
+explanations (Appendix~\ref{app:audit-microscopes}). Across releases retain
+admissions, replacements, revocations, unused support and other interface,
+prompt, fallback, validation, stopping and budget changes. Store size is not
+useful coverage, and active stores need not be nested.
 
-Across releases, record admitted, replaced, revoked, and unused objects and
-relations, together with interface, prompt, fallback, stopping, validation,
-and budget changes. Active stores need not be nested, and store size is not
-useful coverage. A descriptive semantic-stage mapping must specify how
-operations and repairs form stages. Trace flags do not estimate
-$p_i(q)$, $a_{i,t}(q)$, or $w_i(q)$, nor supply the unsupported continuation
-at the same intermediate state.
-
-The complementarity calculation in
-Section~\ref{subsubsec:reuse-complementarity} makes overlapping useful support
-at distinct stages a candidate pattern to examine. These records can show
-where procedures were used together and whether their retained dependencies
-were assessed as valid. One admission path does not estimate the mixed
-coverage gain, compare orders, or show that a greedy admission rule is
-optimal. Such tests require separately controlled paths and budgets.
+A descriptive stage mapping states how operations and repairs form stages.
+Trace flags estimate neither $p_i(q)$, $a_{i,t}(q)$ nor $w_i(q)$, and do not
+supply the unsupported continuation at the same state. Co-use of assessed
+valid procedures at distinct stages can motivate complementarity studies;
+one admission path estimates no mixed-coverage gain, order effect or optimal
+greedy rule. Such comparisons need controlled paths and budgets.
 
 \Needspace{7\baselineskip}
 \subsection{Prospective Resource Ledger}
 
 \label{subsec:pilot-resource-ledger}
 
-The ledger records every instrumented physical event from the accounting
-seal, including reference and evaluator construction, runtime and external
-checking, human work, candidate construction, admission, rejected work,
-tests, replays, storage, and analysis. Scheduled but unperformed work creates
-no consumption; actual prelaunch work remains charged. Native measurements,
-atomic event identity, the four immutable physical scopes, and cutoff and
-reconciliation rules are specified in Section~\ref{subsec:ledger-resources}.
-Outcome-dependent resource fields obey the same archive embargo as their
-execution. The ledger makes no claim about unreported provider-internal work.
+Record instrumented physical work from the accounting seal, including
+reference/evaluator construction, execution/checking, human revision,
+construction/admission, unsuccessful work, tests, replays, storage and
+analysis. Scheduled but unperformed work has no consumption; actual
+prelaunch work is charged. Native units, immutable scopes, cutoff and
+reconciliation follow Section~\ref{subsec:ledger-resources}; outcome-bearing
+resource fields remain embargoed. Unreported provider-internal work is not
+claimed as measured.
 
-Report each scope-specific vector and their exact-once physical-study total
-as of $T_{\mathrm{report}}$, using Equation~\eqref{eq:physical-study-resources}.
-For any incomplete coordinate, report its known subtotal and unavailable-event
-count rather than a complete total. Native quantities, observed API charges,
-imputed human-labor values, and elapsed time remain separately visible.
-An analytical reuse or contamination attribution never retags or duplicates
-a physical event.
+Report scope vectors and exact-once physical total at $T_{\mathrm{report}}$
+(Equation~\ref{eq:physical-study-resources}); incomplete coordinates have
+known subtotals and unavailable-event counts, not complete totals. Keep
+native consumption, charges, imputed human values and elapsed time distinct.
+Analytical attribution cannot retag or duplicate events.
 
-If $N\geq1$ actual registered deployments of $S_t$ are logged by the cutoff,
-report $\mathbf R_{\mathrm{pros\text{-}life},t}(N)$ and
-$\overline{\mathbf R}_{\mathrm{pros\text{-}life},t}(N)$ from
-Equations~\eqref{eq:prospective-lifecycle-resources}--\eqref{eq:average-prospective-lifecycle-resources}.
-Their deployment cohort includes its actually incurred setup, hosting,
-maintenance, storage, and teardown, with shared events counted once.
-Evaluation-only runs and study overhead remain outside these operational
-lifecycle quantities. Without actual deployments, any corresponding quantity
-is projected. Unknown historical resources prevent a claim to the complete
-lifecycle total in Equation~\eqref{eq:full-lifecycle-resources}.
+Only actual registered deployments support operational lifecycle vectors
+in Equations~\ref{eq:prospective-lifecycle-resources}--\ref{eq:average-prospective-lifecycle-resources},
+including cohort setup, hosting, maintenance, storage and teardown counted
+once. Evaluation/overhead stay outside those operational quantities; without
+deployments they are projections, and unknown history prevents a complete
+lifecycle total.
 
-Optional lifecycle-value scenarios follow prospectively specified rules
-and the record requirements in Section~\ref{subsec:ledger-resources}. They
-state the compared releases, common cost boundary, dated valuation, future
-task and execution conditions, and horizon $N$, distinguishing measured
-inputs from assumed or independently supported $F$, $c_{\mathrm{use}}$, $g$,
-and $v$. A development total is not automatically one motif's incremental
-cost, and evaluation expenditure is not automatically recurring deployment
-cost. Neither replay fit nor four terminal questions establish the expected
-gain $g$. The break-even condition in Equation~\eqref{eq:lifecycle-break-even}
-is therefore a conditional projection, not an observed return. It cannot
-replace the native resource record or either correctness readout.
+Optional value scenarios register compared releases, cost boundary, dated
+valuation, future conditions, horizon and measured/assumed/supported inputs
+$F$, $c_{\mathrm{use}}$, $g$ and $v$ under
+Section~\ref{subsec:ledger-resources}. Bundle expenditure is not one motif's
+incremental cost, evaluation is not automatically recurring deployment,
+and replay/four terminal items do not establish $g$. Break-even remains a
+conditional projection, not an observed return or a substitute for native
+resources and correctness readouts.
 
 \Needspace{7\baselineskip}
 \subsection{Outcomes and Planned Analysis}
@@ -4698,7 +4651,15 @@ Z_t
 \label{eq:pilot-first-contact-matrix}
 \end{equation}
 
-The displayed $Z_t$ is an authorized post-embargo analytical join to the custodied target; when the adaptive branch did not launch, it is not part of either execution record and does not imply that the target entered the development channel. Each record states whether the scheduled branch launched. Only a launched, analysis-valid, target-loss-eligible record contains a terminal action that enters the corresponding primary executed-cell target-loss summary; an unlaunched record contains no terminal action or canonical loss, and an invalid or target-ineligible record remains visible outside that denominator. The matrix is summarized by the branch-specific analysis-valid executed-cell means and available-pair contrast defined in Section~\ref{subsec:adaptive-estimands}. The planned denominator per branch is $D=8$, for sixteen scheduled first-contact branch cells in total. For each branch, the planned, launched, analysis-valid, target-loss-eligible, and primary-included counts are reported separately, together with the available paired count. Descriptively, launched paired numerical transitions distinguish canonically correct answers, answered-but-canonically-incorrect outputs, and no-answer dispositions; the latter two both have canonical loss one when the cells are otherwise primary-included. With complete primary inclusion, each of the eight questions has substantial influence on the averages.
+The displayed target is an authorized post-embargo join, not evidence of
+development access after adaptive nonlaunch. Report each branch's planned,
+launched, analysis-valid, target-eligible and included counts, with the
+available paired count. Sixteen first-contact cells are planned ($D=8$ per
+branch). Only eligible valid executed cells with sealed actions enter the
+primary summaries in Section~\ref{subsec:adaptive-estimands}; nonlaunch,
+incompleteness, exclusions and invalidity remain visible without fabricated
+losses. Distinguish correct, answered-incorrect and no-answer transitions;
+the latter two have loss one when included.
 
 For each sealed terminal action, available separately sealed numerical
 and derivation adjudication records are joined under the applicable
@@ -4756,7 +4717,7 @@ A launched non-answer disposition---including no-answer, deferral, cap exhaustio
 \label{eq:pilot-pessimistic-planned-cell-risk}
 \end{equation}
 
-when the denominator is nonzero. Launched analysis-invalid cells, target-ineligible or late-excluded cells, and contaminated cells lie outside both $\mathcal C_g$ and $\mathcal N_g$ and remain visible in the scheduled matrix and exclusion counts. Equation~\eqref{eq:pilot-pessimistic-planned-cell-risk} is labelled \emph{eligible planned-cell noncompletion coding}, not a solver output or a substitute for the analysis-valid executed-cell canonical-loss mean. The scheduled-cell matrices and completion counts remain the primary record; the executed-cell and pessimistically coded summaries are complementary views, and neither is reported alone as ``the'' accuracy. Every branch mean, paired contrast, coverage fraction, accepted-answer risk, or pessimistic summary is reported as undefined when its defining set or denominator is empty; in particular, the $t=2{:}8$ paired contrast can be undefined even when the full $t=1{:}8$ paired contrast is defined.
+when the denominator is nonzero. Launched analysis-invalid cells, target-ineligible or late-excluded cells, and contaminated cells lie outside both $\mathcal C_g$ and $\mathcal N_g$ and remain visible in the scheduled matrix and exclusion counts. Equation~\ref{eq:pilot-pessimistic-planned-cell-risk} is labelled \emph{eligible planned-cell noncompletion coding}, not a solver output or a substitute for the analysis-valid executed-cell canonical-loss mean. The scheduled-cell matrices and completion counts remain the primary record; the executed-cell and pessimistically coded summaries are complementary views, and neither is reported alone as ``the'' accuracy. Every branch mean, paired contrast, coverage fraction, accepted-answer risk, or pessimistic summary is reported as undefined when its defining set or denominator is empty; in particular, the $t=2{:}8$ paired contrast can be undefined even when the full $t=1{:}8$ paired contrast is defined.
 
 \paragraph{Full-solution summaries on the same executed cells.}
 
@@ -4765,7 +4726,7 @@ set $\mathcal C_g$ for both correctness readouts. Partition it into
 $\mathcal P_g^{\mathrm{sol}}$,
 $\mathcal F_g^{\mathrm{sol}}$, and
 $\mathcal U_g^{\mathrm{sol}}$ according to
-Equation~\eqref{eq:pilot-solution-status}. The last set contains
+Equation~\ref{eq:pilot-solution-status}. The last set contains
 unresolved solution assessments and is distinct from the unlaunched
 set $\mathcal N_g$.
 Report all three counts, the assessed-pass fraction, and
@@ -4790,7 +4751,7 @@ observed mathematical error rate.
 For paired summaries, retain the canonical comparison's common eligible
 executed-cell intersection, including pairs with unresolved derivations.
 Use the lower and upper contrast bounds in
-Equation~\eqref{eq:solution-paired-assessment-range}, together with the
+Equation~\ref{eq:solution-paired-assessment-range}, together with the
 underlying paired statuses. Do not restrict the comparison to whichever
 records happen to be assessable. A canonical incorrect-to-correct
 transition and an assessed full-solution fail-to-pass transition are
@@ -4811,7 +4772,7 @@ $m_g=|\mathcal N_g|$, its completion range is
 \end{equation}
 It explicitly codes eligible nonlaunch as failure without creating a
 solution record. It has the same exclusions and protocol interpretation
-as Equation~\eqref{eq:pilot-pessimistic-planned-cell-risk}.
+as Equation~\ref{eq:pilot-pessimistic-planned-cell-risk}.
 No unresolved judgment is silently removed, counted as correct, or
 converted into a resolved invalid verdict. Empty-denominator summaries
 are undefined.
@@ -4861,34 +4822,26 @@ estimate decoding variability. Pairing fixes the realized item but does not
 randomize versions, remove provider drift, or identify component-wise or
 whole-bundle causal effects.
 
-The idealized reuse model motivates inspecting where stored procedures
-replace fallible work and where applicability, binding, retained validity,
-fallback preservation, or continuation resources fail. A baseline error is
-allowed by the model, and a score regression alone does not locate a violated
-premise. The complementarity and order calculations distinguish endpoint
-performance from cumulative value under fixed mechanisms; this single path
-does not test either calculation or compare admission orders. Trace-supported
-successes and adverse cases can provide circumstantial evidence about the
-proposed mechanism without establishing its uniform population premises.
+The reuse model motivates checking applicability, binding, retained validity,
+fallback and continuation resources. A baseline error is allowed by that
+model, and regression alone locates no failed premise. This one path tests
+neither complementarity nor admission-order effects and does not establish
+uniform population conditions.
 
-The information and family-level results provide broader context.
-$Z=c_Q(Y)$ is determined by the complete question, so useful support need
-not add Shannon information conditional on $Q$. The study estimates neither
-implemented population risks, family optima, accessibility residuals, nor
-predictive or induced-solution log loss. A finite numerical alphabet and
-representative renderer do not establish same-budget wrapper closure or a
-positive residual, and they do not supply a fallback over complete valid
-derivations. Observed errors are not family-optimal floors. Full-solution
-assessments are fallible; unresolved-case ranges do not correct adjudicator
-error.
+Because $Z=c_Q(Y)$ is determined by the complete question, useful support
+need not add conditional Shannon information. The pilot estimates no
+population risks, policy-family optima/accessibility residuals, stage
+probabilities, predictive or induced-solution log loss. Finite numerical
+representatives establish neither same-budget closure nor coverage of valid
+full derivations; observed errors are not family-optimal floors. Assessment
+ranges do not correct mistaken resolved judgments.
 
-The resource record can support declared lifecycle scenarios but does not
-demonstrate cost-effectiveness or recover unknown historical work. A shared
-knowledge commons would additionally require useful, valid reuse across users
-and contexts sufficient to meet continuing assurance, governance, and
-maintenance costs. Controlled admission-order, certification/runtime-policy,
-and stage-intervention comparisons remain follow-ups after the platform,
-candidate registry, environments, and budgets are frozen.
+Resource records support only declared scenarios, not demonstrated
+cost-effectiveness or recovery of unknown history. A shared knowledge commons
+would also need valid cross-context reuse sufficient for continuing
+assurance, governance and maintenance. Controlled order, assurance-policy
+and stage interventions remain follow-ups requiring their own frozen
+platforms, registries, environments and budgets.
 
 \section{Execution, Isolation, and Replay Specification}
 \label{app:execution-replay}
@@ -5015,70 +4968,33 @@ successful endpoint never promotes intermediate nodes automatically.
 \subsection{Sealed Evidence and Separate Assessment Records}
 \label{subsec:execution-evidence}
 
-The record schema separates immutable execution evidence from
-later adjudication. For a launched execution, it requires the
-following fields wherever applicable; unavailable required evidence
-is marked missing rather than inferred or reconstructed:
-\begin{itemize}[leftmargin=*,itemsep=2pt,topsep=2pt]
-    \item its opaque cell and run identifiers, branch and phase in
-    the custodied ledger, launch status, release and execution-manifest
-    hashes, registered caps, reset and cache configuration, and
-    seal commitment;
-    \item the exact reference-stripped runtime question and public
-    metadata, prompts, permitted tool inputs and outputs, response
-    objects, parser results, request identifiers, timestamps, returned
-    provider metadata, retries, terminal disposition, and any late-response
-    quarantine references;
-    \item retrieved candidates and ordering; selected object and
-    relation versions, hashes, and declared scope; semantic bindings;
-    checks, execution results, fallback decisions, and retained or
-    discarded status;
-    route-selection records distinguish a stored procedure or baseline
-    route chosen before step execution from any subsequent registered
-    repair;
-    \item the submitted claims and dependency links to the question's
-    givens, their justifications or procedural contracts, executed
-    expressions or code supporting numerical claims, and the final
-    retained-state manifest; and
-    \item resource-event references, usage-schema versions, and access
-    and integrity records within the declared instrumentation boundary.
-\end{itemize}
-Full study identifiers remain in the custodied ledger rather than
-the model-visible payload. If a scheduled cell never launches, its
-record contains its nonlaunch reason and actually incurred prelaunch
-events, without inventing a trace, derivation, or terminal answer.
-A launched-but-incomplete record preserves surviving execution
-evidence and its registered failure status; it does not supply a
-terminal submission for numerical or full-solution adjudication.
+The execution seal commits the reference-stripped input and public metadata;
+release, branch/phase manifest, caps, reset and cache configuration; prompts,
+responses, tool records, retries, provider metadata and timestamps; retrieval,
+route choices, bindings, checks and procedural uses; terminal disposition,
+submitted derivation and retained dependencies; resource links; and access,
+seal and quarantine records. Requirements apply only to actual events.
+An unlaunched cell records its reason and prelaunch work; an incomplete
+launched cell preserves surviving evidence without inventing a submission.
+Full study identifiers stay in the custodied ledger, not the runtime item.
 
-The submitted derivation follows Section~\ref{subsec:pilot-solution-adjudication},
-including its treatment of approximations, discarded attempts, repaired
-dependencies, and partial failure records. Immutable evidence links resolve
-to archived object versions, so a later store revision cannot change an
-earlier submission. Missing evidence at the seal remains missing; later
-checking cannot select another graph or complete the argument.
+The solution contract in Section~\ref{subsec:pilot-solution-adjudication}
+governs approximations, repairs and retained dependencies. Evidence links
+resolve to archived versions, so later store changes cannot alter the sealed
+submission. Missing evidence remains missing; an assessor cannot complete
+the argument or choose a different retained graph.
 
-For an existing sealed terminal action, external adjudication uses
-a separately sealed record linked to the execution commitment. It
-contains the scorer and evaluation-manifest
-hashes, permitted reference-record version, canonical outcome,
-derivation assessment $d_i(o)$, assessed full-solution status,
-supporting findings and unresolved dependencies, initial and reconciled
-judgments, assessor identity or configuration, access and gate events,
-and resource references. Mechanical scoring and derivation assessment
-may seal separately under their respective gates before their
-authorized analytical join. Analysis-validity, eligibility, and
-inclusion determinations are also dated and linked; they do not
-overwrite the execution seal.
-
-Assessment follows the rubric, pseudonymization, first-pass rule, and common
-$B_{\mathrm{assess}}$ in Section~\ref{subsec:pilot-solution-adjudication}.
-Its result and the canonical verdict combine under
-Equation~\eqref{eq:pilot-solution-status}. Missing derivation evidence on an
-existing action does not remove that action from either reporting set.
-Later corrections are dated supplements preserving the submission and
-earlier verdicts. Checking does not enlarge the solver's budget. Shared
-resource links refer to exact-once events under Section~\ref{subsec:ledger-resources}.
+Numerical scoring, derivation assessment, coding, and inclusion decisions
+are separately sealed, dated records linked to that execution commitment.
+They identify the governing rules and reference version, permitted evidence
+and gate, findings and unresolved claims, initial and reconciled judgments,
+responsible assessor or configuration, and resource events. Their authorized
+join follows Equation~\ref{eq:pilot-solution-status}; it neither rewrites the
+submission nor enlarges its runtime budget. The common rubric,
+pseudonymization, first-pass rule, $B_{\mathrm{assess}}$, and correction rules
+remain those of Section~\ref{subsec:pilot-solution-adjudication}.
+Missing derivation evidence does not remove an otherwise eligible action
+from either correctness reporting set. Shared checking events count once.
 
 \subsection{Replay, Assessment Gates, and Confirmatory Sealing}
 \label{subsec:execution-confirmatory}
@@ -5199,51 +5115,27 @@ provider state is controlled.
 \subsection{Release Manifests and Replay Comparability}
 \label{subsec:execution-manifests}
 
-Every released state $S_t$ has a content-addressed manifest containing
-at least:
-\begin{itemize}[leftmargin=*,itemsep=2pt,topsep=2pt]
-    \item the parent release, complete accepted diff, and immutable
-    references to candidate provenance, tests, and admission decisions;
-    \item the requested model and provider, client-visible decoding
-    and retry configuration, and acceptance policy for returned
-    identifiers;
-    \item prompt-template, schema, controller, runtime-parser,
-    solution-renderer, tool, executor, and runtime-validator versions
-    and hashes, with conformance to the common output contract;
-    \item active motif and graph objects and their scopes, canonical
-    store-content hash, retrieval-index configuration and content
-    hash, source-store hash, and runtime-interface hash;
-    \item the version-specific development runtime budget and
-    semantic-action, question-level, provider-retry, and terminal
-    limits, with references to the applicable phase manifests;
-    \item the required release tests, frozen evaluation-manifest
-    reference, and retained-solution contract reference; and
-    \item release timestamp, rationale, protocol-deviation status,
-    and resource-event links.
-\end{itemize}
-Manifest references preserve provenance without granting runtime
-access to the referenced artifact. Reference-derived test fixtures,
-external adjudication records, and other restricted evidence remain
-in their authorized partitions; linking them from a release manifest
-does not expose them to the solver, retriever, or other runtime
-component. Model-visible artifacts are limited to the registered
-runtime projection.
+Each content-addressed release manifest identifies its parent and accepted
+diff; candidate provenance, admission decisions and tests; requested
+model/provider, decoding and retry configuration and returned-identifier
+acceptance rule; runtime component versions; active scoped store objects,
+canonical store hash, retrieval-index and source-store hashes, and interface
+hash; development budget and stopping limits; common evidence/evaluation
+contracts; and release time, rationale, deviations and resource links.
 
-The canonical store is serialized in stable identifier order.
-Added, replaced, revoked, and unused objects remain traceable across
-releases. Store, index, interface, prompt, fallback, and budget
-changes are distinguishable; a larger store does not establish
-greater useful coverage, and successive active stores need not be
-nested.
+Store serialization uses stable identifier order. Added, replaced, revoked
+and unused objects remain traceable; store, index, interface, prompt,
+fallback and budget changes remain distinguishable. Stores need not be
+nested, and size is not useful coverage. Manifest links preserve provenance
+without granting runtime access to restricted evidence or reference-derived
+fixtures.
 
-The external evaluation manifest separately fixes the reference and
-canonicalization procedures, evidence contract, numerical endpoint,
-derivation rubric, assessor roles and configurations, permitted
-evidence and tools, assessment cap and reconciliation procedure,
-blinding and disclosure rules, and treatment of unresolved judgments.
-These fields remain invariant across runtime releases. Per-record
-findings and assessment resource events are later observations, not
-changes to this manifest.
+The separate evaluation manifest fixes the reference and canonicalization
+procedures, numerical endpoint, solution contract, assessment rubric,
+assessor roles/configurations, allowed evidence and tools, common checking
+cap, reconciliation, blinding, disclosure and unresolved-case rules.
+Runtime releases cannot change it. Per-record findings and actual checking
+resources are later observations.
 
 A replay is client-configuration-equivalent only when its frozen
 release hash, model-visible artifacts, runtime budget, evidence
@@ -5320,39 +5212,27 @@ Z_i:=c_{Q_i}(Y_i),
 \label{eq:audit-canonical-labels}
 \end{equation}
 
-An eligible reference has $Z_i\neq\bot$, and the primary numerical loss on an
-analysis-valid executed cell is $\mathbf 1\{\widehat Z_i\neq Z_i\}$, with
-the $\bot$ and no-action rules in Sections~\ref{subsec:pilot-question-sets}
-and~\ref{subsec:pilot-retry-policy}. Derivation judgments and combined
-pass/fail/unresolved statuses follow
-Equations~\eqref{eq:pilot-derivation-assessment}--\eqref{eq:pilot-solution-status}.
-Thus cancelling retained mistakes can yield a numerical pass and a
-full-solution failure. Missing evidence alone is not invalidity, and finding
-no defect in an incomplete trace is not validity. An absent terminal action
-has no fabricated score or assessment and is distinct from an existing
-submission with unassessable evidence.
+For an eligible reference $Z_i\neq\bot$, the numerical loss on an
+analysis-valid executed cell is $\mathbf 1\{\widehat Z_i\neq Z_i\}$.
+The no-action and $\bot$ rules are in
+Sections~\ref{subsec:pilot-question-sets} and~\ref{subsec:pilot-retry-policy};
+derivation judgments and combined statuses are in
+Equations~\ref{eq:pilot-derivation-assessment}--\ref{eq:pilot-solution-status}.
+A correct number can coexist with an invalid retained dependency. Missing
+evidence is not invalidity, and no detected defect is not a validity verdict.
 
-The audit distinguishes retained claims and dependencies from
-discarded attempts, superseded values, and repaired material.
-An abandoned exploratory mistake does not by itself invalidate
-the final solution. A claimed repair must be supported by the
-sealed evidence showing replacement or justification of the
-affected claim and recomputation or revalidation of its surviving
-dependents. A false claim, invalid inference, or violated scope
-condition still supporting the final answer is a retained defect.
-For a branching derivation, several minimal invalid dependencies
-may exist. Their locations are recorded without introducing a
-partial-credit endpoint.
+Coding distinguishes retained claims from discarded, superseded and repaired
+work. It locates defects and affected dependencies without adding partial
+credit. A claimed repair requires the sealed replacement or justification
+and recomputation or revalidation of surviving dependents, as required by
+the solution contract. Several minimal invalid dependencies may coexist.
 
-Trace findings and microscope hypotheses cannot directly overwrite
-the canonical score, eligibility, or the formal derivation judgment.
-A documented discrepancy may enter the registered checking and
-reconciliation process, with the original and subsequent records
-preserved. Any checking used to establish a full-solution judgment
-is subject to $B_{\mathrm{assess}}$ and the frozen assessment procedure;
-renaming additional checking as trace coding does not enlarge that
-cap. Later corrections follow the dated-supplement rules, rather
-than silently replacing the original verdict.
+Trace findings and microscope hypotheses do not overwrite scores,
+eligibility or derivation judgments. A discrepancy enters the registered
+checking and reconciliation procedure, preserving earlier records. Work
+used for a full-solution judgment counts against $B_{\mathrm{assess}}$ even
+when also called trace coding; a different label cannot enlarge the cap.
+Corrections are dated supplements.
 
 \subsection{Frozen Trace-Supported Taxonomy}
 \label{subsec:audit-taxonomy}
@@ -5464,30 +5344,20 @@ are audited through their available control records without
 inventing a derivation. Numerical status is not imputed when the
 reference or eligibility contract does not support it.
 
-The minimum audit scope includes adaptive first contacts, official
-post-update replays, final-$S_8$ development replays, terminal
-executions, and post-embargo shadow executions, together with their
-designated transitions and protocol deviations. Access follows
-Section~\ref{subsec:audit-authority}. For an otherwise analysis-valid,
-target-loss-eligible execution with a sealed terminal action, missing
-or unauditable derivation evidence does not remove the cell from the
-numerical or full-solution denominators. Full-solution uncertainty
-is handled by the unresolved-assessment rules in
-Section~\ref{subsec:pilot-outcomes}; an auditable-trace subset is
-labelled only as a descriptive coding subset. Category frequencies
-report their actual denominators and release-specific observability.
-Changes in instrumentation or schema prevent interpreting frequency
-shifts as mechanism changes without further evidence.
+The audit covers adaptive first contacts, official replays, final-development,
+terminal and post-embargo shadow records, their designated transitions, and
+protocol deviations, under Section~\ref{subsec:audit-authority}. Missing or
+unauditable derivation evidence does not remove an otherwise eligible
+execution from either correctness denominator. A trace-auditable subset is
+only a descriptive coding subset; report actual category denominators and
+release-specific observability. Instrumentation changes alone do not show
+mechanism changes.
 
-A reference, canonicalizer, adjudication, contamination, or
-ill-posed-item code does not itself determine whether an execution
-is a solver failure or enters a target-loss denominator. Those
-decisions follow the frozen eligibility and deviation rules through
-their authorized roles. The complete as-run audit record remains.
-Initial and reconciled coding records are sealed separately from
-execution evidence; corrections are dated supplements. All coding,
-checking, and reconciliation work is charged, with shared physical
-events counted once and their analytical uses linked.
+Evaluation-issue codes do not decide loss or inclusion: authorized roles
+apply the frozen eligibility and deviation rules. Initial and reconciled
+codes seal separately from execution evidence; corrections are dated
+supplements. All coding and checking work is charged, with shared events
+counted once.
 
 \Needspace{7\baselineskip}
 \subsection{Interpreting Reuse and Replay Findings}
@@ -5507,40 +5377,25 @@ the sealed traces under Section~\ref{subsec:pilot-reuse-evidence}.
 A larger store or a successful final number alone does not establish
 improved useful coverage.
 
-When the retained prefix is assessed as valid, an incorrectly bound
-stored procedure or a violated precondition can supply evidence against
-the model's correct-use premise for that invocation. The model permits
-fallible baseline steps, so a baseline error alone does not establish
-a violated premise. A replay score change alone does not identify a failed
-premise, and finding no coded defect does not establish soundness
-or preservation of continuation behavior.
+An incorrectly bound stored procedure or violated precondition, after an
+assessed valid prefix, can supply evidence against correct use in that
+invocation. A fallible baseline step is allowed by the model. Neither a
+replay score change nor absence of a coded defect establishes which model
+premise held or failed.
 
-A canonical-status change is a correct-to-incorrect or
-incorrect-to-correct transition between a designated earlier
-sealed action and a later registered replay, when both statuses
-are defined. Full-solution transitions are recorded separately.
-An assessed fail-to-pass pair differs from a numerical
-incorrect-to-correct pair; unresolved-to-pass is not labelled a
-confirmed full-solution error correction. If the earlier action
-was not canonically incorrect, a canonically correct replay
-establishes only a correct replay endpoint. Under stochastic
-execution, none of these pairs by itself identifies repair,
-forgetting, interference, transfer, or a causal effect of the
-intervening revision.
+Record numerical and assessed full-solution transitions separately between
+the designated sealed actions. Unresolved-to-pass is not confirmed error
+correction; a correct replay is not an incorrect-to-correct transition
+unless the earlier numerical status was incorrect. Under stochastic
+execution, these transitions alone identify neither repair, forgetting,
+interference, transfer nor a causal revision effect.
 
-A microscope diagnosis remains an auditable hypothesis. A located
-defect can motivate a candidate remedy, and subsequent records can
-show that a relevant procedure was used with assessed valid support.
-That sequence provides descriptive evidence consistent with the
-idealized procedural mechanism in
-Section~\ref{subsec:verified-procedural-growth}. It does not establish
-that the diagnosed defect caused the original failure, that the
-remedy is general, or that the result will recur under a later
-provider draw or release. The audit does not reconstruct the
-unsupported continuation that would have occurred at the same
-intermediate state, estimate the model's stage-success probabilities
-from trace flags, or establish the quantitative gain in
-Equation~\eqref{eq:reuse-quantitative-gain}.
+A located defect, proposed remedy and later assessed valid use can provide
+descriptive evidence consistent with procedural reuse. They do not establish
+that the diagnosis caused the original failure, that a remedy generalizes,
+or that the outcome will recur. The audit does not reconstruct the
+unsupported continuation at the same state or estimate stage probabilities
+and Equation~\ref{eq:reuse-quantitative-gain} from trace flags.
 
 Microscope-motivated revisions follow the proposal, isolation, admission,
 testing, and costing rules in Section~\ref{subsec:pilot-development-episode}.
@@ -5553,34 +5408,26 @@ objects. Bundled revisions retain whole-system descriptive attribution.
 \section{Prospective Ledgers and Registration Manifest}
 \label{app:ledgers-manifest}
 
-The published artifacts include machine-readable ledgers that reconstruct
-the trajectory from immutable evidence. The tables below give minimum
-fields; implementations may add fields but may not omit a required field
-without a deviation record. Slash-separated display names denote distinct
-fields. All schemas, enumerations, conditional requirements, and finite
-reason-code vocabularies are frozen at the accounting seal.
+The published machine-readable records must reconstruct releases, scheduled
+executions, outcomes, access, and physical resource use from immutable
+evidence. The tables below specify required information, not mandatory
+column names or separate database tables. Equivalent layouts may combine
+or link records; the accounting seal fixes the concrete schemas, conditional
+requirements and reason codes. A representation choice cannot relax a
+substantive execution, isolation, adjudication or accounting rule.
 
 \paragraph{Record identity and missing values.}
-Every record has a stable identity, schema version, author or responsible
-role, creation timestamp, artifact commitment, and references to its
-governing manifest. Later determinations and corrections are linked,
-append-only records with an explicit superseded-record reference; they
-do not rewrite the sealed execution. A published execution--evaluation
-row is a versioned analytical join of those records, not a mutable
-execution artifact. The export identifies the as-of time and record
-versions used in every summary.
+Records identify their schema, responsible role, time, commitment and
+governing manifest. Corrections are linked append-only supplements;
+analytical exports state the as-of time and record versions. A later join
+does not modify an execution seal.
 
-Required fields remain present even when their values are null. The
-registered field-status map distinguishes \texttt{not\_permitted},
-\texttt{not\_applicable}, \texttt{pending}, \texttt{available},
-\texttt{unavailable}, and \texttt{invalidated}, with a reason when needed.
-These states describe whether a value can be computed and supported;
-field-group visibility separately controls who may see it. A value
-already computed inside an isolated archive is not treated as uncomputed
-merely because it is embargoed. Exports record redaction explicitly.
-Neither null nor an empty list means zero consumption, a correct answer,
-an invalid derivation, or permission to exclude a record. An empty list
-is used only when the applicable list is known to contain no entries.
+Distinguish unavailable, invalidated, pending, inapplicable and prohibited information
+from an observed value, and distinguish value availability from access
+permission. Computed but embargoed values are not uncomputed. Redactions
+and reasons for missing required information remain explicit. Nulls and
+empty lists do not imply zero cost, correctness, invalidity or exclusion;
+an empty list means that an applicable list is known to contain no entries.
 
 \Needspace{7\baselineskip}
 \subsection{System-Version and Revision Ledger}
@@ -5598,15 +5445,15 @@ episode zero and parent \texttt{genesis}.
 \setlength{\LTpre}{6pt}
 \setlength{\LTpost}{8pt}
 \setlength{\LTcapwidth}{\linewidth}
-\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.38\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.62\linewidth-2\tabcolsep\relax}@{}}
-\caption{Minimum version and revision fields. Conditional fields are explicitly null when inapplicable.}\label{tab:version-revision-ledger}\\
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.72\linewidth-2\tabcolsep\relax}@{}}
+\caption{Required version and revision information. Inapplicable information is explicit.}\label{tab:version-revision-ledger}\\
 \toprule
-Field(s) & Requirement and interpretation \\
+Information & Requirement and interpretation \\
 \midrule
 \endfirsthead
 \multicolumn{2}{@{}l}{\textit{Table \thetable\ continued}}\\
 \toprule
-Field(s) & Requirement and interpretation \\
+Information & Requirement and interpretation \\
 \midrule
 \endhead
 \midrule
@@ -5614,17 +5461,10 @@ Field(s) & Requirement and interpretation \\
 \endfoot
 \bottomrule
 \endlastfoot
-\texttt{record\_id}\newline \texttt{record\_type}\newline \texttt{episode\_id} & Stable row identity; type \texttt{proposal} or \texttt{release}; originating development episode. Evaluation cannot generate another registered release. \\
-\texttt{parent\_version}\newline \texttt{parent\_release\_hash} & Immutable parent state. The initial release uses the reserved genesis values. \\
-\texttt{proposal\_id}\newline \texttt{proposal\_type}\newline \texttt{affected\_components} & Proposal rows identify the candidate and affected prompt, code, motif, relation, retriever, validator, tool, test, budget, or other permitted component. Release rows link accepted proposals through their bundle. \\
-\texttt{accepted\_bundle\_id}\newline \texttt{accepted\_proposal\_refs}\newline \texttt{released\_version}\newline \texttt{release\_hash} & Release rows identify the accepted bundle and resulting $S_t$. A no-change release has an explicitly empty bundle and the unchanged content hash; rejected candidates remain proposal records. \\
-\texttt{trigger\_item\_id}\newline \texttt{trigger\_record\_refs}\newline \texttt{information\_exposure\_state} & Item and sealed execution, assessment, coding, or microscope records motivating the candidate, when applicable; the information actually available at proposal and release time. Premature shadow or confirmatory exposure is a deviation, not an ordinary permitted state. \\
-\texttt{rationale}\newline \texttt{provenance\_refs}\newline \texttt{declared\_scope} & Stated reason, source evidence, and reusable scope. A microscope explanation remains a hypothesis. Numeric or assessed full-solution success does not automatically certify a proposed object. \\
-\texttt{mechanical\_status}\newline \texttt{substantive\_status}\newline \texttt{admission\_rule\_hash}\newline \texttt{certificate\_refs} & Applicable schema, evidence, scope, and certification outcomes, using the admission policy active for the candidate. Unperformed checks have explicit status; a co-bundled admission-policy revision cannot certify its own candidates retroactively. \\
-\texttt{test\_refs}\newline \texttt{release\_check\_refs}\newline \texttt{decision}\newline \texttt{decision\_reason} & Registered verification artifacts. Proposal decisions are Accept, Reject, Defer, or Ambiguous with finite reason codes. Final-development and terminal outcomes are not release checks. \\
-\texttt{proposed\_diff\_refs}\newline \texttt{accepted\_diff\_refs}\newline \texttt{artifact\_refs}\newline \texttt{component\_hashes} & Exact proposed and accepted artifacts, changed components, and additions, replacements, or revocations. Inapplicable accepted-diff fields are null; rejected work is retained. \\
-\texttt{solution\_contract\_hash}\newline \texttt{evaluation\_manifest\_hash}\newline \texttt{resource\_event\_refs} & Links to the invariant output/evidence and evaluation contracts, plus exact-once physical events. Runtime changes must conform to those contracts. References do not duplicate resource quantities. \\
-\texttt{decision\_timestamp}\newline \texttt{freeze\_timestamp}\newline \texttt{protocol\_deviation\_codes}\newline \texttt{deviation\_record\_refs} & Decision and release times where applicable, and finite deviation codes with their records. An empty deviation list means none are recorded. \\
+
+Identity and transition & Record type (proposal or release), episode, parent and resulting release, accepted bundle, and content commitments. No-change releases keep their scheduled positions and unchanged hashes without invented proposals. \\
+Scope and decision & Triggering evidence and actual information exposure; rationale, provenance, affected components and reusable scope; proposed/accepted diffs; Accept, Reject, Defer or Ambiguous with reasons. \\
+Assurance and release & Applicable admission-policy version, performed checks, certificates, tests, release checks, component/evaluation/solution-contract hashes, decision/freeze times, deviations and exact-once resource links. Unperformed checks and inapplicable fields stay explicit. \\
 \end{longtable}
 \endgroup
 
@@ -5664,15 +5504,15 @@ answer. Content-dependent metadata cannot bypass these access rules.
 \setlength{\LTpre}{6pt}
 \setlength{\LTpost}{8pt}
 \setlength{\LTcapwidth}{\linewidth}
-\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.38\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.62\linewidth-2\tabcolsep\relax}@{}}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.72\linewidth-2\tabcolsep\relax}@{}}
 \caption{Execution ledger, Part I: schedule, runtime evidence, and terminal-action existence.}\label{tab:execution-evaluation-ledger}\\
 \toprule
-Field(s) & Requirement and interpretation \\
+Information & Requirement and interpretation \\
 \midrule
 \endfirsthead
 \multicolumn{2}{@{}l}{\textit{Table \thetable\ continued}}\\
 \toprule
-Field(s) & Requirement and interpretation \\
+Information & Requirement and interpretation \\
 \midrule
 \endhead
 \midrule
@@ -5680,16 +5520,12 @@ Field(s) & Requirement and interpretation \\
 \endfoot
 \bottomrule
 \endlastfoot
-\texttt{cell\_id}\newline \texttt{run\_id}\newline \texttt{item\_id}\newline \texttt{source\_id}\newline \texttt{variant\_id}\newline \texttt{template\_id} & Stable cell and run identities and custodied item/dependence-family links. Model-visible payloads receive only an opaque cell identifier and the permitted runtime item; study identifiers and their hashes remain hidden. \\
-\texttt{stream}\newline \texttt{phase}\newline \texttt{position}\newline \texttt{system\_version}\newline \texttt{branch} & Development or terminal stream; adaptive/shadow first contact, official replay, final-development replay, or terminal mode; frozen schedule position and release. Repair and escalation are internal routes, not new scheduled cells. \\
-\texttt{launch\_status}\newline \texttt{launch\_event\_ref}\newline \texttt{execution\_status} & Launch is \texttt{scheduled\_unlaunched} or \texttt{launched}. Execution is \texttt{not\_applicable} exactly for an unlaunched cell; otherwise completed, failed, timed out, cancelled, or unknown remote completion under the registered enumeration. Status does not by itself assert that a terminal action exists. \\
-\texttt{terminal\_record\_status}\newline \texttt{terminal\_action\_ref}\newline \texttt{terminal\_disposition} & Terminal record is sealed, unavailable, or not applicable. A handled launched failure or no-answer is a sealed action; catastrophic incompleteness has no action. Unlaunched action and disposition values are null with not-applicable status. \\
-\texttt{raw\_answer\_ref}\newline \texttt{semantic\_answer\_present\_flag} & For a sealed action, the flag states whether $\operatorname{ans}(o)\neq\varnothing$: true for a supplied raw answer, including an invalid one; false for a no-answer disposition. The raw-answer reference is null for no-answer. When no terminal action exists, both values are null; the flag does not falsely describe an absent action as a produced no-answer. \\
-\texttt{runtime\_item\_hash}\newline \texttt{config\_hashes}\newline \texttt{phase\_manifest\_hash}\newline \texttt{solution\_contract\_hash} & Reference-stripped input and public metadata; release, model, prompts, store/index/interface, tools, validators, budget, cache/reset configuration, phase manifest, and common evidence contract. Controller-side hashes follow the visibility of their underlying artifacts. \\
-\texttt{seed\_status}\newline \texttt{provider\_call\_refs}\newline \texttt{start\_timestamp}\newline \texttt{end\_timestamp} & Recorded controllable randomness, call identities, and timing. Request identifiers are not seeds. If no branch event occurred, timing is null and the call list is empty with the applicable reason; actual prelaunch work is recorded separately. \\
-\texttt{retrieved\_object\_ids}\newline \texttt{packet\_hash}\newline \texttt{route\_selection\_refs}\newline \texttt{procedural\_use\_refs} & Ordered retrieval result and packet identity when retrieval occurs. Routing records identify the stored-procedure or baseline route selected before step execution, separately from any subsequent registered repair or fallback. Use records link selected versions, scope, bindings, checks, execution, and retention as specified in Table~\ref{tab:solution-evidence-ledger}. \\
-\texttt{graph\_refs}\newline \texttt{trace\_refs}\newline \texttt{retained\_derivation\_ref}\newline \texttt{runtime\_validator\_ref}\newline \texttt{repair\_escalation\_refs} & Sealed target, action, claim, dependency, checking, tool, repair, and terminal evidence. Missing evidence is explicit; an unlaunched cell has no invented trace. Validator and intervention fields are conditional on actual events. \\
-\texttt{sealed\_artifact\_commitment}\newline \texttt{seal\_timestamp}\newline \texttt{late\_response\_refs}\newline \texttt{resource\_event\_refs} & Commitment and seal time for the complete execution, unexecuted status, or surviving launched-but-incomplete status record. A sealed status record does not create a terminal action. Late responses are quarantined. Resource links cover actual runtime and prelaunch events, with an empty list only when none occurred. \\
+
+Schedule and identity & Opaque cell/run identity; custodied item and dependence-family links; phase, position, branch and release. Repair and escalation are internal routes, not additional cells. \\
+Launch and terminal action & Launch event and execution status; whether a terminal action exists, its disposition and immutable answer/derivation links. Unlaunched or catastrophically incomplete cells have no action or answer-presence value. A sealed no-answer is an action with answer-presence false; a supplied malformed answer has presence true. \\
+Configuration and execution & Runtime-item and release/phase/solution-contract commitments; caps, reset/cache state, controllable randomness, calls, provider metadata, times, prompts, responses and tool records. Request identifiers are not seeds. \\
+Procedural and solution evidence & Ordered retrieval and packet commitments; route selections before execution; selected object/relation versions, scope, bindings, checks, results, fallbacks and repairs; retained/discarded material and dependencies. See Table~\ref{tab:solution-evidence-ledger}. \\
+Seal and resources & Execution or surviving-status commitment and time, quarantine links, access/integrity records and actual runtime/prelaunch resource events. A status seal does not create an output; absent events are not invented. \\
 \end{longtable}
 \endgroup
 
@@ -5699,15 +5535,15 @@ Field(s) & Requirement and interpretation \\
 \setlength{\LTpre}{6pt}
 \setlength{\LTpost}{8pt}
 \setlength{\LTcapwidth}{\linewidth}
-\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.38\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.62\linewidth-2\tabcolsep\relax}@{}}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.72\linewidth-2\tabcolsep\relax}@{}}
 \caption{Execution ledger, Part II: authorized joins, outcome availability, inclusion, and access.}\label{tab:execution-evaluation-ledger-b}\\
 \toprule
-Field(s) & Requirement and interpretation \\
+Information & Requirement and interpretation \\
 \midrule
 \endfirsthead
 \multicolumn{2}{@{}l}{\textit{Table \thetable\ continued}}\\
 \toprule
-Field(s) & Requirement and interpretation \\
+Information & Requirement and interpretation \\
 \midrule
 \endhead
 \midrule
@@ -5715,14 +5551,11 @@ Field(s) & Requirement and interpretation \\
 \endfoot
 \bottomrule
 \endlastfoot
-\texttt{reference\_record\_hash}\newline \texttt{renderer\_hash}\newline \texttt{reference\_procedure\_hash}\newline \texttt{canonicalizer\_hash}\newline \texttt{canonical\_contract\_hash}\newline \texttt{canonical\_target\_label} & After the authorized target join, identify the verified reference and evaluation contract. A target may later be joined to an unlaunched cell for analysis without creating an action or disclosing it to development. \\
-\texttt{action\_adjudication\_ref}\newline \texttt{adjudication\_status}\newline \texttt{adjudicator\_version}\newline \texttt{adjudication\_timestamp} & Separate immutable numerical adjudication, its computation/validity state, scorer identity, and time. No action-specific adjudication exists for nonlaunch or catastrophic incompleteness. Shadow and confirmatory gates apply before computation and disclosure. \\
-\texttt{canonical\_output\_label}\newline \texttt{canonicalization\_status}\newline \texttt{canonical\_acceptance\_flag}\newline \texttt{canonical\_item\_loss} & Canonical output and equality result when supported by the authorized evaluator. A sealed no-answer maps to $\bot$ and loss one in an otherwise analysis-valid, target-eligible execution. No-action cells retain null output, acceptance, and item-loss values. Diagnostic scoring of excluded records is distinguished from primary use. \\
-\texttt{analysis\_validity\_status}\newline \texttt{target\_loss\_eligibility\_status}\newline \texttt{exclusion\_code}\newline \texttt{exclusion\_reason}\newline \texttt{inclusion\_record\_refs} & Execution validity is pending, valid, or invalid; item eligibility is pending, eligible, or ineligible and agrees across branches for the same item. Versioned inclusion records reconstruct planned, launched, valid, eligible, included, paired, excluded, and contaminated sets. Pending outcome availability is not an implicit exclusion rule. \\
-\texttt{solution\_assessment\_refs}\newline \texttt{derivation\_assessment\_status}\newline \texttt{full\_solution\_status}\newline \texttt{solution\_status\_record\_ref} & Links to the formal assessment in Table~\ref{tab:solution-assessment-ledger}. The finalized derivation judgment is valid, invalid, or unassessable; the combined outcome is pass, fail, or unresolved. Process states and no-action nulls remain separate from those judgments. \\
-\texttt{trace\_coding\_refs}\newline \texttt{trace\_coding\_status}\newline \texttt{trace\_observation\_status}\newline \texttt{primary\_trace\_code}\newline \texttt{primary\_retained\_defect\_code}\newline \texttt{secondary\_trace\_codes} & Links to the coding records in Table~\ref{tab:trace-coding-ledger}. Observed defect, no observed defect, or insufficient trace is a coding observation, not formal derivation validity. Before permitted coding, values remain uncomputed; no observed defect cannot substitute for an assessed valid solution. \\
-\texttt{field\_statuses}\newline \texttt{null\_reasons}\newline \texttt{field\_group\_visibility}\newline \texttt{authorized\_principals}\newline \texttt{disclosure\_times}\newline \texttt{access\_event\_refs} & Internal value availability and distinct field-group access controls for runtime, scoring, assessment, coding, resources, and analytical joins. Embargoed values are not exported through hashes, counts, timing, billing, or other proxies. \\
-\texttt{evaluation\_resource\_refs}\newline \texttt{coding\_resource\_refs}\newline \texttt{protocol\_deviation\_codes}\newline \texttt{deviation\_record\_refs}\newline \texttt{export\_version} & Actual external checking/coding events, deviations, and the versioned export used in a summary. These links do not add quantities already represented by physical resource events. \\
+
+Numerical adjudication & Authorized reference and renderer/canonicalizer/contract versions, custodied target, scorer identity, adjudication time, output label and verdict. No-action cells have no action-specific adjudication or loss. Diagnostic scores of excluded records are labelled separately. \\
+Inclusion & Dated execution validity, output-blind item eligibility, exclusion/deviation reason and analysis-specific inclusion. Reconstruct planned, launched, valid, eligible, included, paired and contaminated sets; eligibility agrees across branches for an item. \\
+Assessment and coding & Separate linked judgments, combined full-solution status, findings, process states and coding observations (Tables~\ref{tab:solution-assessment-ledger} and~\ref{tab:trace-coding-ledger}). A process state is not a judgment; no detected defect is not assessed validity. \\
+Access and export & Field-group value status, missingness/redaction reasons, authorized principals, actual access/disclosure times and immutable access events; external-checking resources, deviations and export version. Embargoed content cannot escape through metadata or proxies. \\
 \end{longtable}
 \endgroup
 
@@ -5759,15 +5592,15 @@ cannot fill a gap in that earlier submission.
 \setlength{\LTpre}{6pt}
 \setlength{\LTpost}{8pt}
 \setlength{\LTcapwidth}{\linewidth}
-\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.38\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.62\linewidth-2\tabcolsep\relax}@{}}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.72\linewidth-2\tabcolsep\relax}@{}}
 \caption{Immutable solution evidence and procedural-use records, linked to a sealed execution.}\label{tab:solution-evidence-ledger}\\
 \toprule
-Field(s) & Requirement and interpretation \\
+Information & Requirement and interpretation \\
 \midrule
 \endfirsthead
 \multicolumn{2}{@{}l}{\textit{Table \thetable\ continued}}\\
 \toprule
-Field(s) & Requirement and interpretation \\
+Information & Requirement and interpretation \\
 \midrule
 \endhead
 \midrule
@@ -5775,12 +5608,10 @@ Field(s) & Requirement and interpretation \\
 \endfoot
 \bottomrule
 \endlastfoot
-\texttt{solution\_record\_id}\newline \texttt{run\_id}\newline \texttt{terminal\_action\_ref}\newline \texttt{solution\_contract\_hash} & Identity of the submitted solution and the common evidence contract. Failure dispositions may have partial or empty derivations with a reason; a no-action cell has no solution record. \\
-\texttt{requested\_quantity}\newline \texttt{givens\_refs}\newline \texttt{assumptions}\newline \texttt{unit\_sign\_conventions}\newline \texttt{value\_semantics} & Question interpretation, givens, assumptions, units and signs, and exact, approximate, or interval semantics. Approximation claims retain their declared resolution and supporting checks. \\
-\texttt{claim\_id}\newline \texttt{claim\_ref}\newline \texttt{input\_refs}\newline \texttt{dependency\_refs}\newline \texttt{justification\_refs} & Per-claim content, inputs, dependency links, and stated mathematical or procedural justification. Supporting tool expressions/code and results are immutable evidence, not later reconstructed arguments. \\
-\texttt{use\_id}\newline \texttt{route\_selection\_ref}\newline \texttt{object\_version\_hash}\newline \texttt{declared\_scope}\newline \texttt{binding\_refs}\newline \texttt{check\_refs}\newline \texttt{execution\_result\_refs} & Each attempted stored-procedure use links its preceding route decision and retrieval/selection to the actual scoped object, bindings, checks, and results. A baseline-route choice remains in the routing record without inventing a stored-object use. Object and relation versions resolve to archived bytes even after the store changes. \\
-\texttt{retention\_status}\newline \texttt{fallback\_ref}\newline \texttt{repair\_parent\_refs}\newline \texttt{replacement\_refs}\newline \texttt{revalidation\_refs} & Retained, discarded, superseded, or repaired material; fallback and repair links. Surviving descendants of an invalid or replaced claim require recorded recomputation or revalidation. \\
-\texttt{retained\_manifest\_hash}\newline \texttt{terminal\_dependency\_refs}\newline \texttt{missing\_evidence\_codes}\newline \texttt{execution\_resource\_refs} & Fixed derivation supporting the answer, missing evidence identified at sealing, and resources consumed within the runtime budget. Post-seal changes are audit supplements and cannot alter the submitted graph. \\
+
+Submission & Run/action commitment and common solution-contract version; requested quantity, givens, assumptions, units/signs and exact, approximate or interval value semantics. Failure actions may have partial derivations; no-action cells have no solution record. \\
+Claims and uses & Retained claims, inputs, dependencies, justifications and supporting executed expressions/code/results. Stored uses link preceding route selection, retrieval, immutable object/relation versions, scope, bindings, checks and results; baseline choices do not invent stored uses. \\
+Retention and repair & Fixed terminal dependency manifest; retained, discarded, superseded and repaired states; replacements, fallback and recomputation/revalidation of surviving dependents. Missing evidence and runtime resource links remain explicit. Later audit material cannot change the submitted graph. \\
 \end{longtable}
 \endgroup
 
@@ -5790,15 +5621,15 @@ Field(s) & Requirement and interpretation \\
 \setlength{\LTpre}{6pt}
 \setlength{\LTpost}{8pt}
 \setlength{\LTcapwidth}{\linewidth}
-\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.38\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.62\linewidth-2\tabcolsep\relax}@{}}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.72\linewidth-2\tabcolsep\relax}@{}}
 \caption{Formal derivation assessment and combined full-solution outcome records.}\label{tab:solution-assessment-ledger}\\
 \toprule
-Field(s) & Requirement and interpretation \\
+Information & Requirement and interpretation \\
 \midrule
 \endfirsthead
 \multicolumn{2}{@{}l}{\textit{Table \thetable\ continued}}\\
 \toprule
-Field(s) & Requirement and interpretation \\
+Information & Requirement and interpretation \\
 \midrule
 \endhead
 \midrule
@@ -5806,13 +5637,11 @@ Field(s) & Requirement and interpretation \\
 \endfoot
 \bottomrule
 \endlastfoot
-\texttt{assessment\_id}\newline \texttt{run\_id}\newline \texttt{execution\_commitment}\newline \texttt{assessment\_process\_status} & The fixed submission assessed and process state: not permitted, pending, completed, or not applicable. Completed assessment can still have an unassessable judgment; unfinished work is not a valid or invalid verdict. \\
-\texttt{rubric\_hash}\newline \texttt{assessment\_manifest\_hash}\newline \texttt{assessment\_budget\_ref}\newline \texttt{assessor\_role}\newline \texttt{assessor\_config\_refs} & Frozen rubric, checking/reconciliation rules and $B_{\mathrm{assess}}$, with human qualifications or automated configurations and disclosed role overlap. \\
-\texttt{evidence\_packet\_hash}\newline \texttt{evidence\_access\_refs}\newline \texttt{blinding\_record}\newline \texttt{gate\_event\_refs}\newline \texttt{initial\_assessment\_ref} & Permitted pseudonymized evidence, actual access and limits to blinding, applicable gate, and first assessment before the canonical verdict is joined. Later authorized reference-assisted checks remain identifiable. \\
-\texttt{checked\_claim\_refs}\newline \texttt{supporting\_check\_refs}\newline \texttt{invalid\_dependency\_refs}\newline \texttt{unresolved\_dependency\_refs} & What was checked and the evidence for each finding. Invalid judgments locate retained defects; valid judgments require the specified supporting checks. Missing evidence, ambiguity, or exhausted checking is not silently treated as validity. \\
-\texttt{initial\_judgment}\newline \texttt{derivation\_assessment\_status}\newline \texttt{unassessable\_reason}\newline \texttt{reconciliation\_ref} & Initial and finalized judgments with reasons and reconciliation. Final status is valid, invalid, or unassessable. A demonstrated retained defect supports invalidity even when other claims remain unresolved. \\
-\texttt{canonical\_adjudication\_ref}\newline \texttt{full\_solution\_status}\newline \texttt{solution\_status\_record\_ref} & Authorized join: canonical pass plus assessed valid gives pass; supported canonical failure or a finalized invalid derivation judgment suffices for fail; canonical pass plus unassessable gives unresolved. Pending applies when the available authorized inputs do not yet determine an outcome. No-action outcomes remain null, not unresolved or pending judgments. Assessment judgments remain fallible. \\
-\texttt{assessment\_resource\_refs}\newline \texttt{assessment\_cap\_status}\newline \texttt{assessment\_seal}\newline \texttt{supersedes\_assessment\_ref} & Checking and reconciliation events, cap status, sealed assessment, and dated supplements. Any checking used for the judgment counts against the registered assessment allowance even if also labelled trace coding; shared physical events are counted once. \\
+
+Assessment identity & Fixed execution/submission commitment, process state, frozen rubric/procedure, common $B_{\mathrm{assess}}$, assessor identity/qualifications or configuration, and disclosed role overlap. Completed checking may still yield unassessable. \\
+Evidence and findings & Permitted pseudonymized packet, actual access and gates, blinding limits, first assessment before canonical join, checked claims and supporting checks, located invalid or unresolved dependencies. Missing evidence is not silently treated as validity. \\
+Judgment and join & Preserved initial and reconciled valid/invalid/unassessable judgments with reasons; authorized canonical join and pass/fail/unresolved status under Equation~\ref{eq:pilot-solution-status}. No-action cells have no judgment. Resolved assessments remain fallible. \\
+Accountability & Checking/reconciliation resource events and cap status, assessment seals and dated corrections. Work used for the judgment counts against the assessment allowance even if it also supports coding; physical events count once. \\
 \end{longtable}
 \endgroup
 
@@ -5822,15 +5651,15 @@ Field(s) & Requirement and interpretation \\
 \setlength{\LTpre}{6pt}
 \setlength{\LTpost}{8pt}
 \setlength{\LTcapwidth}{\linewidth}
-\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.38\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.62\linewidth-2\tabcolsep\relax}@{}}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.72\linewidth-2\tabcolsep\relax}@{}}
 \caption{Trace coding and designated transition records. Coding observations do not substitute for derivation assessment.}\label{tab:trace-coding-ledger}\\
 \toprule
-Field(s) & Requirement and interpretation \\
+Information & Requirement and interpretation \\
 \midrule
 \endfirsthead
 \multicolumn{2}{@{}l}{\textit{Table \thetable\ continued}}\\
 \toprule
-Field(s) & Requirement and interpretation \\
+Information & Requirement and interpretation \\
 \midrule
 \endhead
 \midrule
@@ -5838,12 +5667,11 @@ Field(s) & Requirement and interpretation \\
 \endfoot
 \bottomrule
 \endlastfoot
-\texttt{coding\_record\_id}\newline \texttt{run\_id}\newline \texttt{codebook\_hash}\newline \texttt{coding\_process\_status} & Codebook and process state for each record: not permitted, pending, reconciled, unresolved, or not applicable. Missing traces remain visible in coding coverage; they do not remove an included execution from correctness summaries. \\
-\texttt{coder\_record\_refs}\newline \texttt{coder\_config\_refs}\newline \texttt{prior\_access\_refs}\newline \texttt{coding\_evidence\_refs} & Two independent initial assignments on the permitted evidence, coder identity/configuration, prior exposure, and blinding limits. Independence of assignments does not imply independent errors. \\
-\texttt{event\_claim\_refs}\newline \texttt{substantive\_codes}\newline \texttt{retention\_statuses}\newline \texttt{primary\_trace\_code}\newline \texttt{primary\_retained\_defect\_code}\newline \texttt{secondary\_trace\_codes} & Located substantive defects and retention states; deterministic event-order/tie selection of an execution-level primary code and a separate primary retained defect. These are annotation conventions, not causal orderings. \\
-\texttt{trace\_observation\_status}\newline \texttt{evidence\_limitation\_codes}\newline \texttt{disposition\_codes}\newline \texttt{evaluation\_issue\_refs}\newline \texttt{protocol\_deviation\_refs} & Observed defect, no observed defect, or insufficient trace; evidence limitations, routing/terminal dispositions, evaluation concerns, and deviations remain separate. A missing justification need not establish an invalid inference. \\
-\texttt{initial\_code\_refs}\newline \texttt{disagreement\_refs}\newline \texttt{reconciliation\_ref}\newline \texttt{coding\_resource\_refs}\newline \texttt{coding\_seal} & Unaltered initial labels, disagreements, reconciled or unresolved fields, resource links, and separately sealed coding records. Microscope hypotheses are marked as proposals until supported by evidence. \\
-\texttt{transition\_id}\newline \texttt{earlier\_run\_id}\newline \texttt{later\_run\_id}\newline \texttt{canonical\_transition}\newline \texttt{solution\_transition}\newline \texttt{transition\_status} & Separate designated-pair record, created after both applicable gates. Numeric and full-solution transitions retain their direction and unresolved or unavailable endpoints; unresolved-to-pass is not confirmed error correction. \\
+
+Coding identity & Run, frozen codebook, process state, two independent initial assignments, coder identity/configuration, prior access, evidence packet and blinding limits. Independent assignments do not imply independent errors. \\
+Located findings & Event/claim and retention-state links for substantive codes; execution-level primary, primary retained and secondary codes under the frozen ordering/tie rule. Dispositions, transitions, evaluation issues, evidence limits and deviations remain separate. \\
+Review and coverage & Initial codes, disagreements, reconciliation/unresolved fields, observed-defect/no-observed-defect/insufficient-trace status, missingness, resources, separate coding seals and corrections. Coding coverage cannot redefine correctness denominators. \\
+Designated transitions & Earlier/later run links and separate numerical and full-solution transitions, including unavailable or unresolved endpoints. Unresolved-to-pass is not confirmed correction. \\
 \end{longtable}
 \endgroup
 
@@ -5906,15 +5734,15 @@ records that use and any downstream contamination.
 \setlength{\LTpre}{6pt}
 \setlength{\LTpost}{8pt}
 \setlength{\LTcapwidth}{\linewidth}
-\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.38\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.62\linewidth-2\tabcolsep\relax}@{}}
-\caption{Minimum physical resource-event fields. Native units and exact-once event identity are retained.}\label{tab:resource-event-ledger}\\
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{\dimexpr0.72\linewidth-2\tabcolsep\relax}@{}}
+\caption{Required physical resource-event information. Native units and exact-once identity are retained.}\label{tab:resource-event-ledger}\\
 \toprule
-Field(s) & Requirement and interpretation \\
+Information & Requirement and interpretation \\
 \midrule
 \endfirsthead
 \multicolumn{2}{@{}l}{\textit{Table \thetable\ continued}}\\
 \toprule
-Field(s) & Requirement and interpretation \\
+Information & Requirement and interpretation \\
 \midrule
 \endhead
 \midrule
@@ -5922,18 +5750,12 @@ Field(s) & Requirement and interpretation \\
 \endfoot
 \bottomrule
 \endlastfoot
-\texttt{event\_id}\newline \texttt{parent\_event\_id}\newline \texttt{workflow\_ref} & Stable physical event and workflow linkage; parent is null for a root event. A workflow container without its own measured event contributes no duplicate vector. Parentage alone does not assert causality. \\
-\texttt{accounting\_seal\_id}\newline \texttt{protocol\_version}\newline \texttt{resource\_schema\_version}\newline \texttt{scope\_rule\_version} & Prospective boundary, protocol, native measurement schema, and immutable scope rule, including through a dated successor registration. \\
-\texttt{episode\_id}\newline \texttt{run\_id}\newline \texttt{system\_version}\newline \texttt{assessment\_id}\newline \texttt{coding\_record\_id} & Applicable links to runtime and external checking. Overhead not attached to an episode or release uses explicit not-applicable values. Additional many-to-many links do not duplicate event rows. \\
-\texttt{physical\_scope}\newline \texttt{workflow\_phase}\newline \texttt{actor}\newline \texttt{component}\newline \texttt{action} & Exactly one of adapt, eval, deploy, or over; more specific workflow location and responsible human/model/tool/controller/storage component. Analytical reuse never overwrites the physical scope. \\
-\texttt{event\_status}\newline \texttt{measurement\_statuses}\newline \texttt{measurement\_provenance\_refs} & Completed, failed, timed out, cancelled, or unknown remote completion. Each applicable coordinate is observed, registered reconstructed, or unavailable; an inapplicable coordinate is distinct. Failure does not erase observed or billed consumption. \\
-\texttt{provider}\newline \texttt{model}\newline \texttt{request\_id}\newline \texttt{usage\_schema\_version} & Provider-native call identity and semantics where applicable. Remote requests with unsettled usage remain physical events with unavailable coordinates, not zero-cost absences. \\
-\texttt{input\_tokens\_total}\newline \texttt{cached\_input\_tokens}\newline \texttt{uncached\_input\_tokens}\newline \texttt{output\_tokens}\newline \texttt{model\_calls} & Native quantities. Where cached input is a subset of total, uncached input is derived as total minus cached; the three input fields are not summed. Disjoint provider conventions and unavailable usage are explicit. \\
-\texttt{tool\_calls}\newline \texttt{compute\_duration}\newline \texttt{human\_minutes}\newline \texttt{human\_role} & Applicable additive native tool/compute and active human-effort coordinates. Units and roles remain distinct; unmeasured provider-internal computation is not invented. \\
-\texttt{start\_timestamp}\newline \texttt{end\_timestamp}\newline \texttt{service\_latency} & Timing evidence for latency and end-to-end elapsed time. These are not added as though concurrent intervals or service latency were independent consumptions. \\
-\texttt{charge\_amount}\newline \texttt{currency}\newline \texttt{charge\_status}\newline \texttt{billing\_schedule\_id}\newline \texttt{billing\_schedule\_version}\newline \texttt{billing\_effective\_date} & One active monetary value per billable event, observed or reconstructed under the dated schedule. Missing charge is unavailable, not zero. A later observed charge supersedes its reconstruction rather than being added to it. \\
-\texttt{bytes\_read}\newline \texttt{bytes\_written}\newline \texttt{persistent\_bytes\_added}\newline \texttt{persistent\_bytes\_removed} & Separate nonnegative byte coordinates. Net persistent change is reconstructed from additions/removals; peak storage and elapsed time are separate derived quantities. \\
-\texttt{event\_inclusion\_time}\newline \texttt{cutoff\_cohort\_id}\newline \texttt{reconciliation\_refs}\newline \texttt{protocol\_deviation\_codes} & Registered dispatch/start time $t_e$, cohort under $T_{\mathrm{report}}$, later measurement supplements, and deviations. Measurement finalization does not change event identity or cohort membership. \\
+
+Identity and scope & Atomic event, workflow/parent links, accounting boundary, protocol/measurement/scope-rule versions and one immutable adapt/eval/deploy/over scope; applicable episode, run, release, assessment or coding links. Workflow containers do not duplicate child consumption. \\
+Activity and measurement & Responsible actor/component and action; completion/failure/timeout state; native measurement units, availability and provenance. Record observed, registered reconstructed and unavailable values distinctly, including unknown remote completion. \\
+Model and tool use & Provider/model/request and usage-schema identity; native input/output and cache token quantities, model/tool calls and applicable compute duration. Cached/uncached parts are not added again to input total; unsettled usage is not zero. \\
+Human work, time and storage & Active human effort by role; start/end and latency evidence; separate bytes read/written and persistent bytes added/removed. Elapsed time, concurrent intervals and peak storage are not additive event consumptions. \\
+Charges and reconciliation & Amount/currency, observed or reconstructed basis and dated billing schedule; cohort time, report cutoff, measurement supplements and deviations. One active charge per event replaces, rather than adds to, its superseded reconstruction. \\
 \end{longtable}
 \endgroup
 
@@ -5957,58 +5779,34 @@ and releases remain supplements rather than retrospective cohort additions.
 Forecast deployments and optional valuations are dated transformations;
 they neither replace native observations nor relabel evaluation as deployment.
 
-Analytical reuse has a separate append-only attribution ledger.
-Each row identifies \texttt{attribution\_id} and
-\texttt{physical\_event\_id}. It records \texttt{analytical\_use},
-\texttt{supersedes\_id}, \texttt{reason}, and \texttt{timestamp}.
-Affected releases are linked in \texttt{affected\_release\_refs};
-affected executions use \texttt{affected\_execution\_refs}.
-A shadow breach may add an
-adaptation-use attribution and contamination links, but never rewrites
-the event's \texttt{eval} scope or counts its physical vector twice.
+Analytical reuse is a separate append-only attribution linking the physical
+event to its use, affected releases/executions, rationale, time and any
+superseded attribution. A shadow breach can add adaptation-use and
+contamination links; it never changes the event's eval scope or duplicates
+its physical vector.
 
-An optional policy-attributed scenario under
-Equation~\eqref{eq:policy-attributed-resources} uses a projection table
-with \texttt{policy\_id}, \texttt{physical\_event\_id}, indicator
-$w_{p,e}$, rationale, scenario/version, and an actually-executed flag.
-Within a scenario there is at most one active unsuperseded row for each
-policy--event pair. A shared event can appear in several separate
-policy-scenario totals while appearing once in physical study consumption.
-Indicators and state-dependent totals for unexecuted policies remain
-counterfactual projections, not observations.
+Optional policy scenarios identify the policy, physical events, indicators
+$w_{p,e}$, rationale, scenario version and actual-execution status, with one
+active indicator per policy--event pair. Shared events may appear in several
+separate scenario totals but once in physical study consumption. Unexecuted
+policies and state-dependent costs remain counterfactual projections.
 
 \paragraph{Optional lifecycle-value projection records.}
+A scenario under Section~\ref{subsubsec:reuse-lifecycle-value} identifies its
+rule/version, compared releases, common cost boundary, dated valuation,
+future task/execution assumptions, horizon and as-of source records.
+Inputs $F$, $c_{\mathrm{use}}$, $g$ and $v$ retain their units, provenance,
+applicable horizons and status as measured, derived, independently supported
+or assumed. Unavailable inputs stay explicit.
 
-An optional analysis under Section~\ref{subsubsec:reuse-lifecycle-value}
-uses a separate scenario record with \texttt{scenario\_id},
-\texttt{scenario\_version}, \texttt{scenario\_rule\_ref},
-\texttt{comparator\_release\_refs}, \texttt{cost\_boundary\_ref},
-\texttt{valuation\_ref}, \texttt{task\_execution\_assumptions},
-\texttt{reuse\_horizon}, \texttt{source\_snapshot\_ref},
-\texttt{parameter\_refs}, and \texttt{result\_refs}.
-The source snapshot identifies the as-of resource records and
-measurement versions used. Parameter records identify $F$,
-$c_{\mathrm{use}}$, $g$, and $v$, their values and units, input basis,
-source-event or independent-justification references, and the horizon
-over which each asserted bound applies. They distinguish measured
-inputs, derived values, independently supported bounds, and scenario
-assumptions; unavailable values remain explicit.
-
-The cost records specify how each alternative is valued before
-differencing and which incremental upfront and recurring costs are
-included. Measured expenditure alone does not establish the expected
-cost bound in Equation~\eqref{eq:lifecycle-incremental-cost-premise}.
-The gain lower bound $g$ and the value $v$ likewise require their own
-justification or declared scenario basis. Neither a four-item terminal
-contrast nor replay fit supplies a population gain lower bound.
-Derived records report the conditional net-value bound in
-Equation~\eqref{eq:lifecycle-net-value-bound} and any sufficient reuse
-count under Equation~\eqref{eq:lifecycle-break-even}, with the
-applicable premises. Missing inputs or a bound that does not imply
-break-even are reported explicitly. A negative lower bound does not
-establish an actual loss.
-These records retain a projected, conditional interpretation; the
-reuse horizon does not create physical events or observed deployments.
+Value each alternative before differencing; identify included upfront and
+recurring incremental costs. Measured expenditure does not establish an
+expected cost bound, and replay fit or four terminal items do not establish
+a population gain lower bound. Report the premises and conditional net-value
+bound in Equation~\ref{eq:lifecycle-net-value-bound}, and any sufficient
+reuse count under Equation~\ref{eq:lifecycle-break-even}. Missing inputs,
+no implied break-even, and a negative lower bound remain distinct from an
+observed loss. Assumed future uses create no physical deployment events.
 
 \Needspace{7\baselineskip}
 \subsection{Registration Manifest}
@@ -6037,143 +5835,86 @@ Public commitments to low-entropy fields such as item identities or order
 use a keyed construction or high-entropy secret salt withheld through the
 embargo; an unsalted hash does not conceal them.
 
-The combined registration record contains:
+The combined registration record fixes the following choices; it may refer
+to the contracts above instead of reproducing them.
+\begin{enumerate}[leftmargin=*,itemsep=4pt,topsep=4pt]
+\item \textbf{Items and references.}
+Benchmark revision, exposure census and residual unknowns; dependence-family
+grouping and pool flow; eligibility/exclusion/reserve and insufficient-pool
+rules; selection, allocation and order algorithms/seeds; realized development
+and terminal sets; isolated reference roles, locked forms and reconciliation.
 
-\begin{enumerate}[leftmargin=*,itemsep=5pt,topsep=4pt]
-\item \textbf{Items and isolated references.}
-FormulaReasoning revision; accounting-seal hash; historical-exposure census;
-candidate-pool flow and residual unknown-exposure statement; source-family
-grouping, exclusions, reserve substitutions, minimum-cluster and abort
-rules; selection/allocation/order algorithm and seed hashes; realized
-eligible pool, eight-question development order, and four-question terminal
-set; and reference-custodian roles and access controls.
+\item \textbf{Releases, authority and budgets.}
+$S_0$ and historical-cost limitations; invariant model/provider, decoding and
+retry configuration; permitted revision/test classes and admission-policy
+timing; release/write authorities; human information and permissions;
+immutable episode/study caps, their exhaustion treatment, reserved evaluation
+allocation and global stop. Register $B_{\mathrm{eval}}$, its field-by-field
+application and endpoint configuration/mode hashes without replacing internal
+release stopping rules. Development budgets change only by release.
 
-\item \textbf{Starting release and budgets.}
-The complete already-frozen $S_0$ manifest and historical resource
-limitations; invariant requested base model/provider, decoding, and retry
-configuration through $S_8$; $B_{\mathrm{eval}}$, its deterministic
-field-by-field application without replacing frozen release-internal
-stopping rules, endpoint-configuration hashes, and standardized
-confirmatory modes for final-$S_8$ replay and both terminal endpoints.
+\item \textbf{Numerical contract.}
+Distinct published/verified targets, reproducible reference computation and
+renderer; public reference-blind $u(q)$ and identical runtime exposure;
+$c_q=\bar c_{u(q)}$ and conformance tests; exact typed unit/scale normalization;
+six significant digits, nearest/ties-even rounding, global numerical exponent
+bounds fixed before reference inspection, zero and $\bot$ conventions, primary
+loss and no manual output-specific override. Record
+$K=2+18\cdot10^5(e_{\max}-e_{\min}+1)$, $\log_2(K-1)$ and the conditional
+$\Psi_K$ curve without claiming an empirical accessibility floor. Fix the
+five-/seven-digit, wider-bound and released-repository secondary metrics.
 
-\item \textbf{Numerical evaluation contract.}
-Verified-reference renderer and reproducible computation; distinct
-published and verified targets; reference-blind public metadata $u(q)$
-and its identical runtime exposure; the specification and audit of
-$c_q=\bar c_{u(q)}$; deterministic canonicalizer and conformance suite;
-$\mathcal Z_{\bot}=\mathcal G_{\mathrm{FR}}\cup\{\bot\}$;
-$p_{\mathrm{FR}}=6$ significant digits; nearest rounding with ties to even;
-global numerical bounds $[e_{\min},e_{\max}]$ chosen before reference
-inspection from the declared finite decimal representation; the separate
-zero label; exact-decimal implementation; unit and percentage--ratio
-conventions; and $\bot$ mappings. The manifest reports
-\[
-K=2+18\cdot10^5(e_{\max}-e_{\min}+1),
-\qquad \log_2(K-1),
-\]
-and the conditional $\Psi_K$ curve, without calling these bounds
-benchmark-native or claiming an empirical accessibility floor. It fixes
-the primary numerical loss, reference-record schema, five-/seven-digit,
-wider-bound and released-repository secondary metrics, and the prohibition
-on manual output-specific override of the primary canonical label.
+\item \textbf{Solution and assessment contract.}
+Common terminal schema and retained-dependency evidence, exact/approximate/
+interval semantics, partial failures and conformance cases; frozen rubric,
+assessor roles/configurations, tools/evidence, common $B_{\mathrm{assess}}$,
+pseudonymization and blinding limits, first-pass/reference-assisted checking,
+reconciliation, unresolved judgments and dated corrections. No checker may
+repair a submission; conformance is not universal assessor soundness.
 
-\item \textbf{Submitted solution and external assessment.}
-The common terminal schema, contract for retained claims and their
-dependencies, semantics for exact values, approximations, and intervals,
-treatment of partial failure records,
-and evidence-interface conformance cases. The invariant rubric registers
-assessor roles, qualifications or model configurations, allowed tools and
-evidence, pseudonymized packets and blinding limits, first assessment before the
-canonical join, authorized reference-assisted checking, common
-$B_{\mathrm{assess}}$, reconciliation, judgments, pass/fail/unresolved
-mapping, and dated correction rules. No later checker may repair the
-submitted argument. Conformance tests do not establish universal assessor
-soundness or sensitivity.
+\item \textbf{Execution and isolation.}
+Launch boundary and logging; action/question limits; content-independent
+identical-request retries, timeouts, failures, late-response quarantine and
+stop rules; fresh-state/session/cache controls and exact request records;
+branch/order balance, fixed slots, quotas and padded gates; provider-plane
+and archive separation; episode-8 closure and replay, final-development and
+terminal schedule/matched endpoint modes; full confirmatory gate, abort
+certificate, field-level access and computation/disclosure permissions.
+Register the immutable evidence and manifest commitments, concealment of
+low-entropy fields, archived-object resolution and comparability rules.
 
-\item \textbf{Shadow and confirmatory isolation.}
-Frozen-$S_0$ shadow policy; fixed branch slots, padded adaptive gate,
-reserved quotas, provider-plane separation and archives; revocation of
-adaptation authority before episode-8 replay; final-development-before-terminal
-ordering and fixed phase gates; mutual archive isolation through all
-sixteen confirmatory seals; the full sealing point and abort certificate;
-and every field-group access, computation, and disclosure rule. Full-solution
-assessment and trace coding of shadow and confirmatory records wait until
-the full gate or registered abort, including human/model review.
+\item \textbf{Development and audit instruments.}
+Microscope configuration, evidence and finite budgets; permitted corpora,
+synthetic/revision tests, repository and network/egress access and logging;
+trace taxonomy, separate dispositions/evidence limits/transitions, ordering
+and retention conventions, two independent initial coding assignments,
+checking/reconciliation, prior access and role overlap. Diagnoses cannot
+alter submissions or evaluation rules.
 
-\item \textbf{Outer development authority.}
-Operator role, information access, permitted revision classes and proposal/
-test authorities, immutable per-episode and study-wide caps, reserved
-evaluation resources, global stopping rule, admission policy and timing
-of its revisions, release controller, and all post-seal write authorities.
+\item \textbf{Outcomes, inclusion and interpretation.}
+Exact-canonical acceptance and zero post-canonicalization tolerance; planned,
+launched, valid, eligible, included and paired sets; common executed-cell
+sets for both readouts; unresolved/paired assessment ranges, mandatory
+pessimistic eligible planned-cell numerical summary and any full-solution
+completion range; coverage, accepted-answer risk, dispositions, resources
+and all planned summaries. Empty denominators are undefined. Register the
+outcome-blind terminal motif-relevance procedure and its isolated gate,
+finite deviation map and consistency checks. The descriptive and theoretical
+limits in Section~\ref{subsec:pilot-scope} remain applicable.
 
-\item \textbf{Microscopes, tests, and external access.}
-Microscope models, prompts, tools, evidence inputs and budgets; frozen
-revision-test corpus and synthetic-test rules; local corpora, runtime and
-development network/egress allowlists, benchmark-repository permissions,
-and logging of external access. Diagnoses remain hypotheses and cannot
-alter sealed execution evidence or evaluation rules.
-
-\item \textbf{Launch, execution, and replay.}
-Semantic-action and question-level limits; content-independent retry
-eligibility and identical-request rule; timeout/exhaustion dispositions;
-phase-independent launch boundary and atomic launch logging; prelaunch
-events, catastrophic incompleteness, late-response quarantine, and stopping
-rules. The manifest fixes the official replay rule, structural inapplicability
-for no-change episodes, final-development schedule under $B_{\mathrm{eval}}$,
-terminal version set $\mathcal J=\{0,8\}$ and $2\times4$ matrix, matched
-endpoint modes, and counterbalanced branch and terminal call orders.
-
-\item \textbf{Endpoints and denominators.}
-The canonical preimage rule
-$\mathcal A_0(q,y)=c_q^{-1}(\{c_q(y)\})$, extension
-$c_q(\varnothing)=\bot$, and zero post-canonicalization tolerance;
-distinct planned, launched, valid, eligible, included, and paired counts;
-the common executed-cell sets for both readouts; full-solution unresolved
-and paired-contrast ranges; the mandatory pessimistic eligible planned-cell
-numerical summary and any registered full-solution completion range;
-answer-release coverage, accepted-answer risk, dispositions, and resources. Empty
-denominators are undefined; unresolved judgments are neither discarded
-nor silently converted into failures or passes.
-
-\item \textbf{Evidence, caches, and persistence.}
-Cache/reset policy, fresh-state and provider-session controls, exact request
-logging, stable store serialization, immutable source/index/interface
-hashes, evidence and seal commitments, embargo-safe concealment, archived
-object resolution, no direct runtime writes, and replay-comparability rules.
-
-\item \textbf{Ledgers and physical accounting.}
-Version/proposal, execution, phase-applicability, solution-evidence,
-assessment, trace/transition, inclusion, access, deviation, resource,
-analytical-use, and optional policy-attribution schemas; record versions
-and null semantics; declared instrumentation boundary and atomic physical
-grain; native usage semantics and coordinatewise completeness; immutable
-scope rules; observed-versus-reconstructed charges and billing metadata;
-optional dated valuations; cohort time $t_e$, cutoff $T_{\mathrm{report}}$,
-and later reconciliation supplements; disjoint adapt/eval/deploy/over
-scopes; and exact-once cross-ledger resource references. Any optional
-lifecycle-value analysis also registers its scenario and parameter
-schemas, scenario-selection and valuation rules, comparator and
-cost-boundary conventions, input provenance, and horizon requirements.
-
-\item \textbf{Coding and integrity.}
-The substantive taxonomy and separate disposition, transition,
-evaluation-issue, evidence-limitation, and deviation fields; event-order/tie
-and retention rules; two initial independent coding passes, actual prior
-access, checking limits, reconciliation and disagreements; assessment/coding
-role overlap; release tests; and consistency checks for the state rules below.
-
-\item \textbf{Interpretation and descriptive analysis.}
-Outcome-blind terminal motif-relevance mapping after the frozen vocabulary
-and execution seals but before terminal outputs/adjudication are opened
-for analysis or assessment; its isolated archive; all planned summaries;
-and the finite deviation-to-analysis map. The study does not estimate
-$A_{s,B}^{\mathrm{can}}$, $R_{s,B}^{\star,\mathrm{can}}$, native predictive
-or induced solution-distribution log loss, or the idealized reuse model's
-stage probabilities and quantitative gain; evaluate policy-family
-infima; establish the calibration's closure conditions or the reuse
-model's premises; or identify component-wise or whole-bundle causal
-gains. Any optional lifecycle-value projection retains its separate
-scenario interpretation.
+\item \textbf{Records and physical accounting.}
+Concrete linked schemas for the information in this appendix, versioning,
+missingness and visibility; instrumentation boundary, atomic event grain and
+native units; immutable adapt/eval/deploy/over scope rules, exact-once links,
+coordinate completeness, charges and billing basis, dated optional valuations,
+cohort time $t_e$, cutoff $T_{\mathrm{report}}$ and reconciliation. Optional
+policy-attribution records identify policy--event indicators, rationale,
+scenario version and actual-execution status. Quantities for unexecuted
+policies remain counterfactual projections. Optional lifecycle-value
+scenarios additionally fix selection and valuation rules, comparators, cost
+boundaries, input provenance, parameter/scenario schemas and horizons.
+Observed inputs retain that status; future lifecycle returns remain
+conditional projections, not observed returns.
 \end{enumerate}
 
 The exponent bounds must be actual numbers at execution, not unresolved
@@ -6232,14 +5973,15 @@ Contingency or deviation & Registered treatment \\
 \endfoot
 \bottomrule
 \endlastfoot
-Reference, reference-program, grading, canonical-target, or adjudication-derived information reaches a prohibited runtime or pre-seal input. & Retain the as-run artifact. Mark the execution and every downstream release or confirmatory execution for which the material was available contaminated; withdraw the affected registered comparison. \\
-Future-development or terminal question information is exposed before its release point. & Mark the affected episode and downstream releases/executions for which it was available contaminated. Do not silently replace the item. \\
-Outcome-bearing shadow content or a content-dependent proxy is disclosed before the full gate without authorization under an abort-sealing certificate. & Withdraw the primary isolated-shadow interpretation whether or not influence can be proved. Preserve immutable eval physical scope, append the adaptation-use attribution without double-counting, and propagate contamination to affected downstream records. \\
-Outcome-bearing final-development or terminal content leaves its isolated archive or crosses streams before all sixteen records seal, other than preserved partial-record disclosure authorized by the abort-sealing certificate. & Retain every record, mark the affected comparison nonconfirmatory, and mark downstream executions for which it was available contaminated. No refreeze, replacement, or same-experiment rerun is permitted. \\
-A sealed execution or retained derivation is changed, or a runtime component or budget changes within an active attempt. & Treat the affected execution as invalid for the registered comparison and preserve all versions and access evidence. A later record cannot replace it in the primary schedule. \\
-A release, prompt, store, index, interface, tool, budget, cache, or evaluation-manifest hash mismatches the registered execution. & Withdraw the affected registered interpretation and retain descriptive evidence. Propagate contamination when the mismatch entered adaptive or later execution history. A defect confined to external derivation assessment follows the endpoint-specific rules in Table~\ref{tab:prospective-deviation-map-d}. \\
-Evaluation-derived cache or question-local state becomes visible to a later question. & Mark the affected execution and downstream releases/executions for which the state was available contaminated; preserve the as-run trajectory and access logs. \\
-Prospective resource measurements or reconciliation are incomplete. & Retain otherwise valid behavioral outcomes. Report known coordinate subtotals and unavailable-event counts; do not report complete totals or cost comparisons requiring missing/inconsistent coordinates. Event membership remains exact-once. \\
+
+Prohibited reference/adjudication information reaches runtime or a pre-seal input. & Preserve evidence; mark that execution and every downstream release/execution for which it was available contaminated; withdraw the affected registered comparison. \\
+Future-development or terminal inputs are exposed prematurely. & Mark affected and downstream evidence contaminated; no silent item replacement. \\
+Outcome-bearing shadow content or proxy escapes before the full gate without an authorized abort certificate. & Withdraw isolated-shadow interpretation regardless of proved influence; preserve eval physical scope, add adaptation-use/contamination links and count consumption once. \\
+Final-development/terminal information crosses archives or escapes before sixteen seals, outside authorized abort disclosure. & Mark affected comparison nonconfirmatory and downstream available-to executions contaminated. No refreeze, replacement or same-experiment rerun. \\
+A sealed submission changes, or a runtime component/budget changes during an attempt. & Invalidate the affected registered execution; preserve versions/access evidence; no replacement primary record. \\
+Registered release/configuration/evaluation hashes mismatch. & Withdraw affected interpretation, retain descriptive evidence and propagate contamination where applicable. Assessment-only defects follow Table~\ref{tab:prospective-deviation-map-d}. \\
+Evaluation-derived cache/local state reaches a later question. & Mark affected and downstream available-to evidence contaminated; preserve trajectory and access logs. \\
+Resource measurement/reconciliation is incomplete. & Keep unaffected outcomes; report known subtotals and unavailable-event counts, not unsupported complete totals or cost comparisons. Maintain exact-once event membership. \\
 \end{longtable}
 \endgroup
 
@@ -6265,14 +6007,15 @@ Contingency or deviation & Registered treatment \\
 \endfoot
 \bottomrule
 \endlastfoot
-Provider failure after launch is covered by the frozen retry rule. & Apply only that rule and log every attempt. A durably sealed no-answer or handled-failure action maps to $\bot$ and numerical loss one in an otherwise valid, target-eligible execution; it also settles full-solution failure. Keep it in the common executed-cell denominator. \\
-Catastrophic post-launch failure prevents sealing even a watchdog disposition. & Retain a launched-but-incomplete, analysis-invalid record with null action, loss, and full-solution-assessment fields. Seal the surviving status record where possible; quarantine late responses and apply the registered failure, stop, or abort rule. Do not invent an output or an ordinary solver error. \\
-Observed or provider-disclosed model/API behavior changes during the stream. & Record returned identifiers, timestamps, requested configuration, and the applicable acceptance rule. Retain the as-run trajectory and disclose provider-time confounding; apply any frozen stop rule. Do not silently normalize the difference away. \\
-Logging defect is confined, under registered review, to fields not affecting model-visible state, sealing, or numerical adjudication. & Retain unaffected numerical outcomes with a deviation flag and mark analyses requiring the missing field unavailable. Missing derivation evidence follows Table~\ref{tab:prospective-deviation-map-d}, rather than automatically invalidating the numerical record. \\
-Scorer or canonicalizer implementation defect is discovered after execution. & Preserve sealed actions and original adjudications; quarantine the implementation and apply the frozen conformance/impact rule without output-specific discretion. If no applicable label can change, retain verdicts with a flag. Otherwise invalidate affected primary adjudications and comparisons, including full-solution claims that require them. Any contract-conformant recomputation is a versioned secondary sensitivity, with no item replacement or output-conditioned exclusion. \\
-Late-discovered source-family contamination. & Keep the as-run record, label affected evidence nonconfirmatory, and report the registered contamination-excluded summary and denominators without post hoc replacement. \\
-Output-blind item/reference defect: ill-posed question, verified target at $\bot$, inability to render at registered precision, out-of-alphabet target, or inapplicable contract rule independent of solver outputs. & Retain the record and apply the frozen item-level exclusion consistently across releases and both readouts. Report denominator effects and registered zero-versus-one sensitivities; for an excluded terminal pair, report contrast extrema over all four joint assignments. A solver-output parse, grammar, ambiguity, or range failure instead maps to $\bot$ and does not invoke item exclusion. \\
-Revision after $S_8$ and adaptation closure. & Treat the resulting version and later executions as a separately versioned experiment. Preserve the original frozen endpoint and prohibit replacing its records. \\
+
+Launched provider failure covered by retry rule. & Apply only frozen retries and charge every attempt. A sealed handled failure/no-answer has loss one under both endpoints in an otherwise valid eligible cell and stays in the common executed set. \\
+Catastrophic launched failure prevents even watchdog sealing. & Keep surviving launched-but-incomplete, analysis-invalid evidence with null action/loss/assessment; quarantine late responses; apply stop/abort rules without invented output. \\
+Observed or disclosed model/API change. & Record configuration, returned identifiers, time and acceptance rule; disclose provider-time confounding and apply frozen stops. Do not normalize it away. \\
+Logging defect affects neither runtime state, sealing nor numerical scoring. & Keep unaffected numerical outcomes with a flag; mark analyses needing missing fields unavailable. Apply assessment-specific rules to missing derivation evidence. \\
+Scorer/canonicalizer software defect. & Preserve original actions/verdicts, quarantine software and apply frozen impact rules without output-specific discretion. Retain unaffected labels with a flag; otherwise invalidate affected primary adjudications/comparisons, including dependent full-solution claims. Recompute only as versioned secondary sensitivity; no replacement or output-conditioned exclusion. \\
+Late source-family contamination. & Preserve as-run record; label affected evidence nonconfirmatory; report registered contamination-excluded summaries and counts without replacement. \\
+Output-blind item/reference defect. & Apply frozen item-level exclusion across releases/readouts; retain denominator effects and zero/one sensitivities (all four joint assignments for a terminal pair). Output parse/grammar/range/ambiguity failures instead map to $\bot$ and do not justify exclusion. \\
+Revision after adaptation closure. & Separate experiment/version; do not replace original endpoint records. \\
 \end{longtable}
 \endgroup
 
@@ -6298,12 +6041,13 @@ Cap or nonexecution event & Registered treatment \\
 \endfoot
 \bottomrule
 \endlastfoot
-Within-branch runtime budget is exhausted after launch. & Stop under the frozen terminal policy. A sealed cap-exhausted action maps to $\bot$ and numerical loss one, and settles full-solution failure, when otherwise analysis-valid and target-eligible. It remains in the common executed-cell set. \\
-Per-episode or adaptation allocation is exhausted. & Stop further revision under the frozen rule, retain completed records, and continue later development questions under the last frozen configuration via no-change releases unless a registered global stop applies. Reserved confirmatory allocations remain protected. \\
-Cell-specific prelaunch failure or allocation shortfall does not trigger global stop. & Record an unexecuted scheduled cell, reason, and protocol noncompletion. It has no terminal action, ordinary item loss, or branch-runtime event. Log actual prelaunch events and retain distinct planned/launched/valid/eligible/included counts; an empty event list is used only when no work occurred. \\
-Global stop before episode 8 completes. & Revoke adaptation authority, close the ledger, seal cancelled/unexecuted remaining cells where possible, commit partial archives and the abort certificate, and only then disclose them. Do not relabel the last completed release $S_8$; cancel the primary endpoint. Later evaluation needs separate preregistration and an early-stop descriptive label. \\
-Global stop after $S_8$ freezes but before all sixteen confirmatory records seal. & Preserve partial records, revoke remaining write authority, seal outstanding statuses where possible, and commit the abort certificate before disclosure or delayed assessment. Mark the endpoint incomplete and nonconfirmatory. A later evaluation requires separate preregistration; no same-experiment replacement or rerun is permitted. \\
-Eligible planned-cell noncompletion sensitivity. & The mandatory numerical sensitivity assigns one to otherwise eligible scheduled nonlaunches while retaining their nonoutput status. It does not replace the executed-cell mean. Any registered full-solution completion range also retains unresolved judgments and the same exclusions; no imputed code becomes a fabricated solution. \\
+
+Launched runtime budget exhausted. & Stop under frozen policy; a sealed cap-exhausted action has loss one for both endpoints in an otherwise valid eligible cell and stays in the common executed set. \\
+Episode/adaptation allocation exhausted. & Stop revision; carry forward no-change releases unless a global stop applies. Protect reserved confirmatory resources. \\
+Cell-specific prelaunch failure without global stop. & Record nonlaunch, reason and noncompletion, with no output/loss or invented runtime event. Log actual prelaunch work and preserve separate inclusion counts. \\
+Global stop before episode 8 completes. & Revoke adaptation, close ledger, seal remaining statuses where possible and commit partial archives/abort certificate before disclosure. Cancel primary endpoint; do not rename last release $S_8$. Later evaluation requires new registration and early-stop descriptive label. \\
+Global stop after $S_8$ freeze but before sixteen seals. & Preserve partial records; revoke remaining writes, seal statuses where possible and commit abort certificate before disclosure/assessment. Endpoint is incomplete/nonconfirmatory; later evaluation needs new registration, not a replacement/rerun. \\
+Eligible planned-cell noncompletion sensitivity. & Code otherwise eligible nonlaunch as one without inventing outputs or replacing executed-cell means. Any full-solution completion range keeps unresolved judgments and the same exclusions. \\
 \end{longtable}
 \endgroup
 
@@ -6329,13 +6073,14 @@ Evidence or assessment event & Registered treatment \\
 \endfoot
 \bottomrule
 \endlastfoot
-Submitted derivation or supporting evidence is missing, ambiguous, or insufficient, with an intact numerical execution. & Retain the common eligible executed-cell membership. If no retained defect can be established, derivation assessment is unassessable; canonical pass then gives unresolved full-solution status. Canonical failure still settles full-solution failure. Missing evidence is not proof of invalidity or grounds for item exclusion. \\
-A false retained claim, invalid inference, violated scope, or unrepaired dependency is established despite a correct number. & Preserve numerical success. Under the frozen assessment procedure, record the located invalid dependency and assessed full-solution failure. Discarded exploratory mistakes alone do not trigger this outcome. \\
-Assessment cap is exhausted or checking/coder disagreement cannot be resolved. & Seal available findings and resource use. Remaining derivation uncertainty is unassessable unless an established retained defect already supports invalidity. Unresolved trace labels remain unresolved. No extra checking is hidden under another name to bypass the assessment cap. \\
-Full-solution rubric, evidence-access, blinding, or checking procedure is violated, or a judgment is later shown defective. & Preserve original records and apply the frozen impact rule to the affected assessment fields and summaries. Mark unsupported judgments unavailable or unassessable as appropriate; retain unaffected numerical results and the common denominator. Dated corrections preserve their effect on earlier reports. If information crossed an execution/development embargo, also apply contamination rules; a new assessment cannot repair that leak. \\
-An assessor or microscope supplies missing steps or replaces the retained graph after sealing. & Keep that material as a post-seal artifact, never as the solver's submission. Assess the original evidence, and invalidate any judgment that improperly credited the added work. Propagate any prohibited feedback exposure under the isolation rules. \\
-Trace-coding defect, inconsistent taxonomy use, or changed observability. & Retain initial codes, disagreements and dated corrections; report coding coverage and affected category summaries. Do not automatically change a canonical score or formal validity judgment. Evidence-based assessment corrections use their separate authorized procedure. \\
-Shadow or confirmatory human/model review or coding begins without the required full confirmatory seal or authorized abort-sealing certificate. & Preserve the access and work records and mark a gate violation even if results stayed archived. Apply the frozen impact map to affected assessment/coding interpretation; any prohibited disclosure or availability to development or another execution also invokes the corresponding contamination rule. Never treat premature review as permitted mechanical scoring. \\
+
+Missing/ambiguous supporting derivation; numerical execution intact. & Keep common cell membership. Without an established retained defect, judgment is unassessable: canonical pass yields unresolved; canonical failure yields failure. Missingness is not invalidity or exclusion. \\
+Established retained defect despite correct number. & Preserve numerical pass and record assessed full-solution failure with located dependency. Discarded exploratory errors alone do not suffice. \\
+Assessment cap or unresolved disagreement. & Seal findings/resources. Remaining uncertainty is unassessable unless an established defect supports invalidity; trace disagreement stays unresolved. Do not evade the cap by relabelling checking. \\
+Assessment procedure violated or judgment defective. & Preserve records, apply frozen endpoint-specific impact rule, mark unsupported fields unavailable/unassessable, retain unaffected numerical results and common denominator. Dated corrections preserve earlier report effects. Apply contamination rules to any disclosure leak; reassessment cannot repair it. \\
+Checker adds steps or replaces retained graph after seal. & Keep additions as post-seal artifacts; assess original submission and invalidate judgments that credited added work. Propagate prohibited-feedback contamination. \\
+Coding defect or changed observability. & Keep initial labels, disagreements and dated corrections; report affected coding summaries/coverage, without automatically changing correctness judgments. Assessment corrections use their authorized process. \\
+Shadow/confirmatory review or coding starts before full gate/authorized abort. & Record gate violation even if findings stayed archived; apply frozen assessment/coding impact rules and any disclosure/availability contamination. Premature review is not permitted mechanical scoring. \\
 \end{longtable}
 \endgroup
 
