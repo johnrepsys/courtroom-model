@@ -1558,6 +1558,8 @@ observation returned in response. The kernel describes the law of that
 observation given the observed history and action at stage $k$.
 Private policy randomization is represented inside the action kernels. Budget admissibility requires the registered cumulative resource vector through $T_\pi$, including terminal operations, to satisfy $B$. The task law, policy kernels, and environment kernels induce the policy-specific law $P^\pi$ by the Ionescu--Tulcea construction. Stage-specific action, observation, and history spaces may be represented by their standard-Borel disjoint unions. This kernel formulation is what ``nonanticipating end-to-end policy'' means below.
 
+An explicit terminal-reserve convention chooses a solving allowance $B_{\mathrm{solve}}$ and a reserve $b_{\mathrm{term}}$ for the registered terminal path before defining the policy families, with declared total $B=B_{\mathrm{solve}}+b_{\mathrm{term}}$ (componentwise for a resource vector). The solving allowance is not the total budget; all charged terminal operations must also be accounted for.
+
 Let $\Pi_{s,B}^{\mathrm{dec}}$ be a nonempty registered family of end-to-end decision policies. Each $\pi\in\Pi_{s,B}^{\mathrm{dec}}$ induces its own complete source-policy history $H_\pi$ through selection of the raw output $\widehat Y_\pi$, together with a joint law $P^\pi$. The history includes $Q$ and $\widehat Y_\pi$ before adjudication, so $\widehat Y_\pi$ is measurable from $H_\pi$. Every policy shares the same task marginal,
 
 \begin{equation}
@@ -1626,7 +1628,7 @@ reports a distribution over outputs. The rules are registered before
 execution; their realized actions and probability reports depend on
 the history actually encountered.
 
-Throughout, ``budget-preserving'' means that the source policy and its terminal wrapper jointly satisfy $B$. The registered manifest may reserve a terminal-wrapper allowance or assign the registered terminal operations zero incremental cost. If a source policy can exhaust $B$ and the wrapper has positive cost, same-$B$ closure fails. One could instead formulate a comparison from $B$ to $B+b_{\mathrm{wrap}}$, but the results below use the stated same-$B$ closure premise.
+Throughout, ``budget-preserving'' means that the source policy and its terminal wrapper jointly satisfy $B$. The registered manifest may use the reserve convention above or assign the registered terminal operations zero incremental cost. A reserve provides accounting headroom, but does not itself establish family membership, law-preserving closure, or that every terminal path required by the stated closures fits the reserve; inherited or composed terminal operations must also be counted. If a source policy can exhaust $B$ and the wrapper has positive cost, same-$B$ closure fails. One could instead formulate a comparison from $B$ to $B+b_{\mathrm{wrap}}$, but the results below use the stated same-$B$ closure premise.
 
 The first calibration direction uses a law-preserving sampling closure. We say that $(\Pi_{s,B}^{\mathrm{dec}},\Pi_{s,B}^{\mathrm{pred}})$ is \emph{budget-preserving sampling-closed} if, for every $\rho\in\Pi_{s,B}^{\mathrm{pred}}$, there is a decision policy
 
