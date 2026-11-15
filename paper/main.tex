@@ -464,10 +464,10 @@ append-only record. Each execution starts from a read-only release clone;
 question-local state cannot modify the release or enter another runtime
 session directly. Provider metadata and execution times remain recorded,
 since a frozen client configuration does not guarantee fixed hidden
-serving kernels. Detailed session, cache, manifest, and disclosure rules
-are in Appendix~\ref{app:execution-replay}. The distinction between a sealed
-failure disposition and an absent terminal action follows the launch and
-noncompletion rules in Section~\ref{subsec:pilot-retry-policy}.
+serving kernels. For the pilot, detailed session, cache, manifest, and
+disclosure rules are in Appendix~\ref{app:execution-replay}; its launch and
+noncompletion rules in Section~\ref{subsec:pilot-retry-policy} implement the
+distinction between a sealed failure disposition and an absent terminal action.
 
 \subsection{Inner Loop: Question-Specific Use}
 \label{subsec:courtroom-inner-loop}
@@ -577,9 +577,10 @@ defect is not an affirmative validity judgment.
 
 Runtime validation can influence the current attempt through its frozen
 route. External adjudication cannot repair or replace the submission.
-Section~\ref{subsec:pilot-solution-adjudication} specifies the evidence
-contract and assessment procedure; Appendix~\ref{app:audit-microscopes}
-specifies trace coding and reports observability by release.
+For the pilot, Section~\ref{subsec:pilot-solution-adjudication} specifies
+the evidence contract and assessment procedure;
+Appendix~\ref{app:audit-microscopes} specifies trace coding and reports
+observability by release.
 
 \subsection{Outer Loop: Audit, Revision, Admission, and Release}
 \label{subsec:courtroom-outer-loop}
@@ -591,7 +592,8 @@ tests. Adaptive nonlaunch follows the no-change or study-stop path without
 item-driven revision or an imputed answer. The frozen shadow supplies no
 developmental feedback; it becomes a descriptive comparison only after its
 embargo lifts. Section~\ref{subsec:pilot-development-episode} and
-Section~\ref{subsec:execution-confirmatory} define the complete schedule.
+Section~\ref{subsec:execution-confirmatory} define the pilot's complete
+schedule, not an arbitrary-horizon schedule.
 
 Every candidate receives \textsc{Accept}, \textsc{Reject}, \textsc{Defer},
 or \textsc{Ambiguous}, with evidence, reasons, and costs. A retained defect
@@ -619,7 +621,8 @@ partition; reusable proposals retain scope and provenance. An official
 same-item replay measures exposed-item fit and cannot reopen the completed
 release decision. Numerical and assessed full-solution transitions remain
 separate. Adaptation closure, final replay, and terminal evaluation obey
-the gates in Section~\ref{subsec:execution-confirmatory}.
+prospectively registered gates; Section~\ref{subsec:execution-confirmatory}
+instantiates them for the pilot.
 
 \subsection{Assurance-Bearing Procedural Store}
 \label{subsec:courtroom-store}
@@ -691,8 +694,9 @@ distinct from additive consumption. Each billable event contributes one
 observed or registered reconstructed charge.
 
 Events receive one immutable \textsc{adapt}, \textsc{eval},
-\textsc{deploy}, or \textsc{over} scope under the rules in
-Section~\ref{subsec:ledger-resources}. Shared events count once, including
+\textsc{deploy}, or \textsc{over} scope under registered accounting rules,
+instantiated for the pilot in Section~\ref{subsec:ledger-resources}.
+Shared events count once, including
 when later analytical use changes. Actual prelaunch work, retries, failed
 calls, rejected proposals, abandoned patches, negative tests, checks,
 repairs, and unused admitted objects retain their costs. Scheduled but
@@ -2949,8 +2953,8 @@ order their changes between two policies.
 Terminal actions mapped to $\bot$ fail both endpoints. The theoretical
 policies terminate with records almost surely; empirical nonlaunch or
 catastrophic incompleteness without a record supplies no fabricated
-policy output. The inclusion rules are fixed in
-Section~\ref{subsec:pilot-outcomes}.
+policy output. Empirical inclusion rules are fixed prospectively;
+Section~\ref{subsec:pilot-outcomes} specifies them for the pilot.
 
 For release $S_t$ and execution regime $\gamma$, fix the realized state
 $s_t$, budget $B_{t,\gamma}$, and interaction environment
@@ -3065,15 +3069,18 @@ nonlaunch or other noncompletion.
 Section~\ref{sec:pilot-design} specifies that concrete pilot instantiation.
 Its execution, disclosure, and abort gates are given in
 Sections~\ref{subsec:pilot-development-episode}
-and~\ref{subsec:execution-confirmatory}; no gate is relaxed by taking a
-statistical summary.
+and~\ref{subsec:execution-confirmatory}. Other sizes require their own
+prospectively registered operational rules; the pilot sections do not
+supply an arbitrary-size protocol. No registered gate is relaxed by
+taking a statistical summary.
 
 Every denominator below contains only launched, analysis-valid,
 target-loss-eligible cells with sealed terminal actions. A sealed
 no-answer or handled-failure action remains an error. Nonlaunch and
 catastrophic incompleteness without a terminal action supply no ordinary
-loss. Planned-cell noncompletion sensitivities remain separate under
-Section~\ref{subsec:pilot-outcomes}. All means are undefined for empty
+loss. Planned-cell noncompletion sensitivities remain separately
+registered; Section~\ref{subsec:pilot-outcomes} gives the pilot's
+specification. All means are undefined for empty
 denominators, and all inclusion and exclusion counts remain reported.
 
 For $b\in\{\mathrm{adapt},0\}$, let
@@ -3208,8 +3215,9 @@ this updater on all histories and does not identify this expectation.
 
 After authorized adaptive feedback, an accepted change schedules one
 official replay under $(S_t,B_t)$; a no-change episode is structurally
-inapplicable. Replay and freeze permissions are those in
-Section~\ref{subsec:execution-confirmatory}. A replay on the exposed
+inapplicable. Replay and freeze permissions follow the prospectively
+registered protocol; Section~\ref{subsec:execution-confirmatory} gives
+the pilot's concrete gates. A replay on the exposed
 item records fit; an incorrect-to-correct pair is an observed transition,
 not evidence identifying its cause or recurrence.
 
@@ -3254,8 +3262,10 @@ budget-equivalent or evidence identifying forgetting or interference.
 The untouched terminal panel compares $\mathcal J=\{0,D\}$ on $H$
 questions under matched $B_{\mathrm{eval}}$ and the registered
 client-visible configuration. Internal policies and actual provider
-kernels may differ. Section~\ref{subsec:pilot-final-replay-terminal}
-specifies batch sealing and prohibits feedback into a later release.
+kernels may differ. Batch sealing and the prohibition on feedback into
+a later release follow the registered protocol;
+Section~\ref{subsec:pilot-final-replay-terminal} specifies the pilot's
+concrete schedule.
 
 For $j\in\mathcal J$, let $\mathcal I_{j}^{\mathrm{valid}}\subseteq\{1,\ldots,H\}$ be the terminal questions on which the scheduled branch actually launches, the execution is analysis-valid, and the item remains eligible for the registered target-loss analysis, and let $\widehat O_{j,h}^{\mathrm{term}}$ be its terminal action for $h\in\mathcal I_j^{\mathrm{valid}}$. Provided $\mathcal I_j^{\mathrm{valid}}$ is nonempty, define the release-specific analysis-valid executed-cell canonical-loss mean
 
@@ -3481,9 +3491,9 @@ about resolved judgments apply.
 
 The same assessment summaries apply to each phase under its registered
 gates and common executed-cell sets. Full-solution checking requires the
-separate rubric, evidence, and resources in
-Section~\ref{subsec:pilot-solution-adjudication}; canonical scoring alone
-does not supply a derivation judgment.
+separately registered rubric, evidence, and resources, instantiated for
+the pilot in Section~\ref{subsec:pilot-solution-adjudication}; canonical
+scoring alone does not supply a derivation judgment.
 
 \subsection{Accumulation, Order, and Adaptive Path Dependence}
 \label{subsec:adaptive-path-dependence}
@@ -3544,7 +3554,8 @@ S_{t-1}^\sigma\oplus\Delta_t^\sigma
 
 Each realized state $S_t^\sigma$, together with its registered environment and budget, determines an admissible family $\Pi_{t,\sigma}^{\mathrm{dec}}$ and one implemented policy $\pi_{t,\sigma}^{\mathrm{impl}}$. Policies in that family induce their own histories and laws. Order dependence may therefore enter through the artifacts and code in the state, the admissible family, the environment, the laws induced by its members, the implemented policy, or the realization gap.
 
-Admissible histories obey the feedback restrictions in
+Admissible histories obey the prospectively registered feedback
+restrictions, instantiated for the pilot in
 Section~\ref{subsec:execution-confirmatory}. The changes
 $\{\Delta_t^\sigma\}$ generally are not a permutation of fixed objects:
 orders can elicit different diagnoses, motifs, code, tests, and release
@@ -3569,10 +3580,11 @@ Equation~\eqref{eq:reuse-log-loss-kl}.
 
 The primitive ledger records physical consumption, including unsuccessful
 construction, admission, runtime checking, repair, and external
-assessment. Section~\ref{subsec:pilot-resource-ledger} fixes the accounting
-boundary, scopes, reporting cutoff, and reconciliation rules;
-Appendix~\ref{app:ledgers-manifest} supplies the schemas. The definitions
-here connect those records to lifecycle comparisons.
+assessment. The accounting boundary, scopes, reporting cutoff, and
+reconciliation rules are fixed prospectively;
+Section~\ref{subsec:pilot-resource-ledger} and
+Appendix~\ref{app:ledgers-manifest} specify the pilot's rules and schemas.
+The definitions here connect such records to lifecycle comparisons.
 
 Registration fixes a finite coordinate dimension $d_{\mathrm{res}}$,
 an accounting seal before study-specific reference/evaluator work, and
