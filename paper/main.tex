@@ -19,8 +19,8 @@
 \usepackage{makecell}   % line breaks in headers/cells
 \usepackage{pifont}     % check/cross marks
 \usepackage[inline]{enumitem}
-\usepackage{placeins}
 \usepackage{longtable}
+\usepackage{placeins}
 \usepackage{float}
 \usepackage{needspace}
 \usepackage{graphicx}
@@ -105,7 +105,8 @@ feasibility protocol with $D=8$ sequential development questions, an
 isolated frozen-baseline shadow, sealed replays, and a matched-budget
 comparison on $H=4$ prospectively untouched terminal questions. Exact
 canonical numerical scores and fallible retained-derivation assessments,
-including unassessable judgments, remain separate. The protocol is
+including unassessable judgments and explicitly pending assessments,
+remain separate. The protocol is
 designed to document one development trajectory and its costs, not to
 estimate family optima, identify component effects, or establish
 population superiority. No prospective outcomes are reported.
@@ -132,125 +133,30 @@ motivate the \emph{Courtroom loop}: a theory-guided synthesis connecting
 procedural assurance, conditional models of useful reuse, and an
 auditable development trajectory.
 
-\paragraph{Assurance across a versioned lifecycle.}
-
-Courtroom separates \emph{admission-time certification} of a reusable
-motif or relation from \emph{runtime validation} of a particular
-application and from external assessment of the submitted solution.
-Motifs carry semantic roles, units, applicability conditions, execution
-contracts, provenance, and assurance evidence. A relation carries its own
-scoped composition claim; admitting two motifs does not certify a link
-between them. Certification records the claim, scope, evidence, and
-decision rather than conferring unrestricted correctness. Formal
-assurance, when available, remains conditional on its specification,
-premises, and trusted checking machinery.
-
-The inner loop executes a frozen question-specific policy. The outer
-loop examines authorized sealed records, tests general revisions, and
-publishes the next release. The complete release $S_t$ includes prompts,
-code, tools, retrieval, validators, stores, and resource settings. Store
-growth is one part of this whole-system process. Admissions,
-replacements, revocations, unused support, unsuccessful revisions, and
-human work remain in the record. This makes the realized path
-inspectable without treating its bundled changes as identified component
-effects.
-
-\paragraph{A hypothetical numerical pass with invalid retained reasoning.}
-
-Consider a question asking for mass from density and volume, with correct
-normalized values $\rho$ and $V$. Suppose the solver selects the correct
-formula $m=\rho V$ but retains a conversion that multiplies density by
-ten and another that divides volume by ten. Then
-\[
-(10\rho)(V/10)=\rho V.
-\]
-The answer can pass numerical adjudication even though the retained
-conversions are invalid. This is an illustrative construction, not an
-observed pilot result. It separates the final number, the validity of
-the submitted derivation, and the eligibility of any extracted procedure
-for later admission.
-
-A fully correct solution requires both a canonically correct answer and
-valid retained reasoning. Discarded exploratory errors need not invalidate
-it. A repair must replace or justify affected claims and recompute or
-revalidate surviving dependents; cancellation does not perform that
-repair. In the hypothetical example, a later audit might motivate general
-conversion support. Such a repair, its admission, and any benefit on
-another question would each require their own evidence. This possible
-extension is not an observed repair or a demonstrated gain.
-
-The distinction between answer and reasoning quality has prior art.
-ReCEval evaluates reasoning chains through step correctness and
-informativeness, using natural-language-inference and
-$\mathcal V$-information-based metrics \citep{prasad2023receval}.
-Courtroom's FormulaReasoning protocol instead registers a numerical
-contract and a separate assessment of the submitted mathematical
-derivation. That assessment is fallible: assessed validity is not a proof
-of validity, and unassessable evidence remains explicit. We do not assume
-that one reasoning metric or assurance standard transfers unchanged
-across domains.
-
-\paragraph{Availability, use, effect, and value.}
-
-Four questions organize the evidence. What support was available in a
-frozen release? What was actually selected, bound, executed, and retained?
-How does performance compare under a specified task law, endpoint, and
-budget? Under what future-use, cost, and valuation premises would reuse be
-worthwhile? These are distinct questions, not an implication chain.
-Table~\ref{tab:intro-reuse-evidence} gives an interpretive map; the detailed
-theory and the protocol specify different ways to address them.
-
-\begin{table}[t]
-\centering
-\small
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}p{0.37\linewidth}>{\raggedright\arraybackslash}X@{}}
-\toprule
-\textbf{Question} & \textbf{Relevant evidence} & \textbf{Interpretive boundary}\\
-\midrule
-Availability & Versioned motifs and relations, scopes, admission evidence, and release manifests.
-& Inventory does not show applicable selection or useful coverage.\\
-\addlinespace
-Use & Sealed application records, bindings, execution, retained dependencies, and fallible validity assessments.
-& An assessed valid application does not identify its effect on success or cost.\\
-\addlinespace
-Effect & Specified system comparisons, endpoints, task laws, budgets, and identifying assumptions or interventions.
-& One trace or exposed-item replay supplies no causal component contrast; the small terminal panel is descriptive.\\
-\addlinespace
-Value & Resource ledgers plus justified future gains, reuse horizon, cost bounds, and valuation.
-& Observed expenditure or an accuracy gain alone does not establish lifecycle value.\\
-\bottomrule
-\end{tabularx}
-\caption{Evidence questions for procedural reuse. Records and premises
-depend on the claim; inventory and valid-use judgments do not identify
-causal benefit or lifecycle value.}
-\label{tab:intro-reuse-evidence}
-\end{table}
-
-Validity concerns whether an application meets the declared mathematical
-and procedural contract. Attribution concerns the difference made by a
-specified change. A trace can support the former judgment and locate a
-particular defect without supplying the counterfactual needed for the
-latter. Replaying an exposed item can document changed fit, but cannot
-restore holdout status or isolate the contribution of a procedure when
-prompts, tools, validation, or other components also changed.
-\FloatBarrier
-
 \paragraph{Information, accessibility, and realization.}
 
-The theory is self-contained and applies to its declared ensembles,
+The equations below state distinct conditional claims about information,
+useful reuse, and lifecycle value; the information decomposition does not
+prove the reuse mechanism. The theory applies to its declared ensembles,
 policy families, and comparisons independently of the proposed pilot.
 Representation concerns which task-relevant distinctions survive under a
 declared source ensemble. Bounded accessibility concerns what a registered
 policy family can attain with its observations, tools, and budget.
-Realization concerns the particular implemented policy. For discrete
-targets under a fixed law $P$, expected log loss decomposes as
+Realization concerns the particular implemented policy. For a discrete
+target $Z$ observed through $X$, fix a common predictor-independent law
+$P$ and a nonempty registered family $\mathcal V$ of measurable
+probability kernels. Best expected log loss decomposes as
 \[
 L_{\mathcal V}^{P}(Z\mid X)
 =H_P(Z\mid X)+\Gamma_{\mathcal V}^{P}(Z\mid X),
 \]
-where $\Gamma_{\mathcal V}^{P}$ is the family's best expected
+Here $L_{\mathcal V}^{P}$ is the infimum of expected log loss over the
+registered predictive family $\mathcal V$, $H_P$ is conditional Shannon
+entropy, and $\Gamma_{\mathcal V}^{P}$ is the family's best expected
 Kullback--Leibler approximation gap relative to the true conditional
-distribution. Standard information--distortion and packing--Fano converses
+distribution. The decomposition separates uncertainty in the observations
+from restrictions on prediction; it is not an implemented solver's gain.
+Standard information--distortion and packing--Fano converses
 describe representation limits under a specified source--representation
 ensemble and decoder-visible state. Observed solver errors alone do not
 establish a positive Shannon residual.
@@ -370,6 +276,126 @@ remains unknown. Observed expenditure does not supply a future gain or
 cost bound. A lifecycle scenario therefore retains its comparator,
 valuation, horizon, and assumptions separately from observations.
 
+\paragraph{Assurance across a versioned lifecycle.}
+
+Courtroom separates \emph{admission-time certification} of a reusable
+motif or relation from \emph{runtime validation} of a particular
+application and from external assessment of the submitted solution.
+Motifs carry semantic roles, units, applicability conditions, execution
+contracts, provenance, and assurance evidence. A relation carries its own
+scoped composition claim; admitting two motifs does not certify a link
+between them. Certification records the claim, scope, evidence, and
+decision rather than conferring unrestricted correctness. Formal
+assurance, when available, remains conditional on its specification,
+premises, and trusted checking machinery.
+
+The inner loop executes a frozen question-specific policy. The outer
+loop examines authorized sealed records, tests general revisions, and
+publishes the next release. The complete release $S_t$ includes prompts,
+code, tools, retrieval, validators, stores, and resource settings. Store
+growth is one part of this whole-system process. Admissions,
+replacements, revocations, unused support, unsuccessful revisions, and
+human work remain in the record. This makes the realized path
+inspectable without treating its bundled changes as identified component
+effects.
+
+\paragraph{A hypothetical numerical pass with invalid retained reasoning.}
+
+Consider a question asking for mass from density and volume, with correct
+normalized values $\rho$ and $V$. Suppose the solver selects the correct
+formula $m=\rho V$ but retains a conversion that multiplies density by
+ten and another that divides volume by ten. Then
+\[
+(10\rho)(V/10)=\rho V.
+\]
+The answer can pass numerical adjudication even though the retained
+conversions are invalid. This is an illustrative construction, not an
+observed pilot result. It separates the final number, the validity of
+the submitted derivation, and the eligibility of any extracted procedure
+for later admission.
+
+A fully correct solution requires both a canonically correct answer and
+valid retained reasoning. Discarded exploratory errors need not invalidate
+it. A repair must replace or justify affected claims and recompute or
+revalidate surviving dependents; cancellation does not perform that
+repair. To continue the same hypothetical, an audit could propose a density--volume
+mass motif with explicit source-unit-to-SI conversions and the contract
+$m=\rho V$. Its scope would require a scalar uniform mass density and
+the corresponding material volume, known unit labels, and compatible
+material/state assumptions; spatially varying density, an unstated mixture
+basis, or ambiguous units would be outside that claim. Admission checking
+could recompute the conversion identities, test valid and boundary inputs,
+and check rejection of unsupported unit labels and out-of-scope bindings.
+Missing scope evidence or a failed check would support rejection or
+deferral, not admission by numerical cancellation. Passed finite tests
+would still not prove universal soundness.
+
+If admitted in a later release, the motif could be retrieved for another
+question, with fresh scope checks, bindings, executed conversions, and
+retained dependencies recorded for that particular application. A correct
+later number would not by itself establish valid use or a gain over the
+baseline. The ledger would retain proposal, testing, rejected alternatives,
+and admission work as well as later retrieval, execution, and checking;
+an unused admission would retain its construction costs. This continuation
+is entirely hypothetical: it supplies neither an observed repair or use,
+nor evidence that savings recover those costs.
+
+The distinction between answer and reasoning quality has prior art.
+ReCEval evaluates reasoning chains through step correctness and
+informativeness, using natural-language-inference and
+$\mathcal V$-information-based metrics \citep{prasad2023receval}.
+Courtroom's FormulaReasoning protocol instead registers a numerical
+contract and a separate assessment of the submitted mathematical
+derivation. That assessment is fallible: assessed validity is not a proof
+of validity, and unassessable evidence remains explicit. We do not assume
+that one reasoning metric or assurance standard transfers unchanged
+across domains.
+
+\paragraph{Availability, use, effect, and value.}
+
+Four questions organize the evidence. What support was available in a
+frozen release? What was actually selected, bound, executed, and retained?
+How does performance compare under a specified task law, endpoint, and
+budget? Under what future-use, cost, and valuation premises would reuse be
+worthwhile? These are distinct questions, not an implication chain.
+Table~\ref{tab:intro-reuse-evidence} gives an interpretive map; the detailed
+theory and the protocol specify different ways to address them.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}p{0.37\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Question} & \textbf{Relevant evidence} & \textbf{Interpretive boundary}\\
+\midrule
+Availability & Versioned motifs and relations, scopes, admission evidence, and release manifests.
+& Inventory does not show applicable selection or useful coverage.\\
+\addlinespace
+Use & Sealed application records, bindings, execution, retained dependencies, and fallible validity assessments.
+& An assessed valid application does not identify its effect on success or cost.\\
+\addlinespace
+Effect & Specified system comparisons, endpoints, task laws, budgets, and identifying assumptions or interventions.
+& One trace or exposed-item replay supplies no causal component contrast; the small terminal panel is descriptive.\\
+\addlinespace
+Value & Resource ledgers plus justified future gains, reuse horizon, cost bounds, and valuation.
+& Observed expenditure or an accuracy gain alone does not establish lifecycle value.\\
+\bottomrule
+\end{tabularx}
+\caption{Evidence questions for procedural reuse. Records and premises
+depend on the claim; inventory and valid-use judgments do not identify
+causal benefit or lifecycle value.}
+\label{tab:intro-reuse-evidence}
+\end{table}
+
+Validity concerns whether an application meets the declared mathematical
+and procedural contract. Attribution concerns the difference made by a
+specified change. A trace can support the former judgment and locate a
+particular defect without supplying the counterfactual needed for the
+latter. Replaying an exposed item can document changed fit, but cannot
+restore holdout status or isolate the contribution of a procedure when
+prompts, tools, validation, or other components also changed.
+\FloatBarrier
+
 \paragraph{A prospective feasibility protocol.}
 
 The framework permits registered positive development and evaluation sizes
@@ -384,15 +410,20 @@ current-reference release to development; shadow outcomes remain unavailable dur
 adaptation and confirmatory execution.
 
 Official same-item replays measure exposed-item fit. After $S_D$ and the
-adaptation ledger freeze, final-development replays and the matched-budget
-$S_0$--$S_D$ terminal comparison proceed without revision. Confirmatory
+adaptation ledger freeze, final-development replays and the
+$S_0$--$S_D$ terminal comparison proceed without revision. Both batches use
+the same registered outer resource cap $B_{\mathrm{eval}}$, applied
+field by field; frozen endpoint policies retain their internal stopping
+rules. Development budgets may differ by release, so the earlier
+trajectory is not a matched-budget component experiment. Confirmatory
 archives remain mutually embargoed until all scheduled records seal or
 the registered abort-sealing rule closes the partial record. Exact
 numerical comparison follows reference-blind normalization and
 six-significant-digit canonicalization on a bounded finite grid, with
 independently recomputed references. Separate retained-derivation
 assessments report assessed validity, invalidity, and unassessable
-judgments. Noncompletion, numerical failure, and assessment coverage
+judgments, with pending work and its process state explicit at each
+reporting cutoff. Noncompletion, numerical failure, and assessment coverage
 remain distinct records with explicit denominators.
 
 The proposed pilot has one human--API development path, bundled revisions,
@@ -413,7 +444,12 @@ systems, and code-evolution approaches develop reusable skills or revise
 implementations
 \citep{ace2026,wei2025evomemory,mi2026skillpro,aria2025,darwingodel2026}.
 
-Admission and version management also have close precedents. Janus selects
+Admission and version management also have close precedents. AlphaOPT
+builds an experience library for optimization-program formulation, tests
+new insights through retrieval and execution replay on their source tasks,
+and refines applicability conditions using cross-task evidence
+\citep{kong2026alphaopt}. This is a close precedent for scoped, checked
+reuse, not a proof of general semantic validity. Janus selects
 between old and proposed memories; matched-rollout validation estimates a
 candidate skill's marginal utility before storage
 \citep{chen2026janus,zhang2026coevolving}.
@@ -428,9 +464,12 @@ Procedural Graphs evolves relations among procedures using validation-gated
 edits; SPEM stores atomic skills and reusable skill-DAG compositions
 \citep{lu2026proceduralgraphs,zhou2026spem}.
 These recent reports include preprints, notably ChipMEM, Zep Agent Skills,
-Procedural Graphs, and SPEM. A lifecycle taxonomy organizes evolving skill
-libraries around verification/admission, retrieval/composition, maintenance,
-and governance \citep{li2026dynamicskills}.
+Procedural Graphs, and SPEM. Li's lifecycle survey already treats evolving skill libraries in terms of
+admission, retrieval/composition, maintenance, lineage, and governance,
+and calls for trajectory-aware evaluation \citep{li2026dynamicskills}.
+Courtroom specializes that perspective into the assurance distinctions,
+conditional calculations, and prospective protocol below; lifecycle
+management itself is not a new contribution.
 
 SkillsBench supplies paired no-skill and curated-skill evaluations;
 SkillEvolBench and AFTER examine skill evolution and transfer
@@ -439,8 +478,13 @@ Skill Coverage distinguishes exercised behavioral constraints from task
 outcomes, while differential analyses document functional and efficiency
 regressions, including excessive verification
 \citep{tan2026skillcoverage,dong2026skillharm}.
-Analyses of memory retrieval and compaction address additional resource
-constraints \citep{xmemory2026,colaco2026whattokeep}.
+Analyses of memory retrieval address additional resource constraints
+\citep{xmemory2026}. Colaco and Lahjouji formulate memory compaction as
+a rate--distortion tradeoff between retained information and downstream
+utility under a resource budget \citep{colaco2026whattokeep}. Their
+compaction perspective is complementary to, not a substitute for, the
+distinctions among information availability, bounded accessibility,
+particular-application validity, and lifecycle cost here.
 Courtroom's contribution is the connection among scoped reusable-object
 assurance, particular-application validity, whole-system development,
 conditional reuse and lifecycle calculations, and a sealed prospective
@@ -694,7 +738,7 @@ and~\eqref{eq:theory-full-solution-loss}. The mathematical predicate
 $\operatorname{Valid}(q,o)$ is assessed by fallible adjudicators using the
 sealed evidence and frozen rubric. A canonical pass with an invalid
 derivation fails the full-solution assessment; a canonical pass with
-unassessable evidence remains unresolved in the common denominator.
+unassessable evidence or a pending assessment remains unresolved in the common denominator.
 Canonical failure settles failure under both criteria. Absence of a coded
 defect is not an affirmative validity judgment.
 
@@ -3510,8 +3554,18 @@ gain. The common noncompletion rules above still apply.
 
 For each launched, analysis-valid, target-loss-eligible record, the
 study separately assesses the retained derivation under the frozen
-rubric. The assessment is one of \emph{valid}, \emph{invalid}, or
-\emph{unassessable}. A validity judgment requires support for the
+rubric. A completed assessment is one of \emph{valid}, \emph{invalid}, or
+\emph{unassessable}. At a declared reporting cutoff, separately retain
+whether checking is not started, in progress, completed, or has a failed
+attempt. A pending report marker is not a fourth completed judgment and
+does not fabricate work. It covers assessment still permitted under the
+original gates, cap, and retry rules, including work awaiting its gate.
+Failed attempts retain their reasons and resources. If no supported
+completed judgment is available and no permitted checking remains, the
+registered procedure records unassessable unless an established defect
+supports invalidity; cap exhaustion and deviation
+dispositions cannot be bypassed by leaving work pending. A validity
+judgment requires support for the
 required retained claims and dependencies; the absence of a detected
 defect is insufficient. The sealed submission cannot be repaired during
 adjudication. Assessments use the same phase-specific isolation and
@@ -3519,26 +3573,35 @@ release gates as other outcome-bearing evaluation material.
 
 Let $\mathcal C_g$ be the eligible executed cells for a specified
 branch and phase $g$, with $n_g:=|\mathcal C_g|>0$. Write
-$k_c\in\{0,1\}$ for canonical correctness and $d_c$ for the derivation
-assessment of cell $c$. Partition this denominator into
+$k_c\in\{0,1\}$ for canonical correctness and $\widetilde d_c$ for
+the derivation reporting value at that cutoff: \emph{invalid} takes
+precedence whenever a supported retained defect has been established
+under the registered rubric and access gates; otherwise use the supported
+completed judgment when available, and \emph{pending} while permitted
+assessment work remains.
+An incomplete assessment cannot support a valid verdict. Partition this
+denominator into
 \begin{align}
 \mathcal P_g^{\mathrm{sol}}
-&:=\{c\in\mathcal C_g:k_c=1,\ d_c=\mathrm{valid}\},
+&:=\{c\in\mathcal C_g:k_c=1,\ \widetilde d_c=\mathrm{valid}\},
 \notag\\
 \mathcal F_g^{\mathrm{sol}}
 &:=\{c\in\mathcal C_g:k_c=0
-\ \text{or}\ d_c=\mathrm{invalid}\},
+\ \text{or}\ \widetilde d_c=\mathrm{invalid}\},
 \notag\\
 \mathcal U_g^{\mathrm{sol}}
-&:=\{c\in\mathcal C_g:k_c=1,\ d_c=\mathrm{unassessable}\}.
+&:=\{c\in\mathcal C_g:k_c=1,\ \widetilde d_c\in\{\mathrm{unassessable},\mathrm{pending}\}\}.
 \label{eq:solution-assessment-partition}
 \end{align}
 These are assessed passes, assessed failures, and unresolved
 full-solution outcomes. In particular, canonical failure settles
-full-solution failure even when the derivation is unassessable.
+full-solution failure even when the derivation is unassessable or pending.
 
 Report all three counts, their common denominator, and the assessed
-pass fraction $|\mathcal P_g^{\mathrm{sol}}|/n_g$. The possible empirical
+pass fraction $|\mathcal P_g^{\mathrm{sol}}|/n_g$, with pending and
+completed-unassessable counts separate inside $\mathcal U_g^{\mathrm{sol}}$.
+Neither pending work nor unassessability overrides an established
+canonical failure or retained defect. The possible empirical
 error fractions obtained by completing only the unresolved judgments
 lie in
 \begin{equation}
@@ -3558,7 +3621,7 @@ remain visible.
 
 For paired contrasts, retain the common eligible executed-cell
 intersection used by the corresponding canonical comparison; do not
-silently discard a pair because one derivation is unassessable. Define
+silently discard a pair because one derivation is unassessable or pending. Define
 for each cell
 \[
 \underline\ell_c:=\mathbf 1\{c\in\mathcal F^{\mathrm{sol}}\},
@@ -4402,32 +4465,50 @@ reported effects. All checking and reconciliation is charged.
 
 \paragraph{Combining the two correctness readouts.}
 
-Define the assessed full-solution status by
+Each report declares its cutoff and records the assessment process state
+as not started, in progress, completed, or a failed attempt, including any
+gate still awaited. Define $\widetilde d_i(o)$ as the reporting value:
+invalid takes precedence whenever a supported retained defect is already
+established under the registered rubric and access gates. Otherwise use
+the supported completed judgment $d_i(o)$ when available, and report
+pending while assessment work remains permitted by the original gates,
+cap, and retry rules. Failed attempts preserve their reasons and costs;
+if no supported completed judgment is available and no permitted work
+remains, record unassessable unless invalidity is established. Cap
+exhaustion and assessment-procedure violations retain
+their registered dispositions rather than being relabelled pending.
+Pending is an availability marker, not a completed unassessable judgment.
+Only completed checking of all required claims can support valid.
+Preserve findings, timestamps, gates, and later linked corrections; a
+pending marker never hides a known invalid step.
+
+Define the assessed full-solution status at that cutoff by
 \begin{equation}
 \operatorname{status}^{\mathrm{sol}}_i(o)
 :=
 \begin{cases}
 \mathrm{pass},
 &\operatorname{ok}^{\mathrm{can}}_i(o)=1,\
-d_i(o)=\mathrm{valid},\\
+\widetilde d_i(o)=\mathrm{valid},\\
 \mathrm{fail},
 &\operatorname{ok}^{\mathrm{can}}_i(o)=0
-\ \text{or}\ d_i(o)=\mathrm{invalid},\\
+\ \text{or}\ \widetilde d_i(o)=\mathrm{invalid},\\
 \mathrm{unresolved},
 &\operatorname{ok}^{\mathrm{can}}_i(o)=1,\
-d_i(o)=\mathrm{unassessable}.
+\widetilde d_i(o)\in\{\mathrm{unassessable},\mathrm{pending}\}.
 \end{cases}
 \label{eq:pilot-solution-status}
 \end{equation}
 Thus a canonical pass with an invalid retained derivation is a
 full-solution failure. A canonical failure settles full-solution
-failure even when derivation validity is unassessable. A launched
+failure even when derivation validity is unassessable or pending. A launched
 no-answer also fails both endpoints. Missing or unresolved derivation
 evidence does not make an item ineligible, remove it from the
 canonical denominator, or turn it into an unlaunched cell.
 
-This status is an adjudicated observation, not an assertion that the
-assessor has proved mathematical soundness. The unresolved-assessment
+This cutoff reporting status combines canonical adjudication, supported
+assessment findings, and assessment availability; it is not an assertion
+that the assessor has proved mathematical soundness. The unresolved-assessment
 and paired-contrast ranges in
 Section~\ref{subsubsec:full-solution-assessments} are reported
 conditionally on the resolved judgments; they do not correct for
@@ -4616,7 +4697,7 @@ causal repair or fresh transfer.
 
 The manifest fixes a phase-independent launch boundary. A scheduled cell becomes launched at the earliest of (i) durable handoff of $Q$ or any question-bearing field to a branch-visible component and (ii) commencement of any branch-specific operation of the frozen within-question policy, including a registered local operation. The controller atomically appends the launch event at or before that handoff or operation. An unlaunched cell therefore means that the question remained confined to the isolated schedule controller and was never visible to the solver, retriever, tools, branch-local infrastructure, human operator, or microscope. Exact-response reuse is permitted only in the separately labelled secondary deployment-cache condition and never constitutes a primary scheduled cell. A failure before the launch boundary produces an explicit unexecuted record; after that boundary, a failure cannot be reclassified as nonlaunch. Any physically executed preflight, control, or infrastructure events are logged separately. If an adaptive first-contact cell does not launch, the episode records no target loss and permits no question-, output-, or adjudication-driven diagnosis or revision; absent a separately registered study-stop rule, it freezes a no-change release. This does not suppress the protocol-noncompletion and resource records.
 
-Every released system fixes its own inference budget and terminal policy within the immutable study caps. In the current implementation, the language model proposes one local action per call. A formally invalid, unparsable, or schema-invalid returned action consumes one semantic action attempt. At most two action attempts are permitted for a step, and the manifest also fixes finite question-level maxima for total semantic actions, model calls, tool calls, and runtime. Reaching any maximum stops that branch with the registered no-answer, cap-exhausted, or infrastructure disposition. A semantically poor but formally legal action is not intercepted merely because an auditor would prefer another reasoning path. It proceeds under the frozen system until a terminal proposal or another registered stopping condition is reached.
+Every released system fixes its own inference budget and terminal policy within the immutable study caps. In the proposed pilot implementation, the language model proposes one local action per call. A formally invalid, unparsable, or schema-invalid returned action consumes one semantic action attempt. At most two action attempts are permitted for a step, and the manifest also fixes finite question-level maxima for total semantic actions, model calls, tool calls, and runtime. Reaching any maximum stops that branch with the registered no-answer, cap-exhausted, or infrastructure disposition. A semantically poor but formally legal action is not intercepted merely because an auditor would prefer another reasoning path. It proceeds under the frozen system until a terminal proposal or another registered stopping condition is reached.
 
 Provider retries are distinct from semantic action retries. Retry eligibility is content-independent and limited to preregistered transport or service states for which no usable response was returned. An eligible retry repeats the identical request hash; every physical call is logged and charged. A timeout is recorded as an execution of unknown remote completion status and is charged whenever observed or billed. The first eligible usable response is the response used: the controller may not choose among returned responses on the basis of their content. The manifest fixes eligible status codes, maximum provider attempts, backoff, timeout, and exhaustion disposition.
 
@@ -4843,9 +4924,11 @@ set $\mathcal C_g$ for both correctness readouts. Partition it into
 $\mathcal P_g^{\mathrm{sol}}$,
 $\mathcal F_g^{\mathrm{sol}}$, and
 $\mathcal U_g^{\mathrm{sol}}$ according to
-Equation~\ref{eq:pilot-solution-status}. The last set contains
-unresolved solution assessments and is distinct from the unlaunched
-set $\mathcal N_g$.
+Equation~\ref{eq:pilot-solution-status}. The last set contains unresolved solution assessments, including pending
+work at the declared cutoff, and is distinct from the unlaunched
+set $\mathcal N_g$. Report pending counts and process states separately
+from completed-unassessable judgments, without changing the common
+denominator or overriding an established failure.
 Report all three counts, the assessed-pass fraction, and
 \begin{equation}
 \widehat{\mathcal R}^{\mathrm{sol}}(g)
@@ -4866,7 +4949,7 @@ its complement includes unresolved records and is not labelled an
 observed mathematical error rate.
 
 For paired summaries, retain the canonical comparison's common eligible
-executed-cell intersection, including pairs with unresolved derivations.
+executed-cell intersection, including pairs with unassessable or pending derivations.
 Use the lower and upper contrast bounds in
 Equation~\ref{eq:solution-paired-assessment-range}, together with the
 underlying paired statuses. Do not restrict the comparison to whichever
@@ -4897,8 +4980,8 @@ are undefined.
 Report the full cross-tabulation of canonical correctness and
 derivation assessment, including numerical passes obtained with
 identified retained defects. Supporting evidence, disagreements,
-assessment effort, and the reason for every unassessable judgment
-accompany the counts. The study does not elicit predictive-policy
+assessment effort, the reason for every unassessable judgment, and the
+cutoff/process state for every pending assessment accompany the counts. The study does not elicit predictive-policy
 probability kernels, estimate the induced solution-distribution log
 loss, or use a token probability as either quantity.
 
@@ -5125,8 +5208,12 @@ join follows Equation~\ref{eq:pilot-solution-status}; it neither rewrites the
 submission nor enlarges its runtime budget. The common rubric,
 pseudonymization, first-pass rule, $B_{\mathrm{assess}}$, and correction rules
 remain those of Section~\ref{subsec:pilot-solution-adjudication}.
-Missing derivation evidence does not remove an otherwise eligible action
-from either correctness reporting set. Shared checking events count once.
+Missing derivation evidence or a pending assessment at a reporting cutoff
+does not remove an otherwise eligible action from either correctness
+reporting set. Process states, supported findings, and pending/completed
+reporting values follow Section~\ref{subsec:pilot-solution-adjudication};
+canonical failure or an established retained defect still settles failure.
+Shared checking events count once.
 
 \subsection{Replay, Assessment Gates, and Confirmatory Sealing}
 \label{subsec:execution-confirmatory}
@@ -5770,9 +5857,9 @@ Information & Requirement and interpretation \\
 \bottomrule
 \endlastfoot
 
-Assessment identity & Fixed execution/submission commitment, process state, frozen rubric/procedure, common $B_{\mathrm{assess}}$, assessor identity/qualifications or configuration, and disclosed role overlap. Completed checking may still yield unassessable. \\
+Assessment identity & Fixed execution/submission commitment, reporting cutoff, process state (not started, in progress, completed, failed attempt), failed-attempt reason, gate awaited when applicable, frozen rubric/procedure, common $B_{\mathrm{assess}}$, assessor identity/qualifications or configuration, and disclosed role overlap. Completed checking may still yield unassessable; pending work is not a completed judgment. \\
 Evidence and findings & Permitted pseudonymized packet, actual access and gates, blinding limits, first assessment before canonical join, checked claims and supporting checks, located invalid or unresolved dependencies. Missing evidence is not silently treated as validity. \\
-Judgment and join & Preserved initial and reconciled valid/invalid/unassessable judgments with reasons; authorized canonical join and pass/fail/unresolved status under Equation~\ref{eq:pilot-solution-status}. No-action cells have no judgment. Resolved assessments remain fallible. \\
+Judgment and join & Preserved findings and initial/reconciled valid/invalid/unassessable judgments with reasons; separate cutoff reporting value $\widetilde d_i(o)$, including pending; authorized canonical join and pass/fail/unresolved status under Equation~\ref{eq:pilot-solution-status}. Known failures take precedence. No-action cells have no judgment. Resolved assessments remain fallible. \\
 Accountability & Checking/reconciliation resource events and cap status, assessment seals and dated corrections. Work used for the judgment counts against the assessment allowance even if it also supports coding; physical events count once. \\
 \end{longtable}
 \endgroup
@@ -6001,7 +6088,9 @@ Common terminal schema and retained-dependency evidence, exact/approximate/
 interval semantics, partial failures and conformance cases; frozen rubric,
 assessor roles/configurations, tools/evidence, common $B_{\mathrm{assess}}$,
 pseudonymization and blinding limits, first-pass/reference-assisted checking,
-reconciliation, unresolved judgments and dated corrections. No checker may
+reconciliation, reporting cutoffs and process states, pending versus
+completed-unassessable counts, known-failure precedence, unresolved
+judgments and dated corrections. No checker may
 repair a submission; conformance is not universal assessor soundness.
 
 \item \textbf{Execution and isolation.}
@@ -6208,6 +6297,7 @@ Evidence or assessment event & Registered treatment \\
 
 Missing/ambiguous supporting derivation; numerical execution intact. & Keep common cell membership. Without an established retained defect, judgment is unassessable: canonical pass yields unresolved; canonical failure yields failure. Missingness is not invalidity or exclusion. \\
 Established retained defect despite correct number. & Preserve numerical pass and record assessed full-solution failure with located dependency. Discarded exploratory errors alone do not suffice. \\
+Assessment not started or in progress at report cutoff. & Retain the eligible executed cell and process state. A canonical pass without a supported validity or invalidity judgment is unresolved with a pending marker while work remains permitted, not a fabricated completed judgment. Preserve failed-attempt reasons; when no permitted work remains, use the registered unassessable or deviation disposition. Canonical failure or an established retained defect still settles failure. \\
 Assessment cap or unresolved disagreement. & Seal findings/resources. Remaining uncertainty is unassessable unless an established defect supports invalidity; trace disagreement stays unresolved. Do not evade the cap by relabelling checking. \\
 Assessment procedure violated or judgment defective. & Preserve records, apply frozen endpoint-specific impact rule, mark unsupported fields unavailable/unassessable, retain unaffected numerical results and common denominator. Dated corrections preserve earlier report effects. Apply contamination rules to any disclosure leak; reassessment cannot repair it. \\
 Checker adds steps or replaces retained graph after seal. & Keep additions as post-seal artifacts; assess original submission and invalidate judgments that credited added work. Propagate prohibited-feedback contamination. \\
@@ -6233,8 +6323,10 @@ Availability and access permission remain separate. Provenance links
 grant no additional access, and authorized abort disclosure follows
 the registered partial-record procedure.
 \item Full-solution status follows the registered mapping. Canonical
-failure settles failure; canonical pass with unassessable derivation
-remains unresolved. Absence of a trace defect does not establish validity.
+failure or an established retained defect settles failure, even if other
+checking is pending. Canonical pass with unassessable derivation or pending
+assessment remains unresolved; its process state and cutoff remain visible.
+Absence of a trace defect does not establish validity.
 \item Both readouts retain the common cell sets and item-level eligibility.
 Unresolved derivations do not create exclusions. Summaries identify their
 record versions, counts, and unavailable outcomes.
