@@ -101,10 +101,11 @@ and explains why admission order can affect cumulative benefit despite
 equal final coverage and mechanisms. A conditional break-even calculation
 connects these benefits to lifecycle costs and future reuse.
 
-We specify a prospective feasibility study with eight sequential development
-questions, an isolated frozen-baseline shadow, replays, and a matched-budget
-comparison on four prospectively untouched terminal questions. Numerical
-answers are compared exactly after reference-blind normalization and
+The framework is parameterized by registered development and evaluation sizes.
+We instantiate it in a prospective feasibility protocol with $D=8$ sequential
+development questions, an isolated frozen-baseline shadow, replays, and a
+matched-budget comparison on $H=4$ prospectively untouched terminal questions.
+Numerical answers are compared exactly after reference-blind normalization and
 six-significant-digit canonicalization on a bounded finite grid, using
 independently recomputed references. Separate full-solution assessments
 check retained derivations and report unresolved judgments. The study
@@ -290,9 +291,11 @@ horizon, and assumptions separately from observations.
 
 \paragraph{A prospective feasibility study.}
 
-We specify eight sequential FormulaReasoning development questions and
-four prospectively untouched terminal questions, excluding known historical
-uses and registered direct-source, generated, or template siblings.
+For arbitrary positive integers $D$ and $H$, the study design uses $D$
+sequential development questions and $H$ prospectively untouched terminal
+questions. These sizes are registered before execution. The FormulaReasoning
+instantiation excludes known historical uses and registered direct-source,
+generated, or template siblings.
 Registration freezes $S_0$, selection and ordering procedures, permissions,
 outer caps, evaluation, and stopping rules before prospective execution.
 For question $Q_t$, the current $S_{t-1}$ and an isolated frozen-$S_0$ shadow
@@ -301,14 +304,21 @@ seal before permitted current-reference release to development. Authorized
 adaptive evidence may then inform revisions and the next freeze. Shadow
 outcomes remain unavailable throughout adaptation and confirmatory execution.
 
-Official same-item replays measure exposed-item fit. After $S_8$ and the
-adaptation ledger freeze, a final replay on the eight development items
-seals before $S_0$ and $S_8$ are compared without revision on the four
+Official same-item replays measure exposed-item fit. After $S_D$ and the
+adaptation ledger freeze, a final replay on the $D$ development items
+seals before $S_0$ and $S_D$ are compared without revision on the $H$
 terminal items under the matched outer budget $B_{\mathrm{eval}}$.
-Confirmatory archives remain
-mutually embargoed until all sixteen scheduled records seal. Detailed gates
-and noncompletion rules are in Section~\ref{sec:pilot-design} and
-Appendix~\ref{app:execution-replay}.
+Confirmatory archives remain mutually embargoed until all $D+2H$ scheduled
+final-development and terminal records seal, or a registered irrevocable
+abort-sealing certificate closes the partial record.
+
+Section~\ref{sec:pilot-design} instantiates this design as a prospective
+feasibility protocol with $D=8$ and $H=4$, not as a fixed size of the
+Courtroom framework. Its concrete selection, scheduling, resource, sealing,
+and noncompletion rules are specified there and in
+Appendix~\ref{app:execution-replay}. Other sizes require their own
+prospectively registered choices; exact branch-order balance, for example,
+is not possible when $D$ is odd.
 
 The numerical endpoint uses reference-blind parsing, exact unit/scale
 normalization, and six-significant-digit canonicalization with global
@@ -321,9 +331,9 @@ within the common eligible executed-cell denominator. Canonical failures,
 full-solution assessments, noncompletion, and assessment coverage remain
 distinct records.
 
-This is one human--API trajectory, with bundled revisions and one execution
-per scheduled cell. It does not compare admission orders, identify component
-effects, estimate family optima, or establish population superiority. Four
+The proposed $D=8$, $H=4$ pilot records one human--API trajectory, with
+bundled revisions and one execution per scheduled cell. It does not compare
+admission orders, identify component effects, estimate family optima, or establish population superiority. Four
 terminal items provide a small descriptive endpoint comparison; replays do
 not restore holdout status. Recorded applications, retained defects,
 regressions, and costs make the proposed reuse mechanism and its possible
@@ -415,8 +425,9 @@ escalation capabilities are active.
 \subsection{Versioned System State, Manifests, and Isolation}
 \label{subsec:courtroom-state}
 
-Let $S_t$ be the complete registered client-visible release after
-development episode $t$, with active motif and graph store
+For a registered development horizon $D\geq1$, let $S_0$ be the starting
+release and $S_t$ the complete registered client-visible release after
+development episode $t\in\{1,\ldots,D\}$, with active motif and graph store
 \[
 M_t:=\operatorname{mem}(S_t).
 \]
@@ -2622,9 +2633,9 @@ Equality holds if only stage $j$ changes coverage. The gain is strictly
 positive whenever the nonnegative integrand is positive on a set of
 positive $P_Q$-probability.
 
-In particular, suppose a measurable region $D\subseteq\mathcal Q$ and
-constants $\alpha,r,b,\gamma>0$ satisfy $P_Q(D)\geq\alpha$ and, for
-almost every $q\in D$,
+In particular, suppose a measurable region $\mathcal Q_+\subseteq\mathcal Q$ and
+constants $\alpha,r,b,\gamma>0$ satisfy $P_Q(\mathcal Q_+)\geq\alpha$ and, for
+almost every $q\in\mathcal Q_+$,
 \[
 \Delta a_{j,t}(q)\geq r,\qquad
 1-p_j(q)\geq b,\qquad
@@ -2944,7 +2955,7 @@ Section~\ref{subsec:pilot-outcomes}.
 For release $S_t$ and execution regime $\gamma$, fix the realized state
 $s_t$, budget $B_{t,\gamma}$, and interaction environment
 $\mathsf E_{t,\gamma}$. Development uses $B_t$; the confirmatory
-comparison of $S_0,S_8$ uses $B_{\mathrm{eval}}$. Environments retain
+comparison of $S_0,S_D$ uses $B_{\mathrm{eval}}$. Environments retain
 any branch-, call-, or time-specific kernels; one common
 $\mathsf E_{\mathrm{eval}}$ denotes a separately standardized estimand.
 This indexing does not assume empirical knowledge or stability of an
@@ -3043,11 +3054,17 @@ gap in Equation~\eqref{eq:versioned-risk-accounting}.
 \subsection{Prospective Development-Trajectory Estimands}
 \label{subsec:adaptive-estimands}
 
-The protocol in Section~\ref{sec:pilot-design} fixes $D=8$ development
-questions, an isolated frozen-$S_0$ shadow, exposed-item replays, and
-$H=4$ untouched terminal questions. The equations here define the
-summaries used by that protocol. Execution, disclosure, and abort gates
-are specified in Sections~\ref{subsec:pilot-development-episode}
+Fix arbitrary positive integers $D$ and $H$, denoting the registered number
+of development episodes and terminal questions. The design has an isolated
+frozen-$S_0$ shadow, exposed-item replays, and an endpoint comparison of
+$S_0$ with $S_D$. The equations below define its descriptive summaries and
+conditional population targets; they do not depend on $D=8$ or $H=4$.
+There are $2D$ planned first-contact cells and $D+2H$ planned confirmatory
+records ($D$ final-development and $2H$ terminal), before accounting for
+nonlaunch or other noncompletion.
+Section~\ref{sec:pilot-design} specifies that concrete pilot instantiation.
+Its execution, disclosure, and abort gates are given in
+Sections~\ref{subsec:pilot-development-episode}
 and~\ref{subsec:execution-confirmatory}; no gate is relaxed by taking a
 statistical summary.
 
@@ -3099,24 +3116,28 @@ Equation~\eqref{eq:versioned-canonical-loss}, define
 
 A positive paired contrast means lower realized adaptive loss on the
 included pairs. It equals the difference of branch means when both
-branches have the same included set, in particular when all eight pairs
+branches have the same included set, in particular when all $D$ pairs
 are included. With unequal denominators, that equality need not hold.
 The outcome matrix, paired transitions, dispositions, and resources
 accompany the means.
 
-Let $\mathcal T_{\mathrm{pair},2{:}8}^{\mathrm{valid}}:=\mathcal T_{\mathrm{pair}}^{\mathrm{valid}}\cap\{2,\ldots,8\}$. When nonempty, the study also reports
+Let $\mathcal T_{\mathrm{pair},2{:}D}^{\mathrm{valid}}
+:=\mathcal T_{\mathrm{pair}}^{\mathrm{valid}}
+\cap\{t\in\mathbb N:2\leq t\leq D\}$ exclude the duplicate starting-release
+pair. When $D=1$, this set is empty and its contrast is undefined.
+When nonempty, report
 
 \begin{equation}
-\widehat\Delta_{\mathrm{preq}}^{2{:}8}
+\widehat\Delta_{\mathrm{preq}}^{2{:}D}
 :=
-\frac{1}{|\mathcal T_{\mathrm{pair},2{:}8}^{\mathrm{valid}}|}
-\sum_{t\in\mathcal T_{\mathrm{pair},2{:}8}^{\mathrm{valid}}}
+\frac{1}{|\mathcal T_{\mathrm{pair},2{:}D}^{\mathrm{valid}}|}
+\sum_{t\in\mathcal T_{\mathrm{pair},2{:}D}^{\mathrm{valid}}}
 \left[
 \ell^{\mathrm{can}}(Q_t,Y_t,\widehat O_t^0)
 -
 \ell^{\mathrm{can}}(Q_t,Y_t,\widehat O_t^{\mathrm{adapt}})
 \right].
-\label{eq:prequential-paired-contrast-2-8}
+\label{eq:prequential-paired-contrast-2-D}
 \end{equation}
 
 These are descriptive contrasts, released only after the required
@@ -3190,7 +3211,7 @@ official replay under $(S_t,B_t)$; a no-change episode is structurally
 inapplicable. Replay and freeze permissions are those in
 Section~\ref{subsec:execution-confirmatory}. A replay on the exposed
 item records fit; an incorrect-to-correct pair is an observed transition,
-not evidence identifying its cause or recurrence. Write
+not evidence identifying its cause or recurrence.
 
 If $\Delta_t^{\mathrm{acc}}$ denotes the accepted bundle of proposed changes, the realized transition is recorded as
 
@@ -3205,21 +3226,22 @@ S_{t-1}\oplus\Delta_t^{\mathrm{acc}}
 
 This is a versioned historical transition, not an assertion that the human revision process is autonomous, stationary, or reproducible as an algorithm.
 
-The final development replay applies frozen $S_8$ under
-$B_{\mathrm{eval}}$ to the eight exposed questions. Let
+\Needspace{8\baselineskip}
+The final development replay applies frozen $S_D$ under
+$B_{\mathrm{eval}}$ to the $D$ exposed questions. Let
 $\mathcal D_{\mathrm{valid}}^{\mathrm{final\mbox{-}dev}}$ be its
 included indices under the common rules above, with terminal actions
-$\widehat O_{8,t}^{\mathrm{final\mbox{-}dev}}$. Define
+$\widehat O_{D,t}^{\mathrm{final\mbox{-}dev}}$. Define
 
 \begin{equation}
-\widehat R_{\mathrm{final\mbox{-}dev}}^{\mathrm{can}}(S_8)
+\widehat R_{\mathrm{final\mbox{-}dev}}^{\mathrm{can}}(S_D)
 :=
 \frac{1}{|\mathcal D_{\mathrm{valid}}^{\mathrm{final\mbox{-}dev}}|}
 \sum_{t\in\mathcal D_{\mathrm{valid}}^{\mathrm{final\mbox{-}dev}}}
 \ell^{\mathrm{can}}\!\left(
 Q_t,
 Y_t,
-\widehat O_{8,t}^{\mathrm{final\mbox{-}dev}}
+\widehat O_{D,t}^{\mathrm{final\mbox{-}dev}}
 \right).
 \label{eq:regression-risk}
 \end{equation}
@@ -3229,7 +3251,7 @@ Official within-episode replays use $B_t$, whereas this batch uses
 $B_{\mathrm{eval}}$; observed differences are not automatically
 budget-equivalent or evidence identifying forgetting or interference.
 
-The untouched terminal panel compares $\mathcal J=\{0,8\}$ on $H=4$
+The untouched terminal panel compares $\mathcal J=\{0,D\}$ on $H$
 questions under matched $B_{\mathrm{eval}}$ and the registered
 client-visible configuration. Internal policies and actual provider
 kernels may differ. Section~\ref{subsec:pilot-final-replay-terminal}
@@ -3250,13 +3272,13 @@ Y_h^{\mathrm{term}},
 \label{eq:terminal-risk}
 \end{equation}
 
-Let $\mathcal I_{0,8}^{\mathrm{pair}}:=\mathcal I_0^{\mathrm{valid}}\cap\mathcal I_8^{\mathrm{valid}}$. When this set is nonempty, define the paired endpoint contrast
+Let $\mathcal I_{0,D}^{\mathrm{pair}}:=\mathcal I_0^{\mathrm{valid}}\cap\mathcal I_D^{\mathrm{valid}}$. When this set is nonempty, define the paired endpoint contrast
 
 \begin{equation}
-\widehat\Delta_{\mathrm{term}}^{0\to8,\mathrm{can}}
+\widehat\Delta_{\mathrm{term}}^{0\to D,\mathrm{can}}
 :=
-\frac{1}{|\mathcal I_{0,8}^{\mathrm{pair}}|}
-\sum_{h\in\mathcal I_{0,8}^{\mathrm{pair}}}
+\frac{1}{|\mathcal I_{0,D}^{\mathrm{pair}}|}
+\sum_{h\in\mathcal I_{0,D}^{\mathrm{pair}}}
 \left[
 \ell^{\mathrm{can}}\!\left(
 Q_h^{\mathrm{term}},Y_h^{\mathrm{term}},
@@ -3265,23 +3287,26 @@ Q_h^{\mathrm{term}},Y_h^{\mathrm{term}},
 -
 \ell^{\mathrm{can}}\!\left(
 Q_h^{\mathrm{term}},Y_h^{\mathrm{term}},
-\widehat O_{8,h}^{\mathrm{term}}
+\widehat O_{D,h}^{\mathrm{term}}
 \right)
 \right].
 \label{eq:terminal-paired-contrast}
 \end{equation}
 
-With all four pairs included, the paired contrast equals the difference
+With all $H$ pairs included, the paired contrast equals the difference
 of release means, and each binary outcome changes a release's proportion
-by 25 percentage points. Report the raw $2\times4$ matrix, actual branch
-and paired denominators, and the protocol's noncompletion sensitivities.
-There are four item units, not eight independent questions.
+by $1/H$. Report the raw $2\times H$ matrix, actual branch and paired
+denominators, and the registered noncompletion sensitivities. There are
+$H$ paired item units, not $2H$ independent questions. In the $H=4$ pilot,
+each included outcome changes a complete-panel release proportion by
+25 percentage points.
 
 Prospective nonexposure does not establish absence from model pretraining
 or undocumented historical work. Population interpretation requires
 probability sampling from a declared population and suitable execution
-assumptions; even then, four items provide little precision. Pairing
-does not remove provider variability or selection through noncompletion.
+assumptions. These definitions do not supply those premises; the four-item
+pilot remains descriptive and imprecise. Pairing does not remove provider
+variability or selection through noncompletion.
 
 For a population endpoint, first fix the common standardized confirmatory interaction environment $\mathsf E_{\mathrm{eval}}$ and matched outer budget $B_{\mathrm{eval}}$. For each archived release $S$, let $\pi_{\mathrm{eval}}^{\mathrm{impl}}(S)$ be the implemented end-to-end policy determined by its release and evaluation manifests, let $P_{\mathrm{eval}}^{\pi(S)}$ be the induced law with task marginal $\mathcal P$, and define
 
@@ -3298,11 +3323,11 @@ Q,Y,O_{\mathrm{eval}}^{\pi(S)}
 Conditional on the particular archived releases produced by this development history, the corresponding standardized population contrast is
 
 \begin{equation}
-\tau_{\mathcal P}^{0\to8,\mathrm{can}}(S_0,S_8)
+\tau_{\mathcal P}^{0\to D,\mathrm{can}}(S_0,S_D)
 :=
 R_{\mathcal P,\mathrm{eval}}^{\mathrm{can}}(S_0)
 -
-R_{\mathcal P,\mathrm{eval}}^{\mathrm{can}}(S_8).
+R_{\mathcal P,\mathrm{eval}}^{\mathrm{can}}(S_D).
 \label{eq:conditional-terminal-population-contrast}
 \end{equation}
 
@@ -3310,8 +3335,9 @@ This estimand conditions on the archived releases, standardized
 environment, and matched budget. If actual kernels differ, retain their
 indices; a release-only effect does not follow. An updater-level target
 would also average over development streams and revision behavior.
-Neither expectation is identified by one realized $S_8$ and four terminal
-items.
+The proposed $D=8$, $H=4$ pilot does not identify either expectation.
+Larger registered sizes alone would not supply a sampling law, standardized
+execution kernels, or a specified updater.
 
 For any nonempty evaluated set $\mathcal I$ of launched, analysis-valid, target-loss-eligible cells and version $S_j$, let $O_{i,j}$ denote the sealed terminal action and define
 
@@ -3887,10 +3913,10 @@ Realization accounting
 implemented-policy membership. The study does not separate the terms.\\
 \addlinespace
 Observed trajectory
-& First contacts, replays, $2\times4$ terminal matrix
+& First contacts, replays, $2\times H$ terminal matrix
 & Sealed records, isolation, explicit denominators, canonical scores,
-and full-solution assessments. Descriptive observations on one
-eight-item development path and four terminal questions.\\
+and full-solution assessments on a $D$-item development path and $H$
+terminal questions; the proposed pilot fixes $D=8$, $H=4$.\\
 \addlinespace
 Components and order
 & Partial-update and alternative-order contrasts
@@ -3920,8 +3946,8 @@ established merely by a successful trace or a larger store.
 
 The pilot documents realized applications, retained derivations,
 failures, revisions, and prospective costs. Exposed-item replays measure
-fit; the untouched endpoint has four planned paired item units. These
-records can expose particular failures of the proposed mechanism and
+fit; the proposed $D=8$, $H=4$ protocol has four planned paired endpoint
+units. These records can expose particular failures of the proposed mechanism and
 provide circumstantial evidence for useful reuse. They do not establish
 population superiority, an optimal admission order, or the distinct
 effect of certification. The complete empirical scope is stated in
@@ -3942,6 +3968,14 @@ the protocol makes one development path and its costs auditable.
 \section{Prospective FormulaReasoning Feasibility Protocol}
 
 \label{sec:pilot-design}
+
+This appendix instantiates the arbitrary-horizon Courtroom framework and
+summaries with $D=8$ development episodes and $H=4$ terminal questions.
+These are design choices for this prospective feasibility study, not fixed
+requirements of the framework. The concrete counts, balanced schedules,
+resource allocations, and disclosure gates in this and the following
+appendices belong to this $D=8$, $H=4$ protocol; another size requires its
+own prospectively registered protocol.
 
 The study records one prospective human--API development path: eight
 sequential development questions, paired adaptive and isolated frozen-$S_0$
@@ -4027,7 +4061,7 @@ algorithm.
 
 \label{subsec:pilot-question-sets}
 
-Let $D=8$ and $H=4$. The registered question sets are
+For this pilot, set $D=8$ and $H=4$. The registered question sets are
 
 \begin{align}
 \mathcal I_{\mathrm{dev}}
