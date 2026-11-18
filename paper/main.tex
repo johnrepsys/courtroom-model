@@ -376,8 +376,14 @@ premises from this small study.
 
 \paragraph{Positioning and longer-term motivation.}
 
-Reusable procedural stores predate this proposal: Voyager accumulates and
-retrieves executable, compositional skills \citep{wang2024voyager}.
+Reusable procedural support has a longer history than current LLM
+systems. In explanation-based learning, Minton's PRODIGY/EBL evaluated
+learned search-control rules by savings when applicable, applicability
+frequency, and matching cost; added knowledge could slow problem solving
+\citep[Sections~1 and~4.3]{minton1988utility}. This utility problem motivates
+charging selection and application work rather than equating store growth
+with useful reuse. More recently, Voyager accumulates and retrieves
+executable, compositional skills \citep{wang2024voyager}.
 ACE and Evo-Memory study evolving context or memory; Skill-Pro, human-guided
 systems, and code-evolution approaches develop reusable skills or revise
 implementations
@@ -905,10 +911,11 @@ The first infimum ranges over standard-Borel auxiliary alphabets for $\Xi$ and m
 
 \paragraph{Standard representation bounds.}
 
-The following consequences of information--distortion optimization,
-conditional Fano, and data processing are standard background
-\citep{cover2006elements}. They apply under the ensemble in
-Equation~\eqref{eq:source-representation-ensemble}:
+The information--distortion comparison below follows directly from its
+definition. The remaining bounds apply standard conditional Fano and data
+processing \citep[Sections~2.8 and~2.10]{cover2006elements}, with the explicit
+acceptance-separated reduction in part~(iii). They apply under the
+ensemble in Equation~\eqref{eq:source-representation-ensemble}:
 
 \begin{enumerate}[label=(\roman*),itemsep=3pt,topsep=3pt]
 
@@ -1093,7 +1100,8 @@ H(J\mid\widetilde Q,\Theta,\widetilde E).
 \label{eq:external-support-packed-residuals}
 \end{equation}
 
-The chain rule identifies the change in Shannon residual:
+The chain rule \citep[Section~2.5]{cover2006elements} identifies the
+change in Shannon residual:
 \begin{equation}
 h_0-h_1
 =I(\widetilde Y;\widetilde E\mid\widetilde Q,\Theta).
@@ -1161,7 +1169,9 @@ L_{\mathcal V}^{P}(Y\mid X)
 \label{eq:v-entropy}
 \end{equation}
 
-When a class satisfies the predictive-family conditions of \citet{xu2020usable}, the corresponding quantity is commonly called predictive $\mathcal V$-entropy. We use $L_{\mathcal V}^{P}$ because the identity below needs only fixed-law conditional cross-entropy algebra, not those additional family axioms. Define the restricted KL approximation gap
+When a class satisfies the predictive-family conditions of
+\citet[Definitions~1--2]{xu2020usable}, the corresponding quantity is
+commonly called predictive $\mathcal V$-entropy. We use $L_{\mathcal V}^{P}$ because the identity below needs only fixed-law conditional cross-entropy algebra, not those additional family axioms. Define the restricted KL approximation gap
 
 \begin{equation}
 \Gamma_{\mathcal V}^{P}(Y\mid X)
@@ -1177,8 +1187,9 @@ v(\cdot\mid X)
 \label{eq:accessibility-gap}
 \end{equation}
 
-The standard conditional cross-entropy identity gives, under the
-fixed law $P_{X,Y}$,
+The standard relative-entropy identity
+\citep[Sections~2.3--2.4]{cover2006elements} gives, under the fixed law
+$P_{X,Y}$,
 
 \begin{equation}
 L_{\mathcal V}^{P}(Y\mid X)
@@ -1190,10 +1201,8 @@ H_P(Y\mid X)
 \end{equation}
 
 For each $v$, conditional cross-entropy equals conditional entropy plus
-expected conditional KL divergence. The entropy term is common to all
-$v$, so taking the infimum proves
-Equation~\eqref{eq:v-cross-entropy-decomposition}, including extended
-values.
+expected conditional KL divergence, including extended values. Taking
+the infimum leaves the common entropy term unchanged.
 
 For a single fixed FormulaReasoning covariate $X$ containing $Q$, substitute the canonical target $Z=c_Q(Y)$. Because $Z=c_Q(f_{\mathrm{FR}}(Q))$ is deterministic given $Q$,
 
@@ -1299,7 +1308,9 @@ uncertainty instead requires a correspondingly target-dependent response
 kernel, or a declared latent-state kernel with its joint task law; the
 conditional independence and common entropy above need not hold there.
 
-Private policy randomization is represented inside the action kernels. Budget admissibility requires the registered cumulative resource vector through $T_\pi$, including terminal operations, to satisfy $B$. The task law, policy kernels, and environment kernels induce the policy-specific law $P^\pi$ by the Ionescu--Tulcea construction. Stage-specific action, observation, and history spaces may be represented by their standard-Borel disjoint unions. This kernel formulation is what ``nonanticipating end-to-end policy'' means below.
+Private policy randomization is represented inside the action kernels. Budget admissibility requires the registered cumulative resource vector through $T_\pi$, including terminal operations, to satisfy $B$. The task law, policy kernels, and environment kernels induce the
+policy-specific law $P^\pi$ by the Ionescu--Tulcea construction
+\citep[Chapter~8]{kallenberg2021foundations}. Stage-specific action, observation, and history spaces may be represented by their standard-Borel disjoint unions. This kernel formulation is what ``nonanticipating end-to-end policy'' means below.
 
 An explicit terminal-reserve convention chooses a solving allowance $B_{\mathrm{solve}}$ and a reserve $b_{\mathrm{term}}$ for the registered terminal path before defining the policy families, with declared total $B=B_{\mathrm{solve}}+b_{\mathrm{term}}$ (componentwise for a resource vector). The solving allowance is not the total budget; all charged terminal operations must also be accounted for.
 
@@ -1409,7 +1420,10 @@ e_{s,B}^{\tau}\!\left(S(\rho)\right)
 \label{eq:sampling-closure-risk-form}
 \end{equation}
 
-Although a measurable representation of a kernel by an independent uniform seed exists on standard-Borel spaces, the closure additionally requires the registered sampler to be operationally available within $B$.
+A measurable representation of a kernel by an independent uniform seed
+exists on standard-Borel spaces
+\citep[Chapter~4]{kallenberg2021foundations}; the closure additionally
+requires the registered sampler to be operationally available within $B$.
 
 For the reverse direction, fix a registered measurable fallback kernel
 
@@ -1935,11 +1949,36 @@ implementation may be used; the condition does not require materializing all
 $K-1$ alternatives.  Closure for every $0<\delta<1$ is a substantive
 family-level premise and is not established by the feasibility study.
 
+For the registered finite fallback, the accepted mass is $1/(K-1)$ on
+every canonical error. Thus the error-event code cost is
+$\log_2(K-1)$ on that event and zero off it, giving the continuous,
+vanishing fallback-tail modulus
+\begin{equation}
+\mathbb E_{P^\pi}[G_{0,\pi}]
+=e_{s,B}^{\mathrm{can}}(\pi)\log_2(K-1),
+\qquad
+\Omega_{0,s,B}(r)=\overline\Omega_{0,s,B}(r)
+=r\log_2(K-1).
+\end{equation}
+For a decision policy with error $e=e_{s,B}^{\mathrm{can}}(\pi)$, the
+corresponding completion loss is
+\begin{equation}
+(1-e)[-\log_2(1-\delta)]
++e\log_2\!\left(\frac{K-1}{\delta}\right),
+\qquad 0<\delta<1.
+\label{eq:fixed-canonical-completion-loss}
+\end{equation}
+The general completion curve is therefore exactly $\phi_K$. These facts
+supply the modulus, not the separate law-preserving, same-budget closure
+premises.
+
 \Needspace{6\baselineskip}
 \begin{corollary}[FormulaReasoning finite canonical calibration]
 \label{cor:formula-reasoning-canonical-calibration}
 
-Under budget-preserving finite confidence completion,
+For the registered finite alphabet with $2\leq K<\infty$, the canonical
+preimage acceptance rule, and the representative renderer above, the
+following hold. Under budget-preserving finite confidence completion,
 
 \begin{equation}
 A_{s,B}^{\mathrm{can}}
@@ -1996,61 +2035,32 @@ R_{s,B}^{\star,\mathrm{can}}
 \end{corollary}
 
 \begin{proof}
-
-Fix $\pi$ and let $e=e_{s,B}^{\mathrm{can}}(\pi)$. The completion
-assigns correct-label probability $1-\delta$ on success and
-$\delta/(K-1)$ on failure, so its expected loss is
-\begin{equation}
-(1-e)[-\log_2(1-\delta)]
-+e\log_2\!\left(\frac{K-1}{\delta}\right).
-\label{eq:fixed-canonical-completion-loss}
-\end{equation}
-Its infimum over $0<\delta<1$ is $\phi_K(e)$, attained at $\delta=e$
-in the interior and approached at the endpoints. This is an existential
-family argument and does not require estimating $e$ during execution.
-Apply it to policies whose errors approach the decision infimum and
-use continuity of $\phi_K$. Sampling follows from
-Proposition~\ref{prop:tolerance-accessibility-calibration}(i) and the
-preimage identities; the two directions give zero-equivalence.
-
-Since $\phi_K$ increases from zero to its global maximum $\log_2K$ on
-$[0,1-1/K]$, the first crossing of $c\in(0,\log_2K]$ is the positive
-inverse on that branch. The completion bound places the optimal risk
-in its superlevel set. In particular, $A_{s,B}^{\mathrm{can}}\leq\log_2K$;
-the weight $\delta=1-1/K$ explicitly yields the uniform canonical kernel.
-
+Under the respective stated closure premises, apply
+Proposition~\ref{prop:tolerance-accessibility-calibration}(ii)--(iv) with
+the displayed modulus and the canonical-preimage identities; part~(i)
+gives the sampling bound. The proposition already handles
+unattained policy infima and error endpoints $0$ and $1$ using only
+$0<\delta<1$. This is an existential family comparison, not a requirement
+to estimate a policy's error during execution.
+The first crossing of $c\in(0,\log_2K]$ by $\phi_K$ is its positive
+inverse on $[0,1-1/K]$. Its global maximum is $\log_2K$, and the admissible
+weight $\delta=1-1/K$ gives the uniform canonical kernel.
 \end{proof}
 
-For the registered finite fallback, the target-independent raw kernel assigns
-mass $1/(K-1)$ to a representative of the correct canonical label on every
-canonical error.  Therefore, for every $\pi\in\Pi_{s,B}^{\mathrm{dec}}$, the
-error-event code cost equals $\log_2(K-1)$ on the error event and zero off it,
-so
+The finite construction resolves the continuous-singleton problem by
+assigning an atom to each canonical representative. Uniformity is a
+chosen terminal wrapper, not an assumption about an LLM's native answers.
+The construction applies also to $K=2$, when the fallback penalty is zero;
+$K=1$ is excluded. Finiteness and the registered renderer supply the
+modulus; law preservation, same-budget implementation, and closure for
+every $0<\delta<1$ remain separate premises. The manifest must report the
+$K$ from Equation~\eqref{eq:theory-canonical-alphabet-size}, its fallback
+penalty, and $\Psi_K$ before claiming quantitative instantiation. Finer
+precision or wider range can weaken the resulting bound.
 
-\begin{equation}
-\mathbb E_{P^\pi}[G_{0,\pi}]
-=
-e_{s,B}^{\mathrm{can}}(\pi)\log_2(K-1),
-\qquad
-\Omega_{0,s,B}(r)
-=
-r\log_2(K-1).
-\end{equation}
-
-Thus the general completion curve is exactly $\phi_K$. The finite
-construction resolves the continuous-singleton problem by assigning an
-atom to each canonical representative. Uniformity is a chosen terminal
-wrapper, not an assumption about an LLM's native answers. Finiteness and
-the registered renderer supply this modulus; law preservation,
-same-budget implementation, and closure for every $0<\delta<1$ remain
-separate premises. The manifest must report the $K$ from
-Equation~\eqref{eq:theory-canonical-alphabet-size}, its fallback penalty,
-and $\Psi_K$ before claiming quantitative instantiation. Finer precision
-or wider range can weaken the resulting bound.
-
-For comparison, consider any finite target $J$ in a declared
-policy-induced experiment and a terminal report $v_\rho$ on its
-alphabet. Conditional cross-entropy gives, policy by policy,
+Apply the same conditional cross-entropy identity policy by policy to
+any finite target $J$ and terminal report $v_\rho$ on its alphabet in a
+declared policy-induced experiment:
 \begin{equation}
 \begin{split}
 \mathbb E_{P^\rho}[-\log_2v_\rho(J\mid H_\rho)]
@@ -2062,10 +2072,8 @@ P^\rho_{J\mid H_\rho}\,\middle\|\,v_\rho(\cdot\mid H_\rho)
 \end{split}
 \label{eq:policywise-entropy-kl}
 \end{equation}
-This follows by conditioning on $H_\rho$ and using
-$-\sum_j p_j\log_2v_j=-\sum_j p_j\log_2p_j+
-\sum_jp_j\log_2(p_j/v_j)$, with the usual extended-value conventions.
-For any fixed finite task-derived target $J=j(Q,Y)$ under
+As in Equation~\eqref{eq:v-cross-entropy-decomposition}, the identity
+includes extended values. For any fixed finite task-derived target $J=j(Q,Y)$ under
 Equation~\eqref{eq:observed-history-response-kernel}, the entropy term is
 $H_P(J\mid Q)$ for every policy and can be pulled outside the family
 infimum, even though the transcript laws differ. In a broader experiment
@@ -2074,10 +2082,9 @@ response kernels, entropy may instead depend on the policy; an infimum
 of these sums then cannot generally be separated into two infima.
 No common-entropy claim is made for an arbitrary policy-specific $J$.
 
-Because every $H_\rho$ contains $Q$ and $Z$ is a deterministic function of
-$Q$, the policy-specific conditional law of $Z$ given $H_\rho$ is the Dirac
-point mass $\delta_Z$, assigning probability one to the realized canonical
-label $Z$. Thus, for every predictor policy,
+Because every $H_\rho$ contains $Q$ and $Z$ is determined by $Q$, its
+conditional law is $\delta_Z$ and its conditional entropy is zero.
+Equation~\eqref{eq:policywise-entropy-kl} therefore gives
 
 \begin{align}
 \mathbb E_{P^\rho}\!\left[
@@ -2499,7 +2506,8 @@ Thus the marginal accuracy gain from improving stage $i$ is no smaller
 after stage $j$ has improved. Accuracy is affine in each coverage
 function separately, with the others fixed. For scalar coverage
 coordinates on a feasible product domain, the nonnegative mixed
-differences are the usual supermodularity property. The finite-difference
+differences are the usual supermodularity property
+\citep[Section~2.6.1]{topkis1998supermodularity}. The finite-difference
 form accommodates query-dependent coverage directly.
 
 This complementarity concerns different stages with overlapping useful
@@ -2622,9 +2630,9 @@ $z(q):=c_q(f_{\mathrm{FR}}(q))$ is different from $\bot$, and
 \quad\Longleftrightarrow\quad
 o\in\mathcal A^{\mathrm{sol}}(q,f_{\mathrm{FR}}(q)).
 \]
-Thus $v_t(z(q)\mid q)=S_t^{\mathrm{sol}}(q)$. The true conditional
-target law is $\delta_{z(q)}$, whose divergence from $v_t(\cdot\mid q)$
-is $-\log_2v_t(z(q)\mid q)$. Consequently,
+Thus $v_t(z(q)\mid q)=S_t^{\mathrm{sol}}(q)$. Applying the same
+conditional cross-entropy identity to the deterministic target $z(Q)$
+under this implemented-controller law gives
 \begin{equation}
 \mathcal L_t^{\mathrm{sol}}
 =\mathbb E_Q\!\left[
@@ -3260,7 +3268,7 @@ One useful Shannon identity about accumulation survives, but only for a fixed ra
 c_{\widetilde Q^\star}(\widetilde Y^\star)
 \end{equation}
 
-be the finite canonical target for a future task, and let $G_1,\ldots,G_T$ be persistent support objects. For a permutation $\sigma$, write $G_{\sigma(1:t)}=(G_{\sigma(1)},\ldots,G_{\sigma(t)})$. The chain rule gives
+be the finite canonical target for a future task, and let $G_1,\ldots,G_T$ be persistent support objects. For a permutation $\sigma$, write $G_{\sigma(1:t)}=(G_{\sigma(1)},\ldots,G_{\sigma(t)})$. The standard chain rule \citep[Section~2.5]{cover2006elements} gives
 
 \begin{align}
 I\!\left(
