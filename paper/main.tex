@@ -1,6 +1,6 @@
 
 \documentclass[10pt]{article} % For LaTeX2e
-\usepackage{tmlr}
+\usepackage[preprint]{tmlr}
 % If accepted, instead use the following line for the camera-ready submission:
 %\usepackage[accepted]{tmlr}
 % To de-anonymize and remove mentions to TMLR (for example for posting to preprint servers), instead use the following:
@@ -11,7 +11,6 @@
 
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{mathtools}
-\usepackage{hyperref}
 \usepackage{url}
 \usepackage{booktabs}   % \toprule, \midrule, \bottomrule
 \usepackage{tabularx}   % width-constrained tables
@@ -26,6 +25,11 @@
 \usepackage{graphicx}
 \usepackage{pdfpages}
 \usepackage{tabularx,makecell,ragged2e}
+
+% Load after float and longtable so their hyperlink patches are applied.
+\usepackage{hyperref}
+% Restore standard parenthesized references after math_commands' word prefix.
+\renewcommand{\eqref}[1]{\textup{(\ref{#1})}}
 \newcolumntype{L}{>{\hsize=1.6\hsize\RaggedRight\arraybackslash}X} % wider, ragged-right w/ hyphenation
 \newcolumntype{S}{>{\hsize=0.85\hsize\centering\arraybackslash}X}  % narrower feature columns
 \newcommand{\cmark}{\ding{51}} % ✓
@@ -448,427 +452,53 @@ calculations, and a prospective FormulaReasoning protocol. These
 components serve different purposes: the architecture specifies authority
 and records; the theory states conditional relationships; the protocol
 defines observations and their limits.
-Section~\ref{sec:the-courtroom-loop} presents the architecture and a running
-example. Section~\ref{sec:theory} develops representation, accessibility,
-realization, reuse, complementarity, order, and lifecycle value.
-Section~\ref{subsec:identification-pilot} maps theoretical quantities to
-observable evidence. Section~\ref{sec:pilot-design} specifies the proposed
+Section~\ref{sec:courtroom-orientation} gives a short orientation to the
+system and its assurance distinctions. Section~\ref{sec:theory} develops
+representation, accessibility, realization, reuse, complementarity,
+order, and lifecycle value; Section~\ref{subsec:identification-pilot} maps
+theoretical quantities to observable evidence.
+Section~\ref{sec:the-courtroom-loop} then presents the detailed architecture
+and a brief hypothetical example. Section~\ref{sec:pilot-design} specifies the proposed
 study; the remaining appendices detail execution and isolation, trace
 coding, ledgers, and registration.
 
 
 
-\section{The Courtroom Loop}
-\label{sec:the-courtroom-loop}
+\section{Courtroom Orientation}
+\label{sec:courtroom-orientation}
 
-The \emph{Courtroom loop} is a versioned assurance architecture for
-constructing, revising, and reusing external procedural support. Its
-\emph{inner loop} executes one frozen question-specific policy, records
-the derivation retained in its proposed solution, and seals a terminal
-action. Its \emph{outer loop} examines authorized post-seal records,
-proposes and tests general revisions, admits or rejects reusable objects,
-and publishes or carries forward the next immutable release. The store
-can therefore grow across questions while remaining fixed during each
-scored execution.
+The Courtroom loop separates question-specific execution from the
+construction and release of reusable procedural support. A stored
+\emph{motif} is a scoped procedure with declared input/output roles,
+applicability conditions, provenance, and assurance evidence. Relations
+carry dependency or composition claims with their own scope and evidence.
+Admission certification concerns these reusable claims; runtime validation
+concerns a particular selection, binding, composition, or execution.
+Neither finite admission tests nor a runtime recommendation are assumed
+to be infallible.
 
-The architecture gives the evidence questions in the introduction an
-operational form. Release manifests establish what support was available;
-sealed execution records show its attempted use; external adjudication
-assesses the submitted solution. Admission certification assesses reusable
-claims within their declared scope, whereas runtime validation checks
-particular applications. These roles have different evidence and authority;
-none alone establishes the effect or lifecycle value of a revision. The
-prospective protocol follows one human-guided outer trajectory. Each release
-declares which optional validation, repair, and escalation capabilities are
-active.
+Let $S_t$ denote the complete release after development episode $t$, with
+$S_0$ the starting release and $M_t:=\operatorname{mem}(S_t)$ its active
+procedural store. The release includes the controller, prompts, tools,
+retrieval and validation routes, resource limits, and store, rather than
+memory alone. The \emph{inner loop} answers a question using one frozen
+release, retaining its proposed derivation and sealing its terminal
+record. The \emph{outer loop} uses authorized post-seal evidence to propose
+and check revisions, admit or reject reusable objects, and freeze the
+next release. Thus development question $Q_t$ uses $S_{t-1}$, while a
+published revision becomes available only in $S_t$. Empirical releases
+may revoke objects as well as add them. Construction, rejected work,
+retrieval, checking, execution, and maintenance all retain their costs.
 
-\subsection{Running FormulaReasoning Example}
-\label{subsec:courtroom-example}
-
-The following hypothetical example follows a claim from retrieval to
-possible later reuse; it reports no pilot execution. For a question asking
-for mass from density and volume, a frozen release may expose a motif with
-payload $m=\rho V$, semantic roles, dimensional and conversion requirements,
-provenance, tests, and an execution contract. The solver must still bind the
-stated values to the relevant material and object, normalize their units,
-and record the dependencies supporting its multiplication.
-
-Suppose the correct normalized values are $\rho$ and $V$, but the retained
-derivation multiplies density by ten and divides volume by ten through
-invalid conversions. Then
-\[
-(10\rho)(V/10)=\rho V.
-\]
-The final number can pass canonical adjudication while the retained
-conversions violate full-solution validity. Whether empirical assessment
-detects them depends on the evidence and checks. Neither the numerical pass
-nor working-graph membership admits those conversions into persistent memory.
-
-For contrast, consider a separately sealed illustrative execution that
-correctly binds the same givens, justifies the conversions to compatible
-units, and recomputes the multiplication using $\rho$ and $V$. If all retained
-dependencies and the final rendering are valid, it satisfies the
-full-solution endpoint, although its canonical answer is unchanged. In a
-repair, the invalid conversion nodes must be superseded and their surviving
-dependents recomputed or revalidated; changing flags or relying on
-cancellation is insufficient. The original record remains fixed. This
-contrast changes derivation validity, not answer-only accuracy, and does
-not establish that a validator or stored motif caused the difference.
-
-A post-seal audit may motivate general conversion or binding support. That
-proposal needs scoped admission and release checks before becoming available
-to another execution. Applying it on the exposed item documents fit, not
-unseen transfer. On a future question, conversion support and
-formula-selection support can address distinct stages; the complementarity
-calculation concerns their joint useful coverage under its stated kernels,
-not mere co-presence in the store. The audit records which objects were
-available, selected, bound, executed, and retained, and which retained uses
-were assessed as valid. A performance comparison and lifecycle account
-remain separate requirements for effect and value claims.
-
-\subsection{Versioned System State, Manifests, and Isolation}
-\label{subsec:courtroom-state}
-
-For a registered development horizon $D\geq1$, let $S_0$ be the starting
-release and $S_t$ the complete registered client-visible release after
-development episode $t\in\{1,\ldots,D\}$, with active motif and graph store
-\[
-M_t:=\operatorname{mem}(S_t).
-\]
-A release contains its prompts, controller, schemas, runtime parsers,
-answer and derivation interfaces; requested model/provider identifiers
-and decoding/retry configuration; tools, executors, and permitted external
-interfaces; retrieval policies, indices, caches, validators, bounded
-repair/escalation routes, and fallbacks; active motif and relation versions
-with their contracts and evidence; and release tests, conformance checks,
-resource limits, and configuration metadata.
-
-The \emph{release manifest} identifies these contents, hashes, rationale,
-tests, and changes from $S_{t-1}$. The \emph{branch-and-phase execution
-manifest} combines a release with its execution mode and outer budget:
-operations must satisfy both internal restrictions and external caps.
-The separate \emph{study/evaluation manifest} fixes item handling,
-reference construction, adjudication, sealing, embargoes, and analysis.
-Supporting-artifact links preserve provenance without granting runtime
-access to restricted identifiers, references, or development fixtures.
-
-For FormulaReasoning, the invariant evaluation contract includes the
-reference-blind parser, unit/scale normalization, six-significant-digit
-canonicalizer $c_q$, global exponent bounds, finite alphabet
-$\mathcal Z_{\bot}$, verified-reference procedure, and retained-solution
-assessment rules. These are specified in
-Sections~\ref{subsec:pilot-question-sets}--\ref{subsec:pilot-solution-adjudication}.
-Runtime parsers and validators are separate components: they can change
-through releases while conforming to that contract and remaining blind
-to hidden references during execution.
-
-A \emph{seal} commits a payload, timestamp, content/configuration hashes,
-and access-control state. Later adjudication or correction creates a linked
-append-only record. Each execution starts from a read-only release clone;
-question-local state cannot modify the release or enter another runtime
-session directly. Provider metadata and execution times remain recorded,
-since a frozen client configuration does not guarantee fixed hidden
-serving kernels. For the pilot, detailed session, cache, manifest, and
-disclosure rules are in Appendix~\ref{app:execution-replay}; its launch and
-noncompletion rules in Section~\ref{subsec:pilot-retry-policy} implement the
-distinction between a sealed failure disposition and an absent terminal action.
-
-\subsection{Inner Loop: Question-Specific Use}
-\label{subsec:courtroom-inner-loop}
-
-Fix $S_{t-1}$ and development question $Q_t$. Branch and phase indices are
-suppressed but remain recorded. Let $H_{t,\mathrm{pre}}^{\mathrm{impl}}$
-be the implemented policy's history through its pre-gate proposal, and let
-\[
-E_t^{\mathrm{pre}}
-:=\operatorname{RetrOut}\!\left(H_{t,\mathrm{pre}}^{\mathrm{impl}}\right)
-\]
-collect the retrieval packets exposed by that point. Retrieval can depend
-on earlier model outputs, tool results, working-state changes, and
-registered randomness. The following seven functions may recur within
-the frozen stopping rules. They are architectural functions, not the
-common semantic-stage decomposition required by the reuse model.
-
-\begin{enumerate}
-\item \textbf{Identify and decompose.}
-Declare the target, relevant quantities, unresolved dependencies, and
-local subproblems. The language model proposes semantic roles and
-bindings; deterministic checks assess the registered structural, type,
-unit, and provenance requirements.
-
-\item \textbf{Retrieve.}
-Expose active motifs and relations through a versioned index. Record
-candidates, versions, ordering, and interfaces. Exposure is distinct from
-applicability or successful use.
-
-\item \textbf{Select, bind, and compose.}
-Select a candidate, state applicability conditions, bind question evidence
-or derived values to its roles, and record composition dependencies.
-Mechanical checks verify identities, slots, compatible types/units, and
-formal preconditions; these checks need not establish semantic binding.
-Before execution, the frozen routing policy selects stored support or
-the baseline fallback using the observed history and permitted checks.
-It need not know that a baseline answer would be wrong. Any later repair
-is a separate bounded action.
-
-\item \textbf{Execute and record.}
-Perform registered arithmetic, conversion, symbolic manipulation, or other
-permitted operations. Record each value's inputs, operation or motif
-version, output, and checks. The fallback uses the common answer and
-derivation interface. Insufficient supporting work may leave numerical
-scoring possible while derivation validity is unassessable.
-
-\item \textbf{Seal the pre-gate proposal.}
-Seal the proposed disposition, answer, and retained derivation together
-with $E_t^{\mathrm{pre}}$, bindings, intermediate states, dependencies,
-trace, resource state, and configuration hashes as $O_t^{\mathrm{pre}}$.
-This records the proposal before any optional runtime-validation gate;
-it does not open the external-adjudication or development gate.
-
-\item \textbf{Validate and route.}
-An active runtime validator receives a read-only proposal view and records
-a recommendation $V_t^{\mathrm{val}}$, such as release, bounded repair,
-defer, or escalate. The frozen routing policy determines the next action.
-Audit-only validation leaves the proposal unchanged. Repair creates linked
-records preserving the original proposal, uses only permitted evidence,
-and remains within its call, checking, and resource limits. No route
-receives the hidden reference.
-
-\item \textbf{Seal the final action.}
-Seal the terminal answer or no-answer disposition and retained derivation,
-with the pre-gate proposal, validator recommendation when present, repairs,
-additional retrieval, and resource record, before external adjudication
-or revision. Denote the terminal record by $O_t^{\mathrm{final}}$, the full
-recorded history by $H_t^{\mathrm{impl}}$, and exposed retrieval content by
-\[
-E_t:=\operatorname{RetrOut}(H_t^{\mathrm{impl}}).
-\]
-\end{enumerate}
-
-Formally invalid actions receive only registered retries. A semantically
-incorrect but formally legal action can remain undetected. A tool's success
-flag establishes only the property covered by its contract; the required
-state transition and postcondition must also hold. Validation, repair,
-fallback, and record construction all consume execution resources.
-
-\subsection{Working Graphs, Retained Derivations, and Adjudication}
-\label{subsec:courtroom-derivations}
-
-The working graph records hypotheses, candidate bindings, attempted
-transformations, rejected actions, and superseded values. The submitted
-solution selects its retained claims and their transitive dependencies:
-givens, semantic assignments, intermediate values, procedures, and
-transformations supporting the answer. The audit trace also preserves
-discarded work and its costs. Neither graph membership nor a correct final
-number automatically admits a claim to the persistent store.
-
-Repair must recompute or revalidate affected surviving dependencies under
-the corrected inputs; changing a node's validity flag is insufficient.
-Superseded claims remain identifiable, and the terminal record fixes which
-versions support the answer. Withdrawn exploratory mistakes need not
-invalidate a repaired solution, whereas an invalid retained dependency
-remains a defect.
-
-Canonical correctness and full-solution validity are distinct endpoints
-under Equations~\eqref{eq:theory-canonical-acceptance}
-and~\eqref{eq:theory-full-solution-loss}. The mathematical predicate
-$\operatorname{Valid}(q,o)$ is assessed by fallible adjudicators using the
-sealed evidence and frozen rubric. A canonical pass with an invalid
-derivation fails the full-solution assessment; a canonical pass with
-unassessable evidence or a pending assessment remains unresolved in the common denominator.
-Canonical failure settles failure under both criteria. Absence of a coded
-defect is not an affirmative validity judgment.
-
-Runtime validation can influence the current attempt through its frozen
-route. External adjudication cannot repair or replace the submission.
-For the pilot, Section~\ref{subsec:pilot-solution-adjudication} specifies
-the evidence contract and assessment procedure;
-Appendix~\ref{app:audit-microscopes} specifies trace coding and reports
-observability by release.
-
-\subsection{Outer Loop: Audit, Revision, Admission, and Release}
-\label{subsec:courtroom-outer-loop}
-
-During development, both scheduled first-contact records seal before any
-permitted current-reference release. Authorized adaptive evidence can then
-inform bounded diagnosis, candidate construction, admission checks, and
-tests. Adaptive nonlaunch follows the no-change or study-stop path without
-item-driven revision or an imputed answer. The frozen shadow supplies no
-developmental feedback; it becomes a descriptive comparison only after its
-embargo lifts. Section~\ref{subsec:pilot-development-episode} and
-Section~\ref{subsec:execution-confirmatory} define the pilot's complete
-schedule, not an arbitrary-horizon schedule.
-
-Every candidate receives \textsc{Accept}, \textsc{Reject}, \textsc{Defer},
-or \textsc{Ambiguous}, with evidence, reasons, and costs. A retained defect
-can motivate revision even when the final number passes. The diagnosis
-remains a hypothesis, and a procedure extracted from either a successful
-run or a proposed repair needs admission evidence for its generalized
-scope and each proposed relation.
-
-The \emph{release controller} alone publishes persistent state. It checks
-verdicts, tests, permissions, anti-leakage controls, hashes, and required
-records before publishing $S_t$; other components produce proposals or
-evidence without direct write authority. If no revision is accepted,
-record a no-change release $S_t=S_{t-1}$. Runtime revisions remain within immutable
-outer caps and cannot change study invariants, including the requested
-base model/provider, decoding and retry configuration, external evaluation,
-item allocation, sealing, and matched confirmatory budget. Candidates use
-the episode's applicable admission policy; a co-bundled policy revision
-cannot lower their standard retroactively.
-
-Reference access does not authorize runtime memorization of the motivating
-item. Proposals cannot hide item identifiers, literal or paraphrased
-questions, reference answers, source-instance keys, or equivalent lookups
-in releases. Reference-derived fixtures remain in the isolated test
-partition; reusable proposals retain scope and provenance. An official
-same-item replay measures exposed-item fit and cannot reopen the completed
-release decision. Numerical and assessed full-solution transitions remain
-separate. Adaptation closure, final replay, and terminal evaluation obey
-prospectively registered gates; Section~\ref{subsec:execution-confirmatory}
-instantiates them for the pilot.
-
-\subsection{Assurance-Bearing Procedural Store}
-\label{subsec:courtroom-store}
-
-The active store $M_t$ contains typed, versioned motifs and relations.
-Each motif records:
-\begin{itemize}
-\item a stable identifier, immutable version history, and executable
-or declarative payload;
-\item semantic input/output roles, types, dimensions, units, and scale
-conventions;
-\item applicability, preconditions, postconditions, prohibited uses,
-and limitations;
-\item provenance, supporting evidence, and verification method and scope;
-\item positive, negative, boundary, and regression tests, including
-observed failures; and
-\item admission, supersession, quarantine, and revocation records.
-\end{itemize}
-Relations such as \texttt{requires}, \texttt{produces},
-\texttt{applicable-under}, \texttt{specializes}, \texttt{composes-with},
-\texttt{conflicts-with}, and \texttt{supersedes} carry their own scope and
-evidence. A composition claim states when one procedure's output meets
-another's input contract; matching names or units alone is insufficient.
-
-Ordinary retrieval exposes only active admitted versions. Rejected,
-deferred, ambiguous, quarantined, development-only, and superseded objects
-remain outside the active index. Each index records its source-store hash,
-builder, parameters, and conformance checks. Revocation or rollback creates
-a new release while preserving history, so empirical active stores need
-not be nested.
-
-Four assurance channels support this architecture:
-\begin{description}
-\item[Mechanical checks.]
-Deterministic checks establish specified syntax, schema, type, unit,
-provenance, executable-precondition, and formal-postcondition properties.
-Their conclusions cover only what was checked.
-
-\item[Admission certification.]
-The outer loop evaluates reusable claims through the registered combination
-of proof, recomputation, tests, provenance inspection, and uncertainty
-assessment. Acceptance authorizes consideration for release under that
-policy; it does not prove the universal soundness assumed by the idealized
-reuse model.
-
-\item[Runtime instance validation.]
-A frozen validator assesses one proposed use's interpretation,
-applicability, binding, composition, and execution. Its recommendation
-affects the attempt only through the registered bounded route.
-
-\item[Escalation.]
-A bounded channel requests permitted evidence or review without bypassing
-sealing, admission, or release control. The general architecture can include
-human escalation, but the primary first-contact study permits no live
-operator assistance.
-\end{description}
-These channels can share models, tools, assumptions, and blind spots;
-their errors are not assumed independent. Failed and inconclusive checks
-remain recorded and charged.
-
-\subsection{Resource Ledger and Audit Trail}
-\label{subsec:courtroom-resources}
-
-The ledger links executions, proposals, tests, verdicts, and releases to
-physical events without overwriting earlier records. It retains native
-calls, token fields, tool/compute use, storage changes, monetary charges,
-and active human effort. Elapsed time, latency, and peak storage remain
-distinct from additive consumption. Each billable event contributes one
-observed or registered reconstructed charge.
-
-Events receive one immutable \textsc{adapt}, \textsc{eval},
-\textsc{deploy}, or \textsc{over} scope under registered accounting rules,
-instantiated for the pilot in Section~\ref{subsec:ledger-resources}.
-Shared events count once, including
-when later analytical use changes. Actual prelaunch work, retries, failed
-calls, rejected proposals, abandoned patches, negative tests, checks,
-repairs, and unused admitted objects retain their costs. Scheduled but
-unperformed work creates none. Incomplete historical costs remain unknown;
-cutoff totals and later reconciliation remain distinct.
-
-Lifecycle comparisons require a comparator, cost boundary, and dated
-valuation. These records can inform the upfront bound $F$ and expected
-incremental per-question bound $c_{\mathrm{use}}$ in
-Section~\ref{subsubsec:reuse-lifecycle-value}. Construction and admission,
-including unsuccessful work, inform upfront costs; retrieval, instantiation,
-execution, runtime checking, and maintenance inform recurring costs under
-the declared accounting boundary. Measured expenditure alone does not
-establish either expected bound. Saved baseline computation can make the
-incremental per-use cost negative. The expected gain $g$, value $v$, future
-task/execution conditions, and reuse horizon $N$ need separate justification
-or explicit scenario assumptions. Projections do not replace observations,
-and allocating bundle costs to components does not identify their accuracy
-effects.
-
-\subsection{Connection to the Layered Theory}
-\label{subsec:courtroom-theory}
-
-A theoretical state $s$ is paired with a task law, resource specification
-$B$, and fixed environment $\mathsf E_s$. Each admissible end-to-end policy
-induces its own history and law. A launched inner-loop execution is one
-sample path of $\pi_t^{\mathrm{impl}}$; the human--API process constructing
-later releases is a separate process between questions.
-
-Representation converses concern a declared source ensemble. In operational
-FormulaReasoning, the complete question determines the canonical target,
-so $H(Z\mid Q)=0$. Support can nevertheless change the computation available
-within budget or its realized reliability. Family-level log-loss/error
-calibration requires law-preserving confidence completion or sampling
-closure, with source and wrapper jointly within $B$. Canonicalization,
-kernel construction, sampling, and rendering must be included in that
-accounting. A numerical fallback need not produce a valid derivation;
-full-solution calibration would require its own acceptance-set coverage
-and closure.
-
-The implemented reuse model in Section~\ref{subsec:verified-procedural-growth}
-has direct architectural counterparts: scoped admission evidence,
-question-specific applicability and binding checks, explicit semantic
-interfaces, and preserved fallback and continuation resources. Applying
-it requires a common stage decomposition and the stated conditional kernels
-at every registered valid history across the compared controllers.
-Component presence or isolated retrieval success does not establish those
-premises. A larger index can impair selection, a prompt change can alter
-fallback reliability, and validation can displace later computation.
-The imperfect-use variant likewise requires supported reliability
-$w_i(q)\geq p_i(q)$ and the accompanying stability conditions.
-
-Under the model's premises, additional useful coverage can improve expected
-full-solution accuracy without new conditional Shannon information.
-Section~\ref{subsubsec:reuse-complementarity} further shows how coverage at
-distinct stages can be complementary when their useful scope overlaps.
-Equal final coverage and mechanisms can yield equal endpoint accuracy yet
-different cumulative value along admission paths. Equal final inventories
-alone do not establish that equivalence. Neither the seven architectural
-functions nor arbitrary motif sets automatically satisfy the stage model.
-
-The study records outcomes, procedural use, and costs along one path; it
-does not estimate family optima or stage kernels, verify the model's
-uniform premises, or compare admission orders. The reuse model's
-full-solution log-loss comparison concerns the induced solution distribution;
-it does not require a runtime API to report those probabilities. Expected
-improvement under the model also does not require every successive observed
-answer to improve.
+The following section develops the conditional analyses before the
+operational detail. It distinguishes information in a declared ensemble,
+what a bounded policy family can attain, and what an implemented policy
+realizes. Its separate reuse model asks when increased useful coverage
+improves full-solution accuracy under explicit sound-use, fallback,
+interface, and budget premises. The detailed architecture in
+Section~\ref{sec:the-courtroom-loop} specifies the authority and records
+that make those premises and their possible failures inspectable; the
+architecture does not establish the premises by itself.
 
 \section{Layered Theory of Representation, Accessibility, and Realization}
 \label{sec:theory}
@@ -4103,6 +3733,243 @@ failures, and sufficient reuse to cover continuing assurance and
 maintenance. The conditional calculations identify quantities to study;
 the protocol makes one development path and its costs auditable.
 \FloatBarrier
+
+\section{The Courtroom Loop}
+\label{sec:the-courtroom-loop}
+
+This section expands the orientation in
+Section~\ref{sec:courtroom-orientation} into the operational architecture,
+following the conditional theory in Section~\ref{sec:theory}.
+
+The \emph{Courtroom loop} is a versioned assurance architecture for
+constructing, revising, and reusing external procedural support. Its
+\emph{inner loop} executes one frozen question-specific policy and seals
+its terminal action and retained derivation. Its \emph{outer loop}
+examines authorized post-seal evidence, proposes and tests revisions,
+admits or rejects reusable objects, and publishes or carries forward the
+next immutable release. The store can grow across questions while
+remaining fixed during each scored execution.
+
+Release manifests, sealed execution records, external adjudication, and
+resource ledgers document availability, attempted use, assessed outcomes,
+and costs without establishing a revision's effect or lifecycle value.
+Admission certification assesses reusable claims within their declared
+scope; runtime validation checks particular applications. Each release
+declares which optional validation, repair, and escalation capabilities
+are active.
+
+\subsection{Running FormulaReasoning Example}
+\label{subsec:courtroom-example}
+
+In a hypothetical mass calculation using $m=\rho V$, invalid conversions
+that multiply density by ten and divide volume by ten cancel numerically
+while leaving the retained derivation invalid, so a canonical pass alone
+does not establish full-solution validity.
+
+\subsection{Versioned System State, Manifests, and Isolation}
+\label{subsec:courtroom-state}
+
+For a registered development horizon $D\geq1$, let $S_0$ be the starting
+release and $S_t$ the complete registered client-visible release after
+development episode $t\in\{1,\ldots,D\}$, with active motif and graph store
+\[
+M_t:=\operatorname{mem}(S_t).
+\]
+A release fixes the runtime implementation and configuration, active store
+with its contracts and evidence, and permitted tools, resources, and
+access. Release and execution manifests identify the versioned contents,
+changes, execution regime, and applicable internal and outer budgets.
+Provenance links do not grant runtime access to restricted artifacts.
+
+The fixed evaluation contract is separate from changeable runtime
+components. Runtime parsers and validators can change through releases
+while conforming to that contract and remaining blind to hidden
+references during execution. Each execution starts from a read-only
+release clone; question-local state cannot modify the release or enter
+another runtime session directly. A seal commits the record and its
+configuration; later adjudication or correction creates a linked
+append-only record. Evaluation details are in
+Sections~\ref{subsec:pilot-question-sets}--\ref{subsec:pilot-solution-adjudication};
+manifest, session, cache, and sealing rules are in
+Appendix~\ref{app:execution-replay}.
+
+\subsection{Inner Loop: Question-Specific Use}
+\label{subsec:courtroom-inner-loop}
+
+Fix $S_{t-1}$ and development question $Q_t$. The following seven
+functions may recur within the frozen stopping rules. They are
+architectural functions, not the common semantic-stage decomposition
+required by the reuse model.
+
+\begin{enumerate}
+\item \textbf{Identify and decompose.}
+Declare the target, relevant quantities, unresolved dependencies, and
+local subproblems; propose semantic roles and bindings.
+
+\item \textbf{Retrieve.}
+Expose active motifs and relations through a versioned index, recording
+the candidates and versions. Exposure does not establish applicability.
+
+\item \textbf{Select, bind, and compose.}
+Select support, state applicability conditions, bind question evidence or
+derived values to its roles, and record composition dependencies.
+Mechanical checks assess the registered structural requirements without
+necessarily establishing semantic binding. The frozen policy routes to
+support or fallback before execution; it need not detect that the
+baseline would fail.
+
+\item \textbf{Execute and record.}
+Perform permitted operations and record their inputs, outputs, versions,
+and checks, using the common answer and derivation interface for both
+supported and fallback routes.
+
+\item \textbf{Seal the pre-gate proposal.}
+Seal the proposed disposition, answer, retained derivation, and supporting
+trace before optional runtime validation. This does not open the external
+adjudication or development gate.
+
+\item \textbf{Validate and route.}
+An active validator receives a read-only proposal view and recommends
+release, bounded repair, deferral, or escalation through the frozen route.
+Repairs preserve the original proposal, use only permitted evidence, and
+remain within resource limits. No route receives the hidden reference.
+
+\item \textbf{Seal the final action.}
+Seal the terminal answer or no-answer disposition, retained derivation,
+linked validation and repair records, and resource account before
+external adjudication or revision.
+\end{enumerate}
+
+Validation, repair, fallback, and record construction all consume
+execution resources. A formally legal but semantically incorrect action
+can remain undetected.
+
+\subsection{Working Graphs, Retained Derivations, and Adjudication}
+\label{subsec:courtroom-derivations}
+
+The working graph records hypotheses, candidate bindings, attempted
+transformations, rejected actions, and superseded values. The submitted
+solution selects its retained claims and their transitive dependencies;
+the audit trace also preserves discarded work and its costs. Neither
+graph membership nor a correct final number admits a claim to the
+persistent store.
+
+Repair must recompute or revalidate affected surviving dependencies under
+the corrected inputs; changing a validity flag is insufficient.
+Superseded claims remain identifiable, and the terminal record fixes
+which versions support the answer. Withdrawn exploratory mistakes need
+not invalidate a repaired solution, whereas an invalid retained
+dependency remains a defect.
+
+Canonical correctness and full-solution validity are distinct endpoints
+under Equations~\eqref{eq:theory-canonical-acceptance}
+and~\eqref{eq:theory-full-solution-loss}. Empirical adjudicators assess
+mathematical validity from sealed evidence under a frozen rubric; their
+judgments are fallible and can remain unresolved. Runtime validation can
+influence the current attempt through its frozen route, but external
+adjudication cannot repair or replace the submission.
+Section~\ref{subsec:pilot-solution-adjudication} specifies assessments and
+Appendix~\ref{app:audit-microscopes} specifies trace coding.
+
+\subsection{Outer Loop: Audit, Revision, Admission, and Release}
+\label{subsec:courtroom-outer-loop}
+
+Authorized post-seal evidence can inform diagnosis, candidate
+construction, scoped admission checks, and tests. Candidates are
+accepted, rejected, or left unresolved with evidence, reasons, and
+costs. A retained defect can motivate revision even when the final number
+passes, but the diagnosis remains a hypothesis: a generalized procedure
+and each proposed relation require their own admission evidence.
+
+The \emph{release controller} alone publishes persistent state after
+checking verdicts, tests, permissions, anti-leakage controls, and required
+records; other components propose changes or evidence without direct
+write authority. If no revision is accepted, record a no-change release
+$S_t=S_{t-1}$. Revisions must respect the immutable outer caps and study
+invariants. A co-bundled admission-policy revision cannot lower a
+candidate's standard retroactively.
+
+Reference access does not authorize runtime memorization of the
+motivating item. Releases cannot contain item identifiers, literal or
+paraphrased questions, reference answers, source-instance keys, or
+equivalent lookups. Reference-derived fixtures remain in the isolated
+test partition; reusable proposals retain scope and provenance.
+The pilot's embargo, launch, adaptation, and replay rules are specified in
+Sections~\ref{subsec:pilot-development-episode}
+and~\ref{subsec:execution-confirmatory}.
+
+\subsection{Assurance-Bearing Procedural Store}
+\label{subsec:courtroom-store}
+
+The active store $M_t$ contains typed, versioned motifs and relations.
+Each motif carries a payload, semantic input/output roles, applicability
+conditions and limitations, provenance, assurance evidence and its scope,
+tests including observed failures, and an immutable admission and
+revision history. Relations express dependencies, applicability,
+composition, conflicts, or supersession with their own scope and
+evidence. A composition claim must establish when one procedure's output
+meets another's input contract; matching names or units alone is
+insufficient.
+
+Ordinary retrieval exposes only active admitted versions. Revocation or
+rollback creates a new release while preserving history, so empirical
+active stores need not be nested. Four assurance channels remain
+distinct:
+\begin{description}
+\item[Mechanical checks.]
+Deterministic checks establish only the specified structural, type, unit,
+provenance, precondition, or postcondition properties they cover.
+
+\item[Admission certification.]
+A registered combination of proof, recomputation, tests, provenance
+inspection, and uncertainty assessment supports reusable claims within
+their declared scope. An
+empirical acceptance verdict does not prove the universal soundness
+assumed by the idealized reuse model.
+
+\item[Runtime instance validation.]
+A frozen validator assesses a particular interpretation, applicability,
+binding, composition, or execution; its recommendation acts only through
+the registered bounded route.
+
+\item[Escalation.]
+A bounded channel requests permitted evidence or review without bypassing
+sealing, admission, or release control. The primary first-contact study
+permits no live operator assistance.
+\end{description}
+These channels can share models, tools, assumptions, and blind spots;
+their errors are not assumed independent. Failed and inconclusive checks
+remain recorded and charged.
+
+\subsection{Resource Ledger and Audit Trail}
+\label{subsec:courtroom-resources}
+
+The ledger links executions, proposals, tests, verdicts, and releases to
+native resource events and active human effort without overwriting
+earlier records. Shared physical work counts once; retries, failures,
+rejected proposals, abandoned revisions, and unused admitted objects
+retain their costs. Latency and peak storage remain distinct from
+additive consumption. Unrecorded historical work remains unknown, not
+zero. Observed expenditure does not establish future gain, cost bounds,
+or lifecycle value. Phase accounting and detailed schemas are specified
+in Section~\ref{subsec:pilot-resource-ledger} and
+Appendix~\ref{app:ledgers-manifest};
+Section~\ref{subsubsec:reuse-lifecycle-value} states the separate
+premises for lifecycle comparisons.
+
+\subsection{Connection to the Layered Theory}
+\label{subsec:courtroom-theory}
+
+Scoped admission, application checks, semantic interfaces, and resource
+accounting correspond to premises of the reuse model in
+Section~\ref{subsec:verified-procedural-growth}; component presence does
+not establish those premises. A larger index can impair selection,
+a prompt change can alter fallback reliability, and validation can
+displace later computation. The seven architectural functions do not
+automatically supply the model's common stage decomposition or stable
+conditional kernels. The study records outcomes, uses, and costs along
+one path; it does not estimate family optima or verify the model's uniform
+premises.
 
 \bibliography{refs}
 \bibliographystyle{tmlr}
