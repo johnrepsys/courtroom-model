@@ -612,11 +612,13 @@ function before canonicalization. These restrictions prevent the
 question-dependent evaluator from acting as an answer oracle.
 
 The canonicalizer parses one unambiguous answer field and applies the
-registered exact unit and scale conversions. The accounting seal fixes
-$p_{\mathrm{FR}}=6$ and global integer exponents
-$e_{\min}\leq e_{\max}$ before reference inspection. Nonzero values are
-rounded once in normalized decimal scientific form to six significant
-digits, using round-to-nearest, ties-to-even; a significand carry is
+registered exact unit and scale conversions. The accounting seal fixes a
+positive integer precision $p_{\mathrm{FR}}$ and global integer exponents
+$e_{\min}\leq e_{\max}$ before reference inspection; these choices remain
+common to all items. The proposed pilot sets $p_{\mathrm{FR}}=6$. Nonzero
+values are rounded once in normalized decimal scientific form to
+$p_{\mathrm{FR}}$ significant decimal digits, using round-to-nearest,
+ties-to-even; a significand carry is
 renormalized before the exponent check. Decimal literals and exact
 conversion factors use exact rational or decimal arithmetic, not binary
 floating-point adjudication. Signed zeros share one label. Malformed,
@@ -632,24 +634,25 @@ The finite numerical grid is
 \{0\}
 \cup
 \left\{
-\sigma\,n\,10^{e-5}:
+\sigma\,n\,10^{e-(p_{\mathrm{FR}}-1)}:
 \sigma\in\{-1,+1\},\ 
-n\in\{10^5,\ldots,10^6-1\},\ 
+n\in\{10^{p_{\mathrm{FR}}-1},\ldots,10^{p_{\mathrm{FR}}}-1\},\ 
 e\in\{e_{\min},\ldots,e_{\max}\}
 \right\}.
 \end{equation}
 
-Let $L:=e_{\max}-e_{\min}+1$. For the full signed six-digit grid used here,
+Let $L:=e_{\max}-e_{\min}+1$. For the full signed
+$p_{\mathrm{FR}}$-digit grid,
 
 \begin{equation}
-K=|\mathcal Z_{\bot}|=2+18\cdot10^5L,
+K=|\mathcal Z_{\bot}|=2+18\cdot10^{p_{\mathrm{FR}}-1}L,
 \label{eq:theory-canonical-alphabet-size}
 \end{equation}
 
 where the additional labels are zero and $\bot$. Both exponent bounds
 are necessary: fixed significant digits and an upper magnitude bound
 alone permit arbitrarily small nonzero labels. The manifest records the
-bounds, $K$, and $\log_2(K-1)$; item-specific ranges cannot shrink this
+bounds, precision, $K$, and $\log_2(K-1)$; item-specific ranges cannot shrink this
 common alphabet.
 
 The variable $Y$ denotes the independently audited recomputed reference value before canonicalization; the published answer remains a separate reconciliation field rather than the value silently substituted for $Y$. The verified reference computation and the solver output pass through the same canonicalizer. Define the canonical target
@@ -4134,13 +4137,13 @@ loss; any composite utility is secondary and prospectively specified.
 
 Before prospective execution, every reference record must be recomputed and validated with exact rational or decimal arithmetic, or with certified interval arithmetic. Any explicit instruction such as ``round to the nearest integer'' belongs to the reference function before canonicalization and does not change the global precision. The renderer retains guard digits; it does not render to six digits and then quantize a second time. The formula, bound values, quantity kind, dimensions, units, and published answer are independently checked. A published answer that is coarser than six digits is not padded or silently replaced: the recomputation must be compatible with its implied rounding cell, or the item is declared ineligible under the frozen preallocation rule.
 
-The sole primary precision is
+The sole primary precision in this prospective protocol is
 
 \begin{equation}
 p_{\mathrm{FR}}=6
 \end{equation}
 
-significant decimal digits, not decimal places. The registered normalized-exponent bounds satisfy $e_{\min},e_{\max}\in\mathbb Z$ and $e_{\min}\leq e_{\max}$. After exact typed normalization, a nonzero result is expressed in normalized base-10 scientific form, rounded once by round-to-nearest, ties-to-even, renormalized after any significand carry, and only then checked against the global finite exponent interval $[e_{\min},e_{\max}]$. Binary floating-point rounding is not used. A certified reference interval must lie wholly within one six-digit cell or establish an exact tie; otherwise the item is ineligible before allocation. Every signed-zero form maps to one zero label, while a nonzero value whose rounded-and-renormalized exponent lies outside the interval maps to $\bot$ rather than being clipped or rounded to zero. With $N_e=e_{\max}-e_{\min}+1$, the full signed grid has
+significant decimal digits, not decimal places. The registered normalized-exponent bounds satisfy $e_{\min},e_{\max}\in\mathbb Z$ and $e_{\min}\leq e_{\max}$. After exact typed normalization, a nonzero result is expressed in normalized base-10 scientific form, rounded once by round-to-nearest, ties-to-even, renormalized after any significand carry, and only then checked against the global finite exponent interval $[e_{\min},e_{\max}]$. Binary floating-point rounding is not used. A certified reference interval must lie wholly within one six-digit cell or establish an exact tie; otherwise the item is ineligible before allocation. Every signed-zero form maps to one zero label, while a nonzero value whose rounded-and-renormalized exponent lies outside the interval maps to $\bot$ rather than being clipped or rounded to zero. Specializing Equation~\eqref{eq:theory-canonical-alphabet-size} to $p_{\mathrm{FR}}=6$, with $N_e=e_{\max}-e_{\min}+1$, the full signed grid has
 
 \begin{equation}
 K=\lvert\mathcal Z_{\bot}\rvert=2+18\cdot10^5N_e,
