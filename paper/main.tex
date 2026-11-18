@@ -279,12 +279,11 @@ a negative lower bound does not establish unprofitability.
 Section~\ref{subsubsec:reuse-lifecycle-value} also treats differing gains
 and costs along admission paths.
 
-The resource ledger records native quantities, human effort, failed and
-rejected work, and unused admitted procedures. Adaptation, evaluation,
-deployment, and overhead remain separate; unrecorded historical work
-remains unknown. Observed expenditure does not supply a future gain or
-cost bound. A lifecycle scenario therefore retains its comparator,
-valuation, horizon, and assumptions separately from observations.
+Resource ledgers retain native quantities, human effort, failed, rejected,
+and unused work by phase; unrecorded historical work remains unknown.
+Observed expenditure does not establish future benefit: lifecycle
+projections separately declare their comparator, valuation, horizon, and
+assumptions about gains and costs.
 
 \paragraph{Assurance across a versioned lifecycle.}
 
@@ -309,47 +308,6 @@ human work remain in the record. This makes the realized path
 inspectable without treating its bundled changes as identified component
 effects.
 
-\paragraph{A hypothetical numerical pass with invalid retained reasoning.}
-
-Consider a question asking for mass from density and volume, with correct
-normalized values $\rho$ and $V$. Suppose the solver selects the correct
-formula $m=\rho V$ but retains a conversion that multiplies density by
-ten and another that divides volume by ten. Then
-\[
-(10\rho)(V/10)=\rho V.
-\]
-The answer can pass numerical adjudication even though the retained
-conversions are invalid. This is an illustrative construction, not an
-observed pilot result. It separates the final number, the validity of
-the submitted derivation, and the eligibility of any extracted procedure
-for later admission.
-
-A fully correct solution requires both a canonically correct answer and
-valid retained reasoning. Discarded exploratory errors need not invalidate
-it. A repair must replace or justify affected claims and recompute or
-revalidate surviving dependents; cancellation does not perform that
-repair. To continue the same hypothetical, an audit could propose a density--volume
-mass motif with explicit source-unit-to-SI conversions and the contract
-$m=\rho V$. Its scope would require a scalar uniform mass density and
-the corresponding material volume, known unit labels, and compatible
-material/state assumptions; spatially varying density, an unstated mixture
-basis, or ambiguous units would be outside that claim. Admission checking
-could recompute the conversion identities, test valid and boundary inputs,
-and check rejection of unsupported unit labels and out-of-scope bindings.
-Missing scope evidence or a failed check would support rejection or
-deferral, not admission by numerical cancellation. Passed finite tests
-would still not prove universal soundness.
-
-If admitted in a later release, the motif could be retrieved for another
-question, with fresh scope checks, bindings, executed conversions, and
-retained dependencies recorded for that particular application. A correct
-later number would not by itself establish valid use or a gain over the
-baseline. The ledger would retain proposal, testing, rejected alternatives,
-and admission work as well as later retrieval, execution, and checking;
-an unused admission would retain its construction costs. This continuation
-is entirely hypothetical: it supplies neither an observed repair or use,
-nor evidence that savings recover those costs.
-
 The distinction between answer and reasoning quality has prior art.
 ReCEval evaluates reasoning chains through step correctness and
 informativeness, using natural-language-inference and
@@ -363,48 +321,15 @@ across domains.
 
 \paragraph{Availability, use, effect, and value.}
 
-Four questions organize the evidence. What support was available in a
-frozen release? What was actually selected, bound, executed, and retained?
-How does performance compare under a specified task law, endpoint, and
-budget? Under what future-use, cost, and valuation premises would reuse be
-worthwhile? These are distinct questions, not an implication chain.
-Table~\ref{tab:intro-reuse-evidence} gives an interpretive map; the detailed
-theory and the protocol specify different ways to address them.
+Availability asks what support a frozen release contains; use asks what
+was selected, bound, executed, and retained; effect asks how performance
+differs under a specified task law, endpoint, and budget; value asks
+whether future gains justify lifecycle costs under declared premises.
+These are distinct questions, not an implication chain.
 
-\begin{table}[t]
-\centering
-\small
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}p{0.37\linewidth}>{\raggedright\arraybackslash}X@{}}
-\toprule
-\textbf{Question} & \textbf{Relevant evidence} & \textbf{Interpretive boundary}\\
-\midrule
-Availability & Versioned motifs and relations, scopes, admission evidence, and release manifests.
-& Inventory does not show applicable selection or useful coverage.\\
-\addlinespace
-Use & Sealed application records, bindings, execution, retained dependencies, and fallible validity assessments.
-& An assessed valid application does not identify its effect on success or cost.\\
-\addlinespace
-Effect & Specified system comparisons, endpoints, task laws, budgets, and identifying assumptions or interventions.
-& One trace or exposed-item replay supplies no causal component contrast; the small terminal panel is descriptive.\\
-\addlinespace
-Value & Resource ledgers plus justified future gains, reuse horizon, cost bounds, and valuation.
-& Observed expenditure or an accuracy gain alone does not establish lifecycle value.\\
-\bottomrule
-\end{tabularx}
-\caption{Evidence questions for procedural reuse. Records and premises
-depend on the claim; inventory and valid-use judgments do not identify
-causal benefit or lifecycle value.}
-\label{tab:intro-reuse-evidence}
-\end{table}
-
-Validity concerns whether an application meets the declared mathematical
-and procedural contract. Attribution concerns the difference made by a
-specified change. A trace can support the former judgment and locate a
-particular defect without supplying the counterfactual needed for the
-latter. Replaying an exposed item can document changed fit, but cannot
-restore holdout status or isolate the contribution of a procedure when
-prompts, tools, validation, or other components also changed.
-\FloatBarrier
+Application validity concerns compliance with a declared contract;
+attribution concerns the difference made by a specified change, which a
+trace alone cannot establish.
 
 \paragraph{A prospective feasibility protocol.}
 
