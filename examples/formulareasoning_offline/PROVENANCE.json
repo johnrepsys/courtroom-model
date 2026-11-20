@@ -1,0 +1,7 @@
+{
+  "preserved_file": "canonical_numeric.py",
+  "preserved_source_sha256": "bbe812a09a04d06cf2fd1bd469e26de634e41ba69f288fd45ae04ee33adc8cfa",
+  "source_description": "Existing Courtroom unitless canonicalization prototype developed from the paper’s numeric contract and copied byte-for-byte. No full solver, runtime bundle, historical notebook, or results included.",
+  "new_files": "demo.py, test_canonical_numeric.py and contributor documentation were written for this synthetic local draft.",
+  "license": "MIT, scoped to this example; see LICENSE."
+}
